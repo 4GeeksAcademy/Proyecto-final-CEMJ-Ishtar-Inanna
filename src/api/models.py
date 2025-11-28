@@ -3,10 +3,15 @@ from sqlalchemy import String, Boolean, DateTime, ForeignKey
 from datetime import datetime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+from flask import Flask
+from flask_bcrypt import Bcrypt
 
-db = SQLAlchemy()
 
 app = Flask(__name__)
+
+bcrypt = Bcrypt(app)
+
+db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__="user"
@@ -39,7 +44,7 @@ class User(db.Model):
             "is_active" : self.is_active
         }
         
-    #HASHEO DE CONTRASEÑA
+    #HASHEO DE CONTRASEÑA(No touchy)
     
     def set_password(self, password):
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
@@ -69,11 +74,24 @@ class PetPost(db.Model):
     user_id : Mapped[int] = mapped_column(ForeignKey("user.id"))
     user : Mapped["User"] = relationship()
     
+    def serialize(self):
+        return {
+           "id": self.id,
+            "found_lcation": self.found_location,
+            "actual_location": self.actual_location,
+            "found_time": self.found_time,
+            "name": self.name,
+            "breed": self.breed,
+            "physical_description": self.physical_description,
+            "is_active" : self.is_active
+        }
+    
 class SocialMedia(db.Model):
     __tablename__="social_media"
     id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) 
     username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column
 
     #FK
     
