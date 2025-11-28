@@ -20,3 +20,19 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@app.route('/users', methods=['POST'])
+def get_all_users():
+    body = request.get_json()#se manda un body con username y password del front
+    username = body.get("username", None)
+    password = body.get("password")
+    if not username:
+        return jsonify({"message": "username is a required field"}),400
+    
+    user = db.session.execute(select(User).where(User.username==username)).scalars().first()
+
+    if not user:
+        return jsonify({"message":"user not found"}),404
+
+    if not user.check_password(password):
+        return jsonify({"message":"Bad credentials"}),400

@@ -37,6 +37,17 @@ class User(db.Model):
             "is_active" : self.is_active
         }
         
+    #HASHEO DE CONTRASEÑA
+    
+    def set_password(self, password):
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.password_hash=hashed_password
+        return "contraseña hasheada guardada exitosamente"
+        
+    def check_password(self, password):
+        is_valid = bcrypt.check_password_hash(self.password_hash, password)
+        return is_valid
+        
         
         
 class PetPost(db.Model):
