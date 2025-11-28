@@ -6,6 +6,8 @@ from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
+app = Flask(__name__)
+
 class User(db.Model):
     __tablename__="user"
     id: Mapped[int] = mapped_column(primary_key=True)
