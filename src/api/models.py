@@ -99,14 +99,28 @@ class SocialMedia(db.Model):
     user_id : Mapped[int] = mapped_column(ForeignKey("user.id"))
     user : Mapped["User"] = relationship()
     
+    def serialize(self):
+        return{
+        "id":self.id,
+        "type":self.type,
+        "username":self.username,
+        "email":self.email
+    }
+        
+    
 class PetImages(db.Model):
     __tablename__="pet_images"
     id:Mapped[int] = mapped_column(primary_key =  True)
-    type: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) 
-    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False) 
+    url: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) 
     
     #FK
     
     #Relationships
     pet_post_id : Mapped[int] = mapped_column(ForeignKey("pet_post.id"))
     pet_post : Mapped ["PetPost"] = relationship()
+    
+    def serialize(self):
+        return{
+            "id":self.id,
+            "url":self.url
+        }

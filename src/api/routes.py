@@ -22,6 +22,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+#USER ROUTES (Las rutas no son seguras aún, hay que mirar)
 
 @api.route('/users', methods=["POST"])
 def crear_usuario():
@@ -56,7 +57,8 @@ def get_all_users():
     #Generar acces token y retornarlo con username
     #Guardar el token en el localstorage o sessionstorage
     #
-    return 
+    #return 
+
 
 
 #PETPOST ENDPOINTS
