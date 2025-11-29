@@ -24,22 +24,57 @@ def handle_hello():
 
 #USER ROUTES (Las rutas no son seguras aún, hay que mirar)
 
+@api.route('/users', methods=['GET'])
+def get_all_users():
+    data = db.session.execute(select(User)).scalars()
+    result = list(map(lambda item: item.serialize(), data))
+    response_body = {"All user list": result}
+    return jsonify(response_body), 200
+
 @api.route('/users', methods=["POST"])
-def crear_usuario():
+def create_user():
     data = request.get_json()
     user = User(
         email = data.get('email'),
-        username = data.get('username')
+        username = data.get('username'),
+        password = data.get('password'),
+        address = data.get('address'),
+        name = data.get('name'),
+        last_name = data.get('last_name'),
+        phone = data.get('phone'),
+        prof_img = data.get('prof_img')
     )
+    user.set_password(data['password'])
+    
     db.session.add(user)
     db.session.commit()
     
-    user.set_password()
+    return user.serialize(), 200
+
+@api.route('/users/<int:user_id>', methods=["DELETE"])
+def delete_user():
+    data = request.get_json()
+    user = User(
+        email = data.get('email'),
+        username = data.get('username'),
+        password = data.get('password'),
+        address = data.get('address'),
+        name = data.get('name'),
+        last_name = data.get('last_name'),
+        phone = data.get('phone'),
+        prof_img = data.get('prof_img')
+    )
+    user.set_password(data['password'])
+    
+    db.session.add(user)
+    db.session.commit()
+    
     return user.serialize(), 200
 
 
+
 @api.route('/users', methods=['POST'])
-def get_all_users():
+def login_user():
     body = request.get_json()#se manda un body con username y password del front
     username = body.get("username", None)
     password = body.get("password")

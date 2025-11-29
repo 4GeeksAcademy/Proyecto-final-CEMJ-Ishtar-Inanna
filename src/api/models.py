@@ -24,7 +24,7 @@ class User(db.Model):
     last_name: Mapped[str]= mapped_column(String(30), nullable = False)
     phone: Mapped[str] = mapped_column(String(30), nullable = True)
     prof_img: Mapped[str] = mapped_column(String(30),nullable = True)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable = False)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable = True)
     
     #FK
     
@@ -34,7 +34,7 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "usernname": self.username,
+            "username": self.username,
             "email": self.email,
             "address": self.address,
             "name": self.name,
@@ -62,11 +62,11 @@ class PetPost(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     found_location: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) #Donde se ha encontrado
     actual_location: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    found_time: Mapped[datetime] = mapped_column(DateTime,nullable=False, default=datetime.now(),server_default=func.now()) # PONER VALOR POR DEFECTO
+    found_time: Mapped[datetime] = mapped_column(DateTime,nullable=True, default=datetime.now(),server_default=func.now()) # PONER VALOR POR DEFECTO
     name: Mapped[str] = mapped_column(String(30), nullable = False)
     breed: Mapped[str]= mapped_column(String(30), nullable = False)
     physical_description: Mapped[str] = mapped_column(String(30),nullable = True)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable = False)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable = True)
     
     #FK
     
