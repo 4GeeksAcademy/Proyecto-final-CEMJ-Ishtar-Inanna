@@ -44,7 +44,7 @@ class User(db.Model):
             "is_active" : self.is_active
         }
         
-    #HASHEO DE CONTRASEÑA(No touchy)
+    #HASHEO DE CONTRASEÑA(No touchy) INACABADO
     
     def set_password(self, password):
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')

@@ -51,25 +51,37 @@ def create_user():
     
     return user.serialize(), 200
 
-@api.route('/users/<int:user_id>', methods=["DELETE"])
-def delete_user():
-    data = request.get_json()
-    user = User(
-        email = data.get('email'),
-        username = data.get('username'),
-        password = data.get('password'),
-        address = data.get('address'),
-        name = data.get('name'),
-        last_name = data.get('last_name'),
-        phone = data.get('phone'),
-        prof_img = data.get('prof_img')
-    )
-    user.set_password(data['password'])
+############### UNDER WORK ################### INACABADO
+@api.route('/users', methods=['POST'])
+def login_users():
+    body = request.get_json()#se manda un body con username y password del front
+    username = body.get("username", None)
+    password = body.get("password")
+    if not username:
+        return jsonify({"message": "username is a required field"}),400
     
-    db.session.add(user)
+    user = db.session.execute(select(User).where(User.username==username)).scalars().first()
+
+    if not user:
+        return jsonify({"message":"user not found"}),404
+
+    if not user.check_password(password):
+        return jsonify({"message":"Bad credentials"}),400
+    
+    return #LLAVE DE AUTENTIFICACIÓN
+#############################################
+
+
+@api.route('/users/<int:user_id>', methods=['DELETE'])  
+def delete_user(user_id):
+    user = db.session.get(User, user_id)
+    
+    if not user:
+        return jsonify({"Message":"User_id not found in database"})
+    
+    db.session.delete(user)
     db.session.commit()
-    
-    return user.serialize(), 200
+    return jsonify("deleted user", user_id)
 
 
 
