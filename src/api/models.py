@@ -5,11 +5,16 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from flask import Flask
 from flask_bcrypt import Bcrypt
-
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+
 
 bcrypt = Bcrypt(app)
+app.config["SECTET_KEY"]="secret-token"
+jwt= JWTManager(app)
 
 db = SQLAlchemy()
 
@@ -46,14 +51,12 @@ class User(db.Model):
         
     #HASHEO DE CONTRASEÑA(No touchy) INACABADO
     
-    def set_password(self, password):
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        self.password_hash=hashed_password
+    def set_password(self, plain_pwd):
+        self.password = bcrypt.generate_password_hash(plain_pwd).decode('utf-8')
         return "contraseña hasheada guardada exitosamente"
-        
-    def check_password(self, password):
-        is_valid = bcrypt.check_password_hash(self.password_hash, password)
-        return is_valid
+
+    def check_password(self, plain_pwd):
+        return bcrypt.check_password_hash(self.password, plain_pwd)
         
         
         

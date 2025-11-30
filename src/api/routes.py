@@ -6,6 +6,8 @@ from api.models import db, User, PetImages, PetPost, SocialMedia
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from sqlalchemy import select
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import check_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -24,6 +26,7 @@ def handle_hello():
 
 #USER ROUTES (Las rutas no son seguras aún, hay que mirar)
 
+#GET ALL USERS ROUTE (NOT GONNA BE USED)
 @api.route('/users', methods=['GET'])
 def get_all_users():
     data = db.session.execute(select(User)).scalars()
@@ -31,7 +34,8 @@ def get_all_users():
     response_body = {"All user list": result}
     return jsonify(response_body), 200
 
-@api.route('/users', methods=["POST"])
+#CREATE NEW USER ROUTE
+@api.route('/users/register', methods=["POST"])
 def create_user():
     data = request.get_json()
     user = User(
@@ -44,19 +48,21 @@ def create_user():
         phone = data.get('phone'),
         prof_img = data.get('prof_img')
     )
-    user.set_password(data['password'])
+    user.set_password(data.get('password'))
     
     db.session.add(user)
     db.session.commit()
     
     return user.serialize(), 200
 
+#LOGIN USER
+
 ############### UNDER WORK ################### INACABADO
-@api.route('/users', methods=['POST'])
+@api.route('/users/login', methods=['POST'])
 def login_users():
     body = request.get_json()#se manda un body con username y password del front
     username = body.get("username", None)
-    password = body.get("password")
+    password = body.get("password", None)
     if not username:
         return jsonify({"message": "username is a required field"}),400
     
@@ -65,14 +71,38 @@ def login_users():
     if not user:
         return jsonify({"message":"user not found"}),404
 
-    if not user.check_password(password):
+    if not user.check_password_hash(password):
         return jsonify({"message":"Bad credentials"}),400
     
-    return #LLAVE DE AUTENTIFICACIÓN
+    access_token = create_access_token(identity=user.id)
+    
+    return jsonify({"token":access_token, "user_id":user.id})
+    
+    #Generar acces token y retornarlo con username
+    #Guardar el token en el localstorage o sessionstorage
+    #
 #############################################
 
+#JWT TESTING
+# Protect a route with jwt_required, which will kick out requests without a valid JWT
+
+@api.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    return jsonify({"id": user.id, "username": user.username }), 200
+
+
+
+
+
+
+#DELETE USER
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])  
+
 def delete_user(user_id):
     user = db.session.get(User, user_id)
     
@@ -84,49 +114,38 @@ def delete_user(user_id):
     return jsonify("deleted user", user_id)
 
 
+###PETPOST ENDPOINTS###
 
-@api.route('/users', methods=['POST'])
-def login_user():
-    body = request.get_json()#se manda un body con username y password del front
-    username = body.get("username", None)
-    password = body.get("password")
-    if not username:
-        return jsonify({"message": "username is a required field"}),400
-    
-    user = db.session.execute(select(User).where(User.username==username)).scalars().first()
-
-    if not user:
-        return jsonify({"message":"user not found"}),404
-
-    if not user.check_password(password):
-        return jsonify({"message":"Bad credentials"}),400
-    
-    #Generar acces token y retornarlo con username
-    #Guardar el token en el localstorage o sessionstorage
-    #
-    #return 
-
-
-
-#PETPOST ENDPOINTS
-    
+#GET PET POST
 @api.route('/pets', methods=['GET'])
-def get_all_pets():
+def get_all_pet_posts():
     data = db.session.execute(select(PetPost)).scalars()
     result = list(map(lambda item: item.serialize(), data))
     response_body = {"All pets list": result}
     print("hello")
     return jsonify(response_body), 200
 
-@api.route('/pets/<int:pet_post_id>', methods=['GET']) #ESTA ID SE TRAERÁ DESDE EL
-#FRONTEND. 
-def get_single_pet(pet_post_id):
-    data = db.session.execute(select(PetPost)).scalars()
-    result = list(map(lambda item: item.serialize(), data))
-    response_body = {"All pets list": result}
-    print("hello")
-    return jsonify(response_body), 200
+#DELETE PET POST
+@api.route('/pets/<int:pet_post_id>', methods=['DELETE'])  
+def delete_pet_post(pet_post_id):
+    petpost = db.session.get(PetPost, pet_post_id)
+    
+    if not petpost:
+        return jsonify({"Message":"UPet_post not found in database"})
+    
+    db.session.delete(petpost)
+    db.session.commit()
+    return jsonify("deleted petpost", petpost)
 
+#GET SINGLE PET POST
+@api.route('/pets/<int:pet_post_id>', methods=['GET'])  
+def get_pet_post(pet_post_id):
+    petpost = db.session.get(PetPost, pet_post_id)
+    if not petpost:
+        return jsonify({"Message":"pet_post not found in database"})
+    return jsonify(petpost.serialize()), 200
+
+#PUPLOAD A PET POST
 @api.route('/pets', methods=["POST"])
 def create_pet_post():
     data = request.get_json()
