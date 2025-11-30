@@ -23,7 +23,7 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(30),nullable = False, unique = True)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String(30),nullable=False)
+    password: Mapped[str] = mapped_column(String(250),nullable=False)
     address: Mapped[str] = mapped_column(String(30), nullable = True)
     name: Mapped[str] = mapped_column(String(30), nullable = False)
     last_name: Mapped[str]= mapped_column(String(30), nullable = False)

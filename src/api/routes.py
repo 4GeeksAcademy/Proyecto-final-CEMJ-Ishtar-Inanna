@@ -71,11 +71,11 @@ def login_users():
     if not user:
         return jsonify({"message":"user not found"}),404
 
-    if not user.check_password_hash(password):
+    if not user.check_password(password):
         return jsonify({"message":"Bad credentials"}),400
     
     access_token = create_access_token(identity=user.id)
-    
+    print(access_token, user.id)
     return jsonify({"token":access_token, "user_id":user.id})
     
     #Generar acces token y retornarlo con username
