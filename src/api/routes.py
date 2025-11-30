@@ -75,7 +75,6 @@ def login_users():
         return jsonify({"message":"Bad credentials"}),400
     
     access_token = create_access_token(identity=user.id)
-    print(access_token, user.id)
     return jsonify({"token":access_token, "user_id":user.id})
     
     #Generar acces token y retornarlo con username
@@ -89,14 +88,7 @@ def login_users():
 @api.route("/protected", methods=["GET"])
 @jwt_required()
 def protected():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
-
-    return jsonify({"id": user.id, "username": user.username }), 200
-
-
-
-
+    return jsonify("working"), 200
 
 
 #DELETE USER
@@ -160,3 +152,8 @@ def create_pet_post():
     db.session.add(pet_post)
     db.session.commit()
     return pet_post.serialize(), 200
+
+
+#AUTHENTICATION TESTING
+# Protect a route with jwt_required, which will kick out requests without a valid JWT
+

@@ -28,9 +28,11 @@ export const login = async (username, password) => {
 }
 
 export const getMyTasks = async () => {
+
      // Retrieve token from localStorage
      const token = localStorage.getItem('jwt-token');
-     const resp = await fetch(`https://your_api.com/protected`, {
+     const resp = await fetch(`http://localhost:3001/protected`, {
+
         method: 'GET',
         headers: { 
           "Content-Type": "application/json",
@@ -39,14 +41,13 @@ export const getMyTasks = async () => {
 
      });
 
-     if(!resp.ok) {throw Error("There was a problem in the login request")} 
-
-     else if(resp.status === 403) {throw Error("Missing or invalid token");} 
-
-     else {throw Error("Unknown error");}
-
-     const data = await resp.json();
-     console.log("This is the data you requested", data);
-     return data
+     if(!resp.ok) {
+          throw Error("There was a problem in the login request")
+     } else if(resp.status === 403) {
+          throw Error("Missing or invalid token");
+     } 
+     console.log(token)
+     return "WORKS"
 
 }
+
