@@ -26,6 +26,7 @@ class User(db.Model):
     prof_img: Mapped[str] = mapped_column(String(30),nullable = True)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable = True)
     
+    #name , lastname username, email, password SON OBLIGATORIOS
     #FK
     
     #Relationships
