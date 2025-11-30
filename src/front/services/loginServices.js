@@ -31,7 +31,7 @@ export const getMyTasks = async () => {
 
      // Retrieve token from localStorage
      const token = localStorage.getItem('jwt-token');
-     const resp = await fetch(`http://localhost:3001/protected`, {
+     const resp = await fetch(`http://localhost:3001/api/protected`, {
 
         method: 'GET',
         headers: { 

@@ -24,6 +24,13 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@api.route('/token', methods=['POST'])
+def create_token():
+
+
+
+    return jsonify(response_body), 200
+
 #USER ROUTES (Las rutas no son seguras aún, hay que mirar)
 
 #GET ALL USERS ROUTE (NOT GONNA BE USED)

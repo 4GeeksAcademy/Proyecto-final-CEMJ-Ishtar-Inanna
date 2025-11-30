@@ -14,12 +14,14 @@ export const Navbar = () => {
 					</Link>
 
 				</div>
-				<Link to="/loginpage">
-					<button className="btn btn-primary">Vamos a login</button>
-				</Link>
-				<Link to="/">
-					<button className="btn btn-primary">Vamos a home</button>
-				</Link>
+				<div>
+					<Link to="/loginpage">
+						<button className="btn btn-primary">Vamos a login</button>
+					</Link>
+					<Link to="/registerpage">
+						<button className="btn btn-primary">Vamos a register</button>
+					</Link>
+				</div>
 			</div>
 		</nav>
 	);

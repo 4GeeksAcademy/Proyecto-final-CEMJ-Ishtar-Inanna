@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react"
 import { getMyTasks, login } from "../services/loginServices.js"
+import { useActionState } from "react"
 
 export const LoginPage = () =>{
 
     const[password,setPassword]= useState("")
     const[userName,setUserName]= useState("")
+    const token = localStorage.getItem("jwt-token")
 
+    
+    useEffect(() => {}, [token])
     return(
         <>  
             <div className="container">
-        	<h3>Login and register test</h3>
+        	<h3>Login test</h3>
 			<div>
-				<input placeholder="Username" onChange={e=>setUserName(e.target.value)}></input>
-				<input placeholder="Password" onChange={e=>setPassword(e.target.value)}></input>
-				<button >Register</button>
-			</div>
-			<div>
-				<input placeholder="Username" onChange={e=>setUserName(e.target.value)}></input>
-				<input placeholder="Password" onChange={e=>setPassword(e.target.value)}></input>
+				<input placeholder="Username" value={userName} onChange={e=>setUserName(e.target.value)}></input>
+				<input placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)}></input>
 				<button onClick={e=>login(userName,password)}>Login</button>
 			</div>
 			<div>
@@ -26,7 +25,9 @@ export const LoginPage = () =>{
 			<div>
 				<button>Logout</button>
 			</div>
+            {(token ? "You are logged in" : "You are not logged in")}
             </div>
+
         </>
     )
 }
