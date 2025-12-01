@@ -2,5 +2,21 @@
 .logo {
   width: 60px;
   height: 60px;
-  border-radius: 50%;
+  border-radius: 80%;
+  border-color: #980000;
+}
+
+.boton-buscar {
+  background-color: #4da8b0; /* Un color púrpura personalizado */
+  border-color: #4da8b0;
+
+}
+
+.boton-buscar:active {
+  background-color: #008c98;
+}
+
+
+nav {
+  background-color: #4da8b0;
 }
