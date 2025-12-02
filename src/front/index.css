@@ -3,20 +3,21 @@
   width: 60px;
   height: 60px;
   border-radius: 80%;
-  border-color: #980000;
+  border-color: #D97A00;
 }
 
-.boton-buscar {
-  background-color: #4da8b0; /* Un color púrpura personalizado */
-  border-color: #4da8b0;
-
+.boton {
+  background-color: #00AFAF; /* Un color púrpura personalizado */
+  border-color: #00AFAF;
 }
 
-.boton-buscar:active {
-  background-color: #008c98;
+.boton:hover {
+  background-color: #D97A00;
 }
 
 
 nav {
-  background-color: #4da8b0;
+  background-color: #00AFAF;
+  height: 70px;
+  color: white;
 }

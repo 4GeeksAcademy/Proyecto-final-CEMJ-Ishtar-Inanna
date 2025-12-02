@@ -6,7 +6,7 @@ import Logo from "../assets/img/Logo.png";
 
 export const Navbar = () => {
 	return (
-		<nav className="navbar navbar-expand-lg text-light">
+		<nav className="navbar navbar-expand-lg text-light color-text-light">
 			<div className="container-fluid text-light">
 				<a className="navbar-brand mx-5" href="#">
 					{/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> */}
@@ -14,11 +14,13 @@ export const Navbar = () => {
 				{/* </button> */}
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto">
-						<li className="nav-item mx-4">
-							<a className="nav-link text-light" href="#"><b>Refugios</b></a>
+						<li className="nav-item mx-3">
+							<a className="nav-link text-light"><b><Link to="/Refuges">Refugios
+							</Link></b>
+							</a>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link text-light" href="#"><b>Animales</b></a>
+							<a className="nav-link text-light" href="#"><b><Link to="/Animals">Animales</Link></b></a>
 						</li>
 
 					</ul>
@@ -37,7 +39,7 @@ export const Navbar = () => {
 
 						<a className="nav-link" href="#"><i className="fa-regular fa-user me-1"></i>Login</a>
 					</div>
-					
+
 				</div>
 			</div>
 		</nav>
