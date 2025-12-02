@@ -11,11 +11,13 @@ export const Demo = () => {
   
       const authenticationPrivateZone = async () => {
           const response = await getAuthentication()
-          if (!response){
+
+          if (response.ok==false){
+
               navigate('/')
-          }
+          
           console.log(response)
-      }
+      }}
   
       useEffect(()=>{
           authenticationPrivateZone()
