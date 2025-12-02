@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
 from api.models import db, User, PetImages, PetPost, SocialMedia
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -24,12 +24,12 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/token', methods=['POST'])
-def create_token():
+# @api.route('/token', methods=['POST'])
+# def create_token():
 
 
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 #USER ROUTES (Las rutas no son seguras aún, hay que mirar)
 
@@ -81,8 +81,9 @@ def login_users():
     if not user.check_password(password):
         return jsonify({"message":"Bad credentials"}),400
     
-    access_token = create_access_token(identity=user.id)
-    return jsonify({"token":access_token, "user_id":user.id})
+    print('LOGIN secret:', current_app.config['JWT_SECRET_KEY'])
+    access_token = create_access_token(identity=str(user.id))
+    return jsonify({"token": access_token, "user_id": user.id})
     
     #Generar acces token y retornarlo con username
     #Guardar el token en el localstorage o sessionstorage
@@ -92,12 +93,22 @@ def login_users():
 #JWT TESTING
 # Protect a route with jwt_required, which will kick out requests without a valid JWT
 
+
 @api.route("/protected", methods=["GET"])
 @jwt_required()
 def protected():
-    return jsonify("working"), 200
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"done":False}),404
+
+    return jsonify({"done":True}), 200
 
 
+
+
+##################################
 #DELETE USER
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])  

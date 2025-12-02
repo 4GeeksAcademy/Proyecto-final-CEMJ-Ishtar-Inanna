@@ -27,27 +27,45 @@ export const login = async (username, password) => {
 
 }
 
-export const getMyTasks = async () => {
+// export const getAuthentication = async () => {
 
-     // Retrieve token from localStorage
-     const token = localStorage.getItem('jwt-token');
-     const resp = await fetch(`http://localhost:3001/api/protected`, {
+//      // Retrieve token from localStorage
+//      const token = localStorage.getItem('jwt-token');
+//      console.log(token)
+//      const resp = await fetch(`http://localhost:3001/api/protected`, {
 
-        method: 'GET',
-        headers: { 
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer ' + token // ⬅⬅⬅ authorization token
-        } 
+//         method: 'GET',
+//         headers: { 
+//           'Authorization': `Bearer ${token}` // ⬅⬅⬅ authorization token
+//         } 
+//      });
+//      const data = await resp.json()
+//      console.log('status',resp.status)
+//      console.log('body :',data)
 
-     });
+//      return resp
 
-     if(!resp.ok) {
-          throw Error("There was a problem in the login request")
-     } else if(resp.status === 403) {
-          throw Error("Missing or invalid token");
-     } 
-     console.log(token)
-     return "WORKS"
+// }
 
-}
+export const getAuthentication = async () => {
+  const token = localStorage.getItem('jwt-token');
 
+  /* =====  DEBUG  ===== */
+  console.log('raw token:', JSON.stringify(token));
+  console.log('parts   :', token?.split('.').length);
+  /* ==================== */
+  console.log('Authorization:', `Bearer ${token}`);
+  if (!token) {                                // optional guard
+    console.warn('No token found – aborting request');
+    return { ok: false, status: 401 };
+  }
+
+  const resp = await fetch(`http://localhost:3001/api/protected`, {
+    method: 'GET',
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  const data = await resp.json();
+  console.log('status:', resp.status, 'body:', data);
+  return resp;
+};

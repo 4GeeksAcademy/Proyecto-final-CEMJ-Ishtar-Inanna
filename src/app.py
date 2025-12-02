@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Flask, request, jsonify, url_for, send_from_directory, current_app
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -25,7 +25,7 @@ app = Flask(__name__)
 
 app.url_map.strict_slashes = False
 ######
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(app, resources={r"/api/*":{ "origins":"http://localhost:3000"}}, supports_credentials=True)
 
 #JWT MANAGER CONFIG
 app.config["JWT_SECRET_KEY"] = "super-secret-string"   # change this!
@@ -53,7 +53,9 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
-
+@app.before_request
+def log_secret():
+    print('PROTECT secret:', current_app.config['JWT_SECRET_KEY'])
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
