@@ -12,6 +12,9 @@ import { Demo } from "./pages/private-pages/Demo";
 import { LoginPage } from "./pages/public-pages/LoginPage";
 import { RegisterPage } from "./pages/public-pages/RegisterPage";
 import { PrivateLayout } from "./pages/PrivateLayout";
+import SignUp from "./pages/SignUp";
+
+
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +32,7 @@ export const router = createBrowserRouter(
         <Route path="/single/:theId" element={<Single />} />  {/* Dynamic route for single items */}
         <Route path="/loginpage" element={<LoginPage />} />
         <Route path="/registerpage" element={<RegisterPage />} />
+        <Route path="/signup" element={<SignUp />} />
       </Route>
 
       <Route path="/auth" element={<PrivateLayout/>} errorElement={<h1>Not found!</h1>} >
