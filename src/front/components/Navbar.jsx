@@ -24,21 +24,25 @@ export const Navbar = () => {
 
 					</ul>
 					<form className="d-flex" role="search">
-		
+
 						<input className="form-control bi bi-camera" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
-						
+
 						<div>
 							<Link to="/filteredsearch">
 								<button className="btn btn-outline-success mx-1" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
 							</Link>
-							
+
 						</div>
 
 					</form>
-					<div className="nav-item mx-3 d-flex">
-						<a className="nav-link me-3" href="#"><i className="fa-solid fa-pen-to-square me-1"></i>Registro</a>
+					<div>
+						<Link to="/loginpage">
+							<button className="btn btn-primary">Vamos a login</button>
+						</Link>
+						<Link to="/registerpage">
+							<button className="btn btn-primary">Vamos a register</button>
+						</Link>
 
-						<a className="nav-link" href="#"><i className="fa-regular fa-user me-1"></i>Login</a>
 					</div>
 
 				</div>

@@ -1,9 +1,11 @@
-import React, { useEffect } from "react"
-import Logo from "../assets/img/Logo.png";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import React, { useEffect, useState } from "react"
+import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
+
+
 
 
 export const Home = () => {
+
 
 	const { store, dispatch } = useGlobalReducer()
 
@@ -29,13 +31,14 @@ export const Home = () => {
 
 	}
 
+
+
 	useEffect(() => {
 		loadMessage()
 	}, [])
 
 	return (
 		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
 			<p className="lead">
 			</p>
 			<div className="alert alert-info">
