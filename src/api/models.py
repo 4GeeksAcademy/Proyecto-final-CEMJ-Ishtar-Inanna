@@ -5,11 +5,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from flask import Flask
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
-
-app = Flask(__name__)
-
-bcrypt = Bcrypt(app)
+bcrypt = Bcrypt()
 
 db = SQLAlchemy()
 
@@ -18,7 +17,7 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(30),nullable = False, unique = True)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String(30),nullable=False)
+    password: Mapped[str] = mapped_column(String(250),nullable=False)
     address: Mapped[str] = mapped_column(String(30), nullable = True)
     name: Mapped[str] = mapped_column(String(30), nullable = False)
     last_name: Mapped[str]= mapped_column(String(30), nullable = False)
@@ -31,7 +30,6 @@ class User(db.Model):
     
     #Relationships
     
-
     def serialize(self):
         return {
             "id": self.id,
@@ -45,19 +43,15 @@ class User(db.Model):
             "is_active" : self.is_active
         }
         
-    #HASHEO DE CONTRASEÑA(No touchy) INACABADO
+    #HASHEO DE CONTRASEÑA(No touchy)
     
-    def set_password(self, password):
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        self.password_hash=hashed_password
+    def set_password(self, plain_pwd):
+        self.password = bcrypt.generate_password_hash(plain_pwd).decode('utf-8')
         return "contraseña hasheada guardada exitosamente"
-        
-    def check_password(self, password):
-        is_valid = bcrypt.check_password_hash(self.password_hash, password)
-        return is_valid
-        
-        
-        
+
+    def check_password(self, plain_pwd):
+        return bcrypt.check_password_hash(self.password, plain_pwd)
+           
 class PetPost(db.Model):
     __tablename__ = "pet_post"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -107,7 +101,6 @@ class SocialMedia(db.Model):
         "username":self.username,
         "email":self.email
     }
-        
     
 class PetImages(db.Model):
     __tablename__="pet_images"
