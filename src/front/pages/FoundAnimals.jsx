@@ -1,10 +1,12 @@
-export const Animals = () => {
+import { Link } from "react-router-dom";
+
+export const FoundAnimals = () => {
     //     // Access the global state and dispatch function using the useGlobalReducer hook.
 
 
     
     return (
-        <div className="container mt-5">
+        <div className="container">
         <div className="card" style={{width: "18rem"}}>           <img src="..." className="card-img-top" alt="..." />
             <div className="card-body">
                 <h5 className="card-title">Kitty</h5>

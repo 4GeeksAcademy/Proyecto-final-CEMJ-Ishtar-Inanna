@@ -15,22 +15,23 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto">
 						<li className="nav-item mx-3">
-							<a className="nav-link text-light"><b><Link to="/Refuges">Refugios
-							</Link></b>
-							</a>
+							<Link to="/Refuges"><a className="nav-link text-light"><b>Refugios
+							</b></a></Link>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link text-light" href="#"><b><Link to="/Animals">Animales</Link></b></a>
+							<Link to="/foundlostanimals"><a className="nav-link text-light" href="#"><b>Animales Perdidos/Encontrados</b></a></Link>
 						</li>
 
 					</ul>
 					<form className="d-flex" role="search">
-						<input className="form-control" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
+		
+						<input className="form-control bi bi-camera" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
+						
 						<div>
 							<Link to="/filteredsearch">
 								<button className="btn btn-outline-success mx-1" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
 							</Link>
-							<i class="bi bi-camera"></i>
+							
 						</div>
 
 					</form>

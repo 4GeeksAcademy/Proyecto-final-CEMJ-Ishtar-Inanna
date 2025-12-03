@@ -21,3 +21,10 @@ nav {
   height: 70px;
   color: white;
 }
+
+.background {
+  background-image: url("./assets/img/Fondo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}

@@ -11,7 +11,9 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import { FilteredSearch } from "./pages/FilteredSearch";
 import { Refuges } from "./pages/Refuges";
-import { Animals } from "./pages/Animals/";
+import { LostAnimals } from "./pages/LostAnimals";
+import { FoundAnimals } from "./pages/FoundAnimals";
+import { FoundLostAnimals } from "./pages/FoundLostAnimals";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -30,7 +32,10 @@ export const router = createBrowserRouter(
         <Route path="/demo" element={<Demo />} />
         <Route path="/filteredsearch" element={<FilteredSearch />} />
         <Route path="/refuges" element={<Refuges />} />
-        <Route path="/animals" element={<Animals />} />
+        <Route path="/foundlostanimals" element={<FoundLostAnimals />} />
+        <Route path="/lostanimals" element={<LostAnimals />} />
+        <Route path="/foundanimals" element={<FoundAnimals />} />
+
       </Route>
     )
 );
