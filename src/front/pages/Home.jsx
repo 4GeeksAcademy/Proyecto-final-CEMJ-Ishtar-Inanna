@@ -1,52 +1,52 @@
 import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
-export const Home = () => {
+//Agregar un carrusel con Bootstrap con slides automaticos que resuman cada vista de la pagina
 
-	const { store, dispatch } = useGlobalReducer()
+const texts = [
+	"Bienvenido a nuestra página, donde encontrarás las mejores ofertas.",
+	"Explora nuestros productos destacados y descubre nuevas oportunidades.",
+	"Contamos con envíos rápidos y atención personalizada.",
+	"Tu satisfacción es nuestra prioridad."
+];
 
-	const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-			const response = await fetch(backendUrl + "/api/hello")
-			const data = await response.json()
-
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-			return data
-
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
-
-	}
+export default function Home() {
+	const [index, setIndex] = useState(0);
 
 	useEffect(() => {
-		loadMessage()
-	}, [])
+		const interval = setInterval(() => {
+			setIndex((prev) =>
+				prev === texts.length - 1 ? 0 : prev + 1
+			);
+		}, 5000);
+
+		return () => clearInterval(interval);
+	}, []);
 
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
-			</div>
+		<div style={styles.container}>
+			<p style={styles.text}>{texts[index]}</p>
 		</div>
 	);
-}; 
+}
+
+const styles = {
+	container: {
+		width: "100%",
+		height: "150px",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		padding: "20px",
+		backgroundColor: "#f2f2f2",
+		borderRadius: "10px",
+		boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+		marginTop: "20px",
+	},
+	text: {
+		fontSize: "1.5rem",
+		textAlign: "center",
+		maxWidth: "80%",
+		transition: "opacity 0.5s ease",
+	},
+};
