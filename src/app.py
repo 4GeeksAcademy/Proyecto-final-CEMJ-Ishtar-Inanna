@@ -25,9 +25,10 @@ app = Flask(__name__)
 
 app.url_map.strict_slashes = False
 ######
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(app, origins=[
+     "https://scaling-invention-6wp99v5gqwgf4vpx-3001.app.github.dev"], supports_credentials=True)
 
-#JWT MANAGER CONFIG
+# JWT MANAGER CONFIG
 app.config["JWT_SECRET_KEY"] = "super-secret-string"   # change this!
 jwt = JWTManager(app)
 #######
@@ -69,6 +70,8 @@ def sitemap():
     return send_from_directory(static_file_dir, 'index.html')
 
 # any other endpoint will try to serve it like a static file
+
+
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):

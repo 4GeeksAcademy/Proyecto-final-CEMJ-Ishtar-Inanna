@@ -1,6 +1,6 @@
 export const registerUser = async (userData) => {
   const response = await fetch(
-    "https://scaling-invention-6wp99v5gqwgf4vpx-3001.app.github.dev/api/users",
+    "https://scaling-invention-6wp99v5gqwgf4vpx-3001.app.github.dev/api/users/register",
     {
       method: "POST",
       headers: {
