@@ -1,0 +1,30 @@
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 80%;
+  border-color: #D97A00;
+}
+
+.boton {
+  background-color: #00AFAF; /* Un color púrpura personalizado */
+  border-color: #00AFAF;
+}
+
+.boton:hover {
+  background-color: #D97A00;
+}
+
+
+nav {
+  background-color: #00AFAF;
+  height: 70px;
+  color: white;
+}
+
+.background {
+  background-image: url("./assets/img/Fondo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}

@@ -1,28 +1,55 @@
 import { Link } from "react-router-dom";
 
+import Logo from "../assets/img/Logo.png";
+
+
+
 export const Navbar = () => {
-
 	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/auth/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+		<nav className="navbar navbar-expand-lg text-light color-text-light">
+			<div className="container-fluid text-light">
+				<a className="navbar-brand mx-5" href="#">
+					{/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> */}
+					<img className="logo" src={Logo} alt="Logo Inanna"></img></a>
+				{/* </button> */}
+				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul className="navbar-nav me-auto">
+						<li className="nav-item mx-3">
+							<Link to="/Refuges"><a className="nav-link text-light"><b>Refugios
+							</b></a></Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/foundlostanimals"><a className="nav-link text-light" href="#"><b>Animales Perdidos/Encontrados</b></a></Link>
+						</li>
 
-				</div>
-				<div>
-					<Link to="/loginpage">
-						<button className="btn btn-primary">Vamos a login</button>
-					</Link>
-					<Link to="/registerpage">
-						<button className="btn btn-primary">Vamos a register</button>
-					</Link>
+					</ul>
+					<form className="d-flex" role="search">
+
+						<input className="form-control bi bi-camera" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
+
+						<div>
+							<Link to="/filteredsearch">
+								<button className="btn btn-outline-success mx-1" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
+							</Link>
+
+						</div>
+
+					</form>
+					<div>
+						<Link to="/loginpage">
+							<button className="btn btn-primary">Vamos a login</button>
+						</Link>
+						<Link to="/registerpage">
+							<button className="btn btn-primary">Vamos a register</button>
+						</Link>
+
+					</div>
+
 				</div>
 			</div>
 		</nav>
 	);
 };
+
+
+

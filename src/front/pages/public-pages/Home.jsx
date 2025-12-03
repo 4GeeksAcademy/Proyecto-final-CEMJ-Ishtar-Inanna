@@ -3,6 +3,7 @@ import useGlobalReducer from "../../hooks/useGlobalReducer.jsx";
 
 
 
+
 export const Home = () => {
 
 
@@ -39,7 +40,6 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			<p className="lead">
-
 			</p>
 			<div className="alert alert-info">
 				{store.message ? (
