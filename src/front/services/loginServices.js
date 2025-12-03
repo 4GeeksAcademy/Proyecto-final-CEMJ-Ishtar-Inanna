@@ -1,6 +1,4 @@
 
-
-
 export const login = async (username, password) => {
 
      const resp = await fetch(`http://localhost:3001/api/users/login`, { 
@@ -18,44 +16,20 @@ export const login = async (username, password) => {
 
      const data = await resp.json()
 
-     // Save your token in the localStorage
-     // Also you should set your user into the store using the setItem function
-
      localStorage.setItem("jwt-token", data.token);
 
      return data
 
 }
 
-// export const getAuthentication = async () => {
-
-//      // Retrieve token from localStorage
-//      const token = localStorage.getItem('jwt-token');
-//      console.log(token)
-//      const resp = await fetch(`http://localhost:3001/api/protected`, {
-
-//         method: 'GET',
-//         headers: { 
-//           'Authorization': `Bearer ${token}` // ⬅⬅⬅ authorization token
-//         } 
-//      });
-//      const data = await resp.json()
-//      console.log('status',resp.status)
-//      console.log('body :',data)
-
-//      return resp
-
-// }
-
 export const getAuthentication = async () => {
   const token = localStorage.getItem('jwt-token');
 
-  /* =====  DEBUG  ===== */
-  console.log('raw token:', JSON.stringify(token));
-  console.log('parts   :', token?.split('.').length);
-  /* ==================== */
+//   console.log('raw token:', JSON.stringify(token));
+//   console.log('parts   :', token?.split('.').length);
+ 
   console.log('Authorization:', `Bearer ${token}`);
-  if (!token) {                                // optional guard
+  if (!token) {                      
     console.warn('No token found – aborting request');
     return { ok: false, status: 401 };
   }

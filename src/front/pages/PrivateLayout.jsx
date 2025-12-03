@@ -5,7 +5,6 @@ import { Footer } from "../components/Footer"
 import { useEffect } from "react"
 import { getAuthentication } from "../services/loginServices"
 
-// Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
 export const PrivateLayout = () => {
 
     const navigate = useNavigate()

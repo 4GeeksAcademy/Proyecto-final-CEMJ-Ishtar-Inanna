@@ -8,10 +8,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-
-
 bcrypt = Bcrypt()
-
 
 db = SQLAlchemy()
 
@@ -32,7 +29,6 @@ class User(db.Model):
     
     #Relationships
     
-
     def serialize(self):
         return {
             "id": self.id,
@@ -54,9 +50,7 @@ class User(db.Model):
 
     def check_password(self, plain_pwd):
         return bcrypt.check_password_hash(self.password, plain_pwd)
-        
-        
-        
+           
 class PetPost(db.Model):
     __tablename__ = "pet_post"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -106,7 +100,6 @@ class SocialMedia(db.Model):
         "username":self.username,
         "email":self.email
     }
-        
     
 class PetImages(db.Model):
     __tablename__="pet_images"

@@ -24,15 +24,6 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-# @api.route('/token', methods=['POST'])
-# def create_token():
-
-
-
-#     return jsonify(response_body), 200
-
-#USER ROUTES (Las rutas no son seguras aún, hay que mirar)
-
 #GET ALL USERS ROUTE (NOT GONNA BE USED)
 @api.route('/users', methods=['GET'])
 def get_all_users():
@@ -62,12 +53,11 @@ def create_user():
     
     return user.serialize(), 200
 
-#LOGIN USER
+#LOGIN USER SERVICES
 
-############### UNDER WORK ################### INACABADO
 @api.route('/users/login', methods=['POST'])
 def login_users():
-    body = request.get_json()#se manda un body con username y password del front
+    body = request.get_json()
     username = body.get("username", None)
     password = body.get("password", None)
     if not username:
@@ -84,15 +74,8 @@ def login_users():
     print('LOGIN secret:', current_app.config['JWT_SECRET_KEY'])
     access_token = create_access_token(identity=str(user.id))
     return jsonify({"token": access_token, "user_id": user.id})
-    
-    #Generar acces token y retornarlo con username
-    #Guardar el token en el localstorage o sessionstorage
-    #
-#############################################
 
-#JWT TESTING
-# Protect a route with jwt_required, which will kick out requests without a valid JWT
-
+#PROTECTED ROUTE
 
 @api.route("/protected", methods=["GET"])
 @jwt_required()
@@ -105,10 +88,6 @@ def protected():
 
     return jsonify({"done":True}), 200
 
-
-
-
-##################################
 #DELETE USER
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])  
