@@ -11,7 +11,7 @@ export const PrivateLayout = () => {
 
     const authenticationPrivateZone = async () => {
         const response = await getAuthentication()
-        if (!response){
+        if (!response.done){
             navigate('/')
         }
         console.log(response)

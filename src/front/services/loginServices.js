@@ -41,5 +41,5 @@ export const getAuthentication = async () => {
 
   const data = await resp.json();
   console.log('status:', resp.status, 'body:', data);
-  return resp;
+  return data;
 };

@@ -14,10 +14,10 @@ import { LostAnimals } from "./pages/LostAnimals";
 import { FoundAnimals } from "./pages/FoundAnimals";
 import { FoundLostAnimals } from "./pages/FoundLostAnimals";
 import { Demo } from "./pages/private-pages/Demo";
-import { LoginPage } from "./pages/public-pages/LoginPage";
 import { RegisterPage } from "./pages/public-pages/RegisterPage";
 import { PrivateLayout } from "./pages/PrivateLayout";
 import SignUp from "./pages/SignUp";
+import { LoginPage } from "./pages/public-pages/LoginPage";
 
 
 
