@@ -8,18 +8,22 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg text-light color-text-light">
 			<div className="container-fluid text-light">
-				<a className="navbar-brand mx-5" href="#">
+				<Link to="/" className="navbar-brand mx-5">
+
 					{/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> */}
-					<img className="logo" src={Logo} alt="Logo Inanna"></img></a>
+					<img className="logo" src={Logo} alt="Logo Inanna"></img>
+
+				</Link>
 				{/* </button> */}
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto">
 						<li className="nav-item mx-3">
-							<Link to="/Refuges"><a className="nav-link text-light"><b>Refugios
-							</b></a></Link>
+							<Link to="/Refuges" className="nav-link text-light">
+								<b>Refugios</b>
+							</Link>
 						</li>
 						<li className="nav-item">
-							<Link to="/foundlostanimals"><a className="nav-link text-light" href="#"><b>Animales Perdidos/Encontrados</b></a></Link>
+							<Link to="/foundlostanimals" className="nav-link text-light"><b>Animales Perdidos/Encontrados</b></Link>
 						</li>
 
 					</ul>
@@ -35,14 +39,13 @@ export const Navbar = () => {
 						</div>
 
 					</form>
-					<div>
-						<Link to="/loginpage">
-							<button className="btn btn-primary">Vamos a login</button>
+					<div className="nav-item mx-3 d-flex">
+						<Link to="/SignUp" className="nav-link me-3">
+							<i className="fa-solid fa-pen-to-square me-1"></i>Registro
 						</Link>
-						<Link to="/registerpage">
-							<button className="btn btn-primary">Vamos a register</button>
+						<Link to="/loginpage" className="nav-link" >
+							<i className="fa-regular fa-user me-1"></i>Login
 						</Link>
-
 					</div>
 
 				</div>
