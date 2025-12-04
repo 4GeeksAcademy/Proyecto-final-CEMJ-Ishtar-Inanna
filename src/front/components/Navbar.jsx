@@ -10,7 +10,7 @@ export const Navbar = () => {
 			<div className="container-fluid text-light">
 				<a className="navbar-brand mx-5" href="#">
 					{/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> */}
-					<img className="logo" src={Logo} alt="Logo Inanna"></img></a>
+					<Link to="/intro"><img className="logo" src={Logo} alt="Logo Inanna"></img></Link></a>
 				{/* </button> */}
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto">
@@ -23,18 +23,7 @@ export const Navbar = () => {
 						</li>
 
 					</ul>
-					<form className="d-flex" role="search">
 
-						<input className="form-control bi bi-camera" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
-
-						<div>
-							<Link to="/filteredsearch">
-								<button className="btn btn-outline-success mx-1" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
-							</Link>
-
-						</div>
-
-					</form>
 					<div>
 						<Link to="/loginpage">
 							<button className="btn btn-primary">Vamos a login</button>
