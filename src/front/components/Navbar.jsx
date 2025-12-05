@@ -9,10 +9,10 @@ export const Navbar = () => {
 
 
 
-	const {login, switchLogin} = useGlobalReducer()
+	const { login, switchLogin } = useGlobalReducer()
 	console.log(useGlobalReducer())
 
-	const handleLogout = () =>{
+	const handleLogout = () => {
 		localStorage.clear()
 		switchLogin()
 	}
@@ -23,13 +23,9 @@ export const Navbar = () => {
 				<Link to="/" className="navbar-brand mx-5">
 
 					{/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> */}
-<<<<<<< HEAD
-					<Link to="/intro"><img className="logo" src={Logo} alt="Logo Inanna"></img></Link></a>
-=======
 					<img className="logo" src={Logo} alt="Logo Inanna"></img>
 
 				</Link>
->>>>>>> 0c76eaac09b7e933b3b56da49b16e6de3e63af12
 				{/* </button> */}
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto">
@@ -44,27 +40,19 @@ export const Navbar = () => {
 
 					</ul>
 
-<<<<<<< HEAD
+					<input className="form-control bi bi-camera" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
+
 					<div>
-						<Link to="/loginpage">
-							<button className="btn btn-primary">Vamos a login</button>
-=======
-						<input className="form-control bi bi-camera" type="search" placeholder="Búsqueda avanzada" aria-label="Search" />
+						<Link to="/filteredsearch">
+							<button className="btn btn-outline-success mx-1" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
+						</Link>
 
-						<div>
-							<Link to="/filteredsearch">
-								<button className="btn btn-outline-success mx-1" type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
-							</Link>
-
-						</div>
-
-					</form>
+					</div>
 					{login && <div><button onClick={handleLogout}>Logout</button></div>}
-					
+
 					<div className="nav-item mx-3 d-flex">
 						<Link to="/SignUp" className="nav-link me-3">
 							<i className="fa-solid fa-pen-to-square me-1"></i>Registro
->>>>>>> 0c76eaac09b7e933b3b56da49b16e6de3e63af12
 						</Link>
 						<Link to="/loginpage" className="nav-link" >
 							<i className="fa-regular fa-user me-1"></i>Login
@@ -73,8 +61,8 @@ export const Navbar = () => {
 
 				</div>
 			</div>
-			
-			<button onClick={() => console.log("el valor de login es ",login)}>TesteoLogin</button>
+
+			<button onClick={() => console.log("el valor de login es ", login)}>TesteoLogin</button>
 		</nav>
 	);
 };
