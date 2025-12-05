@@ -51,7 +51,7 @@ export const Navbar = () => {
 					{login && <div><button onClick={handleLogout}>Logout</button></div>}
 
 					<div className="nav-item mx-3 d-flex">
-						<Link to="/SignUp" className="nav-link me-3">
+						<Link to="/signup-page" className="nav-link me-3">
 							<i className="fa-solid fa-pen-to-square me-1"></i>Registro
 						</Link>
 						<Link to="/loginpage" className="nav-link" >

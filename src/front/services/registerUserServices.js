@@ -2,7 +2,7 @@ import { BACKEND_URL } from "../main";
 
 export const registerUser = async (userData) => {
   const response = await fetch(
-    `${BACKEND_URL}users`,
+    `${BACKEND_URL}users/register`,
     {
       method: "POST",
       headers: {
