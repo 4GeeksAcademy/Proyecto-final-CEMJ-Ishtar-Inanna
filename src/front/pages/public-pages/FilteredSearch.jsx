@@ -1,4 +1,3 @@
-import Fondo from "../assets/img/Fondo.png";
 
 export const FilteredSearch = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
