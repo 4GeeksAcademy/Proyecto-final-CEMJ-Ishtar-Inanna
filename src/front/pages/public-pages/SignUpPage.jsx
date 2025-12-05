@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { registerUser } from "../services/registerUser";
+import { useState, useEffect } from "react";
+import { registerUser } from "../../services/registerUser";
+import { useNavigate } from "react-router-dom"
+import { getAuthentication } from "../../services/loginServices";
 
-export default function SignUp() {
+export const SignUpPage = () => {
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -11,6 +13,23 @@ export default function SignUp() {
     const registerUsers = async (e) => {
         e.preventDefault();
 
+
+    //PARA PRIVATIZAR PÁGINAS
+    const navigate = useNavigate()
+
+    const authenticationPrivateZone = async () => {
+        const response = await getAuthentication()
+        console.log(response)
+        if (response.done == true) {
+            navigate('/')
+            console.log(response)
+        }
+    }
+    useEffect(() => {
+        authenticationPrivateZone()
+    })
+    ///////////////////
+    console.log("Hola")
 
         const userData = { username, email, password, name, last_name: lastName };
         try {
@@ -96,3 +115,49 @@ export default function SignUp() {
         </div>
     );
 }
+
+
+// import React, { useEffect, useState } from "react"
+// import { getAuthentication, login } from "../../services/loginServices.js"
+// import { useNavigate } from "react-router-dom"
+
+// export const RegisterPage = () => {
+
+//     const [password, setPassword] = useState("")
+//     const [userName, setUserName] = useState("")
+
+//     //PARA PRIVATIZAR PÁGINAS
+//     const navigate = useNavigate()
+
+//     const authenticationPrivateZone = async () => {
+//         const response = await getAuthentication()
+
+//         if (response.done == true) {
+//             navigate('/')
+//             console.log(response)
+//         }
+//     }
+//     useEffect(() => {
+//         authenticationPrivateZone()
+//     })
+//     ///////////////////
+
+//     return (
+//         <>
+//             <div className="container">
+//                 <h3>Register test</h3>
+//                 <div>
+//                     <input placeholder="Username" onChange={e => setUserName(e.target.value)}></input>
+//                     <input placeholder="Password" onChange={e => setPassword(e.target.value)}></input>
+//                     <button >Register</button>
+//                 </div>
+//                 <div>
+//                     <button onClick={e => getAuthentication()}>Testeame el sistema de logeo</button>
+//                 </div>
+//                 <div>
+//                     <button>Logout</button>
+//                 </div>
+//             </div>
+//         </>
+//     )
+// }
