@@ -5,18 +5,18 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import { PublicLayout } from "./pages/PublicLayout";
+import { PublicLayout } from "./pages/public-pages/PublicLayout";
 import { Home } from "./pages/public-pages/Home";
-import { Single } from "./pages/Single";
-import { FilteredSearch } from "./pages/FilteredSearch";
-import { Refuges } from "./pages/Refuges";
-import { LostAnimals } from "./pages/LostAnimals";
-import { FoundAnimals } from "./pages/FoundAnimals";
-import { FoundLostAnimals } from "./pages/FoundLostAnimals";
+import { Single } from "./pages/public-pages/Single";
+import { FilteredSearch } from "./pages/public-pages/FilteredSearch";
+import { Refuges } from "./pages/public-pages/Refuges";
+import { LostAnimals } from "./pages/public-pages/LostAnimals";
+import { FoundAnimals } from "./pages/public-pages/FoundAnimals";
+import { FoundLostAnimals } from "./pages/public-pages/FoundLostAnimals";
 import { Demo } from "./pages/private-pages/Demo";
-import { PrivateLayout } from "./pages/PrivateLayout";
+import { PrivateLayout } from "./pages/public-pages/PrivateLayout";
 import { LoginPage } from "./pages/public-pages/LoginPage";
-import {SignUpPage} from "./pages/public-pages/SignUpPage";
+import { SignUpPage } from "./pages/public-pages/SignUpPage";
 
 
 

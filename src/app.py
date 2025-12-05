@@ -24,7 +24,7 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 
 app.url_map.strict_slashes = False
-######
+######AÑADIR LA URL DEL FRONT
 CORS(app, resources={r"/api/*":{ "origins":"http://localhost:3000"}}, supports_credentials=True)
 
 #JWT MANAGER CONFIG
