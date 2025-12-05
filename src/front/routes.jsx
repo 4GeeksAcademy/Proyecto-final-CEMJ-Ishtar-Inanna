@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { PublicLayout } from "./pages/PublicLayout";
-import { Home } from "./pages/public-pages/Home";
+import Home from "./pages/public-pages/Home";
 import { Single } from "./pages/Single";
 import { FilteredSearch } from "./pages/FilteredSearch";
 import { Refuges } from "./pages/Refuges";
@@ -16,7 +16,7 @@ import { FoundLostAnimals } from "./pages/FoundLostAnimals";
 import { Demo } from "./pages/private-pages/Demo";
 import { PrivateLayout } from "./pages/PrivateLayout";
 import { LoginPage } from "./pages/public-pages/LoginPage";
-import {SignUpPage} from "./pages/public-pages/SignUpPage";
+import { SignUpPage } from "./pages/public-pages/SignUpPage";
 
 
 
