@@ -1,6 +1,8 @@
+import { BACKEND_URL } from "../main";
+
 export const registerUser = async (userData) => {
   const response = await fetch(
-    "https://scaling-invention-6wp99v5gqwgf4vpx-3001.app.github.dev/api/users",
+    `${BACKEND_URL}users`,
     {
       method: "POST",
       headers: {

@@ -1,7 +1,8 @@
+import { BACKEND_URL } from "../main"
 
 export const login = async (username, password) => {
 
-     const resp = await fetch(`http://localhost:3001/api/users/login`, { 
+     const resp = await fetch(`${BACKEND_URL}users/login`, { 
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }) 
@@ -34,12 +35,12 @@ export const getAuthentication = async () => {
     return { ok: false, status: 401 };
   }
 
-  const resp = await fetch(`http://localhost:3001/api/protected`, {
+  const resp = await fetch(`${BACKEND_URL}protected`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` }
   });
 
   const data = await resp.json();
   console.log('status:', resp.status, 'body:', data);
-  return resp;
+  return data;
 };
