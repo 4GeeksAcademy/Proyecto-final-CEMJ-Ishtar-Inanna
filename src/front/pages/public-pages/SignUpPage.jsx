@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { registerUser } from "../../services/registerUser";
+import { registerUser } from "../../services/registerUserServices";
 import { useNavigate } from "react-router-dom"
 import { getAuthentication } from "../../services/loginServices";
 
@@ -13,7 +13,15 @@ export const SignUpPage = () => {
     const registerUsers = async (e) => {
         e.preventDefault();
 
-
+        const userData = { username, email, password, name, last_name: lastName };
+        try {
+            const result = await registerUser(userData);
+            console.log("Usuario registrado:", result);
+        } catch (err) {
+            console.error(err);
+            alert("No se pudo registrar el usuario.");
+        }
+    }
     //PARA PRIVATIZAR PÁGINAS
     const navigate = useNavigate()
 
@@ -28,20 +36,6 @@ export const SignUpPage = () => {
     useEffect(() => {
         authenticationPrivateZone()
     })
-    ///////////////////
-    console.log("Hola")
-
-        const userData = { username, email, password, name, last_name: lastName };
-        try {
-            const result = await registerUser(userData);
-            console.log("Usuario registrado:", result);
-        } catch (err) {
-            console.error(err);
-            alert("No se pudo registrar el usuario.");
-        }
-
-
-    }
 
     return (
         <div className="container d-flex flex-column align-items-center mt-5">

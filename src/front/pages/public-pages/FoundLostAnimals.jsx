@@ -12,13 +12,13 @@ export const FoundLostAnimals = () => {
                     <div className="card col-3 mx-5" style={{ width: "18rem" }}>           <img src="..." className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">PERDIDOS</h5>
-                            <Link to="/lostanimals"><a href="#" className="boton btn btn-primary">Consultar</a></Link>
+                            <Link to="/lostanimals"><p href="#" className="boton btn btn-primary">Consultar</p></Link>
                         </div>
                     </div>
                     <div className="card col-3" style={{ width: "18rem" }}>           <img src="..." className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">ENCONTRADOS</h5>
-                            <Link to="/foundanimals"><a href="#" className="boton btn btn-primary">Consultar</a></Link>
+                            <Link to="/foundanimals"><p href="#" className="boton btn btn-primary">Consultar/</p></Link>
                         </div>
                     </div>
                 </div>
