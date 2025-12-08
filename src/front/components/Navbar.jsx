@@ -52,7 +52,7 @@ export const Navbar = () => {
 
 						//     VISTA SI ESTÁ LOGUEADO
 						<div className="nav-item mx-3 d-flex align-items-center">
-							<Link to="/profile" className="nav-link me-3">
+							<Link to="/ProfilePage" className="nav-link me-3">
 								<i className="fa-regular fa-user me-1"></i>Mi Perfil
 							</Link>
 

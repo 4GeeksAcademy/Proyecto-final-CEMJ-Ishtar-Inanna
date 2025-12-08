@@ -21,6 +21,8 @@ import { LoginPage } from "./pages/public-pages/LoginPage";
 
 import { SignUpPage } from "./pages/public-pages/SignUpPage";
 
+import { ProfilePage } from "./pages/public-pages/ProfilePage";
+
 
 
 
@@ -48,6 +50,8 @@ export const router = createBrowserRouter(
         <Route path="/signup-page" element={<SignUpPage />} />
         <Route path="/refugesite" element={<RefugeSite />} />
         <Route path="/intro" element={<Intro />} />
+        <Route path="/profilepage" element={<ProfilePage />} />
+
       </Route>
 
       <Route path="/auth" element={<PrivateLayout />} errorElement={<h1>Not found!</h1>} >
