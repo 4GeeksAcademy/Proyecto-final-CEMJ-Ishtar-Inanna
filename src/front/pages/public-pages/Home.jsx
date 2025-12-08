@@ -4,7 +4,8 @@ import useGlobalReducer from "../../hooks/useGlobalReducer.jsx"
 import PerdidosVista from "../../assets/img/PerdidosVista.png";
 import RefugiosVista from "../../assets/img/RefugiosVista.png";
 import BusquedaVista from "../../assets/img/BusquedaFiltrada.png";
-import Perros2 from "../../assets/img/Perros1.jpg";
+import Perros1 from "../../assets/img/Perros1.jpg";
+import Perros2 from "../../assets/img/Perros2.jpg";
 
 const slides = [
 	{
@@ -21,17 +22,17 @@ const slides = [
 		img: BusquedaVista,
 		title: "Busqueda avanzada",
 		text: "Introduce cualquier caracteristica del animal al que estas buscando, se filtran segun los datos introducidos para reducir el tiempo de busqueda y facilitar resultados optimos"
-	},
-	{
-		img: Perros2,
-		title: "Ishtar Inanna",
-		text: "Ayudanos a ayudarlos"
 	}
+	// {
+	// 	img: Perros2,
+	// 	title: "Ishtar Inanna",
+	// 	text: "Ayudanos a ayudarlos"
+	// }
 ];
 
 const SLIDE_DURATION = 5000;
 
-export default function Home() {
+export const Home =()=> {
 	const [index, setIndex] = useState(0);
 	const [progress, setProgress] = useState(0);
 
