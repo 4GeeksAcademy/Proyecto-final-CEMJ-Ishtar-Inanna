@@ -4,7 +4,7 @@ import useGlobalReducer from "../../hooks/useGlobalReducer.jsx"
 import PerdidosVista from "../../assets/img/PerdidosVista.png";
 import RefugiosVista from "../../assets/img/RefugiosVista.png";
 import BusquedaVista from "../../assets/img/BusquedaFiltrada.png";
-import Perros2 from "../../assets/img/Perros1.jpg";
+import Perros2 from "../../assets/img/Perros.jpg";
 
 const slides = [
 	{
