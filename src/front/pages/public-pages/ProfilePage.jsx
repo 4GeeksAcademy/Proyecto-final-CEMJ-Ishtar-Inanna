@@ -29,7 +29,7 @@ export const ProfilePage = () => {
                 {/* Imagen del usuario */}
                 <div className="text-center mb-3">
                     <img
-                        src={user.prof_img || "/img/DobbyElElfo.JPG"}
+                        src={user.prof_img}
                         alt="Foto perfil"
                         className="rounded-circle"
                         width="130"
@@ -38,10 +38,8 @@ export const ProfilePage = () => {
                     />
                 </div>
 
-                <h3 className="text-center">{user.name} {user.last_name}</h3>
+                <h2 className="text-center">{user.name} {user.last_name}</h2>
                 <p className="text-center text-muted">@{user.username}</p>
-
-                <hr />
 
                 <div className="mb-3">
                     <strong>Email:</strong>

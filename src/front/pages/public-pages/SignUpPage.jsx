@@ -10,30 +10,18 @@ export const SignUpPage = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [profileImage, setProfileImage] = useState(null);
     const registerUsers = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("username", username);
-        formData.append("email", email);
-        formData.append("password", password);
-        formData.append("name", name);
-        formData.append("last_name", lastName);
-
-        if (profileImage) {
-            formData.append("prof_img", profileImage); // archivo
-        }
-
+        const userData = { username, email, password, name, last_name: lastName };
         try {
-            const result = await registerUser(formData); // pasamos FormData
+            const result = await registerUser(userData);
             console.log("Usuario registrado:", result);
-            navigate("/loginpage");
         } catch (err) {
             console.error(err);
             alert("No se pudo registrar el usuario.");
         }
-    };
+    }
     //PARA PRIVATIZAR PÁGINAS
     const navigate = useNavigate()
 
@@ -66,7 +54,6 @@ export const SignUpPage = () => {
                         placeholder="Introduce tu correo electrónico"
                         onChange={({ target }) => setEmail(target.value)}
                         value={email}
-                        required
                     />
                 </div>
 
@@ -77,7 +64,6 @@ export const SignUpPage = () => {
                         placeholder="Introduce tu usuario"
                         onChange={({ target }) => setUsername(target.value)}
                         value={username}
-                        required
                     />
                 </div>
 
@@ -90,7 +76,6 @@ export const SignUpPage = () => {
                         placeholder="Introduce tu contraseña"
                         onChange={({ target }) => setPassword(target.value)}
                         value={password}
-                        required
                     />
                 </div>
 
@@ -101,7 +86,6 @@ export const SignUpPage = () => {
                         placeholder="Introduce tu nombre"
                         onChange={({ target }) => setName(target.value)}
                         value={name}
-                        required
                     />
                 </div>
 
@@ -113,23 +97,8 @@ export const SignUpPage = () => {
                         placeholder="Introduce tu apellido"
                         onChange={({ target }) => setLastName(target.value)}
                         value={lastName}
-                        required
                     />
                 </div>
-
-                <div className="mb-3">
-                    <label className="form-label">Foto de perfil</label>
-                    <input type="file"
-                        className="form-control"
-                        accept="image/*"
-                        onChange={(e) => {
-                            if (e.target.files && e.target.files[0]) {
-                                setProfileImage(e.target.files[0]);
-                            }
-                        }}
-                    />
-                </div>
-
 
                 <div className="d-flex justify-content-end">
                     <button type="submit" className="btn btn-success px-4 py-2">
