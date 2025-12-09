@@ -8,6 +8,7 @@ from flask_cors import CORS
 from sqlalchemy import select
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import check_password_hash
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -138,7 +139,15 @@ def get_pet_post(pet_post_id):
 @api.route('/pets', methods=["POST"])
 def create_pet_post():
     data = request.get_json()
+    found_time_str=data.get("found_time")
+    found_time = None
+    if found_time_str:
+        found_time = datetime.strptime(found_time_str,"%Y-%m-%dT%H:%M")
+    
+    print(data)        
+        
     pet_post = PetPost(
+        user_id = data.get('user_id'),
         found_location = data.get('found_location'),
         actual_location = data.get('actual_location'),
         found_time = data.get('found_time'),

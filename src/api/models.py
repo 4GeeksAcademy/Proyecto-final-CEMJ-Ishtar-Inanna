@@ -57,7 +57,7 @@ class PetPost(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     found_location: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) #Donde se ha encontrado
     actual_location: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    found_time: Mapped[datetime] = mapped_column(DateTime,nullable=True, default=datetime.now(),server_default=func.now()) # PONER VALOR POR DEFECTO
+    found_time: Mapped[datetime] = mapped_column(DateTime,nullable=True) # PONER VALOR POR DEFECTO
     name: Mapped[str] = mapped_column(String(30), nullable = False)
     breed: Mapped[str]= mapped_column(String(30), nullable = False)
     physical_description: Mapped[str] = mapped_column(String(30),nullable = True)

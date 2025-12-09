@@ -1,4 +1,5 @@
 import { act } from "react";
+import { BACKEND_URL } from "../main";
 
 //Añadir los fetch
 export const getAllPetPosts = async () => {
@@ -22,21 +23,16 @@ export const getAllPetPosts = async () => {
   }
 };
 
-export const createPetPost = async (f_location, a_location, time, name, breed, physical_descrption) => {
-  const r = await fetch(
-    `${BACKEND_URL}api/pets`,
+export const createPetPost = async (fetchData) => {
+  console.log("Hola estas dentro de createPetPost")
+  const response = await fetch(
+    `${BACKEND_URL}pets`,
     {
       method: "POST",
       headers: { 
         accept: "application/json",
-      },body : { 
-        "found_location": f_location,
-        "actual_location": a_location,
-        "found_time": time,
-        "name": name,
-        "breed": breed,
-        "physical_descrption": physical_descrption,
-      }
+        "Content-Type":"application/json"
+      },body : JSON.stringify(fetchData)
     }
   );
   if (response.ok) {
