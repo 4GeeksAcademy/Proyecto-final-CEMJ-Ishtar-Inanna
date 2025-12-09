@@ -134,7 +134,7 @@ def get_pet_post(pet_post_id):
         return jsonify({"Message":"pet_post not found in database"})
     return jsonify(petpost.serialize()), 200
 
-#PUPLOAD A PET POST
+#UPLOAD A PET POST
 @api.route('/pets', methods=["POST"])
 def create_pet_post():
     data = request.get_json()
@@ -149,6 +149,8 @@ def create_pet_post():
     db.session.add(pet_post)
     db.session.commit()
     return pet_post.serialize(), 200
+
+
 
 
 #AUTHENTICATION TESTING

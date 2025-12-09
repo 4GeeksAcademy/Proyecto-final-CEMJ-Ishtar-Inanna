@@ -104,7 +104,7 @@ class SocialMedia(db.Model):
     
 class PetImages(db.Model):
     __tablename__="pet_images"
-    id:Mapped[int] = mapped_column(primary_key =  True)
+    id: Mapped[int] = mapped_column(primary_key =  True)
     url: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) 
     
     #FK

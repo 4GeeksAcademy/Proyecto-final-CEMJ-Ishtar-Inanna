@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 export const FilteredSearch = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
