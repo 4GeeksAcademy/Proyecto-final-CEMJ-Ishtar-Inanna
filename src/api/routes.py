@@ -164,8 +164,6 @@ def create_pet_post():
     return pet_post.serialize(), 200
 
 # GET USER INFORMATION
-
-
 @api.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = db.session.get(User, user_id)
