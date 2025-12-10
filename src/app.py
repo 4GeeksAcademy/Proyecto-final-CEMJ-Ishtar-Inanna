@@ -24,10 +24,11 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 
 app.url_map.strict_slashes = False
-######AÑADIR LA URL DEL FRONT
-CORS(app, resources={r"/api/*":{ "origins":"http://localhost:3000"}}, supports_credentials=True)
+# AÑADIR LA URL DEL FRONT
+CORS(app, resources={
+     r"/api/*": {"origins": "https://zany-umbrella-g6p44xrqpqjcvxpw-3000.app.github.dev/"}}, supports_credentials=True)
 
-#JWT MANAGER CONFIG
+# JWT MANAGER CONFIG
 app.config["JWT_SECRET_KEY"] = "super-secret-string"   # change this!
 jwt = JWTManager(app)
 #######
@@ -53,9 +54,12 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
+
+
 @app.before_request
 def log_secret():
     print('PROTECT secret:', current_app.config['JWT_SECRET_KEY'])
+
 
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
@@ -71,6 +75,8 @@ def sitemap():
     return send_from_directory(static_file_dir, 'index.html')
 
 # any other endpoint will try to serve it like a static file
+
+
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):

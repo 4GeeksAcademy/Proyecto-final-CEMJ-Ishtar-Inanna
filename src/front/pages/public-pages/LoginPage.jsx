@@ -25,7 +25,15 @@ export const LoginPage = () => {
 		const response = await login(userName, password)
 		if (response.token) {
 			switchLogin()
+			localStorage.setItem("userId", response.user_id);
+			navigate("/profilepage");
+
+
 		}
+
+
+
+
 	}
 
 	useEffect(() => {
