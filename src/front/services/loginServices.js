@@ -18,6 +18,7 @@ export const login = async (username, password) => {
      const data = await resp.json()
 
      localStorage.setItem("jwt-token", data.token);
+     localStorage.setItem("user_id", data.user_id)
 
      return data
 

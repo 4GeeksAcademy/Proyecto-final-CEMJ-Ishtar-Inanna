@@ -22,7 +22,7 @@ export const FoundLostAnimals = () => {
                         </div>
                     </div>
                     <div className="d-flex justify-content-end">
-                        <Link to="/registerpets"><p href="#" className="boton btn btn-primary">REGISTRO MASCOTA PERDIDA/ENCONTRADA</p></Link>
+                        <Link to="/auth/registerpets"><p href="#" className="boton btn btn-primary">REGISTRO MASCOTA PERDIDA/ENCONTRADA</p></Link>
                     </div>
                 </div>
             </div>
