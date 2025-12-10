@@ -19,7 +19,7 @@ export const Single = props => {
 
       {/* A Link component acts as an anchor tag but is used for client-side routing to prevent page reloads. */}
       <Link to="/">
-        <span className="btn btn-primary btn-lg" href="#" role="button">
+        <span className="boton btn btn-primary btn-lg" href="#" role="button">
           Back home
         </span>
       </Link>

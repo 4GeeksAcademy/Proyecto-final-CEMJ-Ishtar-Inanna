@@ -101,7 +101,7 @@ export const SignUpPage = () => {
                 </div>
 
                 <div className="d-flex justify-content-end">
-                    <button type="submit" className="btn btn-success px-4 py-2">
+                    <button type="submit" className="button btn btn-success px-4 py-2">
                         siguiente
                     </button>
                 </div>

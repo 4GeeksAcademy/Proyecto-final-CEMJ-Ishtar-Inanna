@@ -14,36 +14,43 @@ export const RefugeSite = () => {
                             <h5 className="card-title">Los Aristogatos de Boadilla</h5>
                             <p className="card-text">Asociación de protección animal en Boadilla del Monte</p>
                             <div>
-                                <a href="#" className="boton btn btn-primary mx-3">Donate</a>
-                                <a href="#" className="boton btn btn-primary">Voluntariado</a>
+                                <a href="#" className="button btn btn-primary mx-3">Donar</a>
+                                <a href="#" className="button btn btn-primary">Voluntariado</a>
                             </div>
                         </div>
                     </div>
-                    <div className="card mt-5 mb-5" style={{ width: "18rem" }}>
-                        <div className="card-body">
-                            <p className="contact-email"></p>
-                            <p className="contact-phone"></p>
-                            <p className="web"></p>
-                            <p className="social-media"></p>
-                        </div>
-                        <div>
-                            <p className="map"></p>
-                        </div>
+                    <div className="card mt-3 mb-3" style={{ width: "18rem" }}>
+                        <p className="contact-phone"></p>
+                        <p className="web"></p>
+                        <p className="social-media"></p>
+                    </div>
+                    <div>
+                        <p className="map"></p>
                     </div>
                 </div>
-                <div className="container mt-5 col-6 ">
+                <div className="container mt-5 col-6">
                     <div className="card">
                         <b className="mt-3 mx-3">Sobre nosotros</b>
-                        <p className="mx-3 mt-3">Cuidamos y alimentamos a los gatos de las colonias de Boadilla</p>
+                        <p className="mx-3 mt-3">Somos una pequeña asociación de Boadilla del Monte. Los ARISTOGATOS ayudamos a los gatos de la calle. Nos preocupamos de su alimento y de su salud, procurando su adopción siempre que sea posible.</p>
                     </div>
-                    <div className="mt-5">
+                    <div className="mt-3 row">
                         <strong className="">Gatos en adopción</strong>
-                        <input className="form-control bi bi-camera button btn btn-outline-success mt-3 mx-1 fa-solid fa-magnifying-glass" type="search submit" placeholder="Búsqueda avanzada" aria-label="Search" to="/filteredsearch" />
+                        <div className="mt-3 d-flex justify-content-center
+                        ">
+                            <input
+                                className="form-control me-2"
+                                type="search"
+                                placeholder="Búsqueda avanzada"
+                                aria-label="Search"
+                            />
+                            <button className="btn btn-outline-success" type="submit">
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
 
     );

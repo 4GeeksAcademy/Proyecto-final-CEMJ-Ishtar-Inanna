@@ -10,7 +10,7 @@ export const Refuges = () => {
                <div className="card-body">
                   <h5 className="card-title">Los Aristogatos de Boadilla</h5>
                   <p className="card-text">Asociación de protección animal en Boadilla del Monte</p>
-                  <Link to="/refugesite"><p href="#" className="boton btn btn-primary">Más información</p></Link>
+                  <Link to="/refugesite"><p href="#" className="button btn btn-primary">Más información</p></Link>
                </div>
             </div>
          </div>
