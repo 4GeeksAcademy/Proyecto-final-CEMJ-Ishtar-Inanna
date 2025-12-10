@@ -19,7 +19,7 @@ export const RefugeSite = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="card mt-5" style={{ width: "18rem" }}>
+                    <div className="card mt-5 mb-5" style={{ width: "18rem" }}>
                         <div className="card-body">
                             <p className="contact-email"></p>
                             <p className="contact-phone"></p>
@@ -31,16 +31,14 @@ export const RefugeSite = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-6 d-flex justify-content-end column-reverse">
-                    <div className="">
-                        <div className="card">
-                            <b className="">Sobre nosotros</b>
-                            <a className="">Cuidamos y alimentamos a los gatos de las colonias de Boadilla</a>
-                        </div>
-                        <div className="card">
-                            <input className="form-control bi bi-camera button btn btn-outline-success mx-1 fa-solid fa-magnifying-glass" type="search submit" placeholder="Búsqueda avanzada" aria-label="Search" to="/filteredsearch" />
-                            <p className="">Gatos en adopción</p>
-                        </div>
+                <div className="container mt-5 col-6 ">
+                    <div className="card">
+                        <b className="mt-3 mx-3">Sobre nosotros</b>
+                        <p className="mx-3 mt-3">Cuidamos y alimentamos a los gatos de las colonias de Boadilla</p>
+                    </div>
+                    <div className="mt-5">
+                        <strong className="">Gatos en adopción</strong>
+                        <input className="form-control bi bi-camera button btn btn-outline-success mt-3 mx-1 fa-solid fa-magnifying-glass" type="search submit" placeholder="Búsqueda avanzada" aria-label="Search" to="/filteredsearch" />
                     </div>
                 </div>
             </div>
