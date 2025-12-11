@@ -28,7 +28,6 @@ export const LoginPage = () => {
 			localStorage.setItem("userId", response.user_id);
 			navigate("/profilepage");
 
-
 		}
 
 

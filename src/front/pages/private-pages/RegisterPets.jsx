@@ -12,9 +12,9 @@ export const RegisterPets = () => {
     const [breed, setBreed] = useState("");
     const [physicalDescription, setPhysicalDescription] = useState("");
     const [foundTime, setFoundTime] = useState("")
-
+    const [isLost, setIsLost] = useState(false)
     const [formData, setFormData] = useState(
-        { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_desctiption: "" })
+        { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_desctiption: "", is_lost: "" })
 
     useEffect(() => {
         setFormData({
@@ -24,11 +24,13 @@ export const RegisterPets = () => {
             found_time:foundTime,
             name,
             breed,
-            physical_desctiption: physicalDescription
+            physical_desctiption: physicalDescription,
+            is_lost : isLost
+
         })
-    }, [foundLocation, actualLocation, foundTime, name, breed, physicalDescription])
+    }, [foundLocation, actualLocation, foundTime, name, breed, physicalDescription, isLost])
 
-
+    console.log(formData)
 
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
@@ -38,7 +40,9 @@ export const RegisterPets = () => {
     return (
         <div className="container d-flex flex-column align-items-center mt-5">
 
-            <h1 className="mb-4">Crear ficha de búsqueda</h1>
+            <h1 className="mb-4">Crear registro</h1>
+            <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={()=>setIsLost(true)}>PERDIDO DEFAULT</button>
+            <button className={`btn ${isLost ? "btn-danger" : "btn-success"}`} onClick={()=>setIsLost(false)}>ENCONTRADO</button>
             <form
                 //onSubmit={}
                 className="w-100"

@@ -12,7 +12,7 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-expand-lg text-light color-text-light">
-			<div className="container-fluid text-light">
+			<div className="container-fluid text-light container">
 
 				<Link to="/" className="navbar-brand mx-5">
 					<img className="logo" src={Logo} alt="Logo Inanna" />
