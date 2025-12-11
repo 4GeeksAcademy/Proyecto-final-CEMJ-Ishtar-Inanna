@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 export const FilteredSearch = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
@@ -57,7 +58,7 @@ export const FilteredSearch = () => {
           </div>
 
           <div className="d-flex justify-content-end">
-            <button type="submit" className="boton btn btn-md mt-5 text-light">Buscar</button>
+            <button type="submit" className="button btn btn-md mt-5 text-light">Buscar</button>
           </div>
         </form>
       
