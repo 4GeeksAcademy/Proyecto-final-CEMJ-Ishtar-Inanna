@@ -55,8 +55,8 @@ class User(db.Model):
 class PetPost(db.Model):
     __tablename__ = "pet_post"
     id: Mapped[int] = mapped_column(primary_key=True)
-    found_location: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) #Donde se ha encontrado
-    actual_location: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    found_location: Mapped[str] = mapped_column(String(30), nullable = False) #Donde se ha encontrado
+    actual_location: Mapped[str] = mapped_column(String(120), nullable=False)
     found_time: Mapped[datetime] = mapped_column(DateTime,nullable=True) # PONER VALOR POR DEFECTO
     name: Mapped[str] = mapped_column(String(30), nullable = False)
     breed: Mapped[str]= mapped_column(String(30), nullable = False)

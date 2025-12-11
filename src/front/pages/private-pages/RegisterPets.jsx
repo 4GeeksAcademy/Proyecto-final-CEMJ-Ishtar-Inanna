@@ -21,14 +21,14 @@ export const RegisterPets = () => {
             user_id:localStorage.getItem("user_id"),
             found_location: foundLocation,
             actual_location: actualLocation,
-            found_time:foundTime,
+            found_time: foundTime, 
             name,
             breed,
             physical_desctiption: physicalDescription
         })
     }, [foundLocation, actualLocation, foundTime, name, breed, physicalDescription])
 
-
+// '2025-12-11T15:30'
 
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
