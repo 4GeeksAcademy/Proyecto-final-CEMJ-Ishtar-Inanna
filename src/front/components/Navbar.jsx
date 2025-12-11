@@ -4,6 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Navbar = () => {
 	const { login, switchLogin } = useGlobalReducer();
+	const isToken = localStorage.getItem("jwt-token") ? true : false
 
 	const handleLogout = () => {
 		localStorage.removeItem("jwt-token");
@@ -48,7 +49,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 
-					{login ? (
+					{isToken ? (
 
 						//     VISTA SI ESTÁ LOGUEADO
 						<div className="nav-item mx-3 d-flex align-items-center">

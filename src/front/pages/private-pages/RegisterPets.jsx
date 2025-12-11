@@ -18,14 +18,14 @@ export const RegisterPets = () => {
 
     useEffect(() => {
         setFormData({
-            user_id:localStorage.getItem("user_id"),
+            user_id: localStorage.getItem("user_id"),
             found_location: foundLocation,
             actual_location: actualLocation,
-            found_time:foundTime,
+            found_time: foundTime,
             name,
             breed,
             physical_desctiption: physicalDescription,
-            is_lost : isLost
+            is_lost: isLost
 
         })
     }, [foundLocation, actualLocation, foundTime, name, breed, physicalDescription, isLost])
@@ -41,16 +41,17 @@ export const RegisterPets = () => {
         <div className="container d-flex flex-column align-items-center mt-5">
 
             <h1 className="mb-4">Crear registro</h1>
-            <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={()=>setIsLost(true)}>PERDIDO DEFAULT</button>
-            <button className={`btn ${isLost ? "btn-danger" : "btn-success"}`} onClick={()=>setIsLost(false)}>ENCONTRADO</button>
+            <div className="my-3">
+                <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={() => setIsLost(true)}>PERDIDO DEFAULT</button>
+                <button className={`btn ${isLost ? "btn-danger" : "btn-success"}`} onClick={() => setIsLost(false)}>ENCONTRADO</button>
+            </div>
             <form
                 //onSubmit={}
                 className="w-100"
                 style={{ maxWidth: "420px" }}
             >
-
-                <div className="mb-3">
-                    <label className="form-label">Lugar donde se perdió/encontró</label>
+                {isLost ? <div className="mb-3">
+                    <label className="form-label">Lugar donde se perdió</label>
                     <input
                         className="form-control"
                         type="lugar"
@@ -58,16 +59,19 @@ export const RegisterPets = () => {
                         onChange={({ target }) => setFoundLocation(target.value)}
                         value={foundLocation}
                     />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Localización actual (en caso de haber encontrado un animal)</label>
-                    <input
-                        className="form-control"
-                        placeholder="LOCALIZACIÓN"
-                        onChange={({ target }) => setActualLocation(target.value)}
-                        value={actualLocation}
-                    />
-                </div>
+                </div> :
+                    <div className="mb-3">
+                        <label className="form-label">Lugar donde se encontró</label>
+                        <input
+                            className="form-control"
+                            placeholder="LUGAR DONDE SE ENCONTRÓ"
+                            onChange={({ target }) => setActualLocation(target.value)}
+                            value={actualLocation}
+                        />
+                    </div>
+                }
+
+
                 <div className="mb-3">
                     <label className="form-label">Nombre</label>
                     <input
@@ -95,18 +99,22 @@ export const RegisterPets = () => {
                         value={physicalDescription}
                     />
                 </div>
-                <div className="mb-3">
-                    <label className="form-label">Descripción</label>
-                    <input
-                        className="form-control"
-                        placeholder="HORA DE ENCUENTRO"
-                        type="datetime-local"
-                        onChange={({ target }) => setFoundTime(target.value)}
-                        value={foundTime}
 
-                    />
-                </div>
+                <select className="form-select" id="inputGroupSelect01">
+                    <option placeholder="Especie" selected>Especie</option>
+                    <option value="1">Perro</option>
+                    <option className="mb-3">
+                        <label className="form-label">Descripción</label>
+                        <input
+                            className="form-control"
+                            placeholder="HORA DE ENCUENTRO"
+                            type="datetime-local"
+                            onChange={({ target }) => setFoundTime(target.value)}
+                            value={foundTime}
 
+                        />
+                    </option>
+                </select>
 
                 <div className="mb-3 d-flex justify-content-end">
                     <button onClick={() => sendNewPetPost(formData)} type="button" className="boton btn btn-success px-4 py-2">
