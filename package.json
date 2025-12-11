@@ -55,6 +55,7 @@
     ]
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^2.0.2",
     "@react-google-maps/api": "^2.20.7",
     "bootstrap": "^5.3.8",
     "cors": "^2.8.5",
