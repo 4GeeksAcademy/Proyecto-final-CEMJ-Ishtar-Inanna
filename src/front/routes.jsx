@@ -15,10 +15,11 @@ import { FoundAnimals } from "./pages/public-pages/FoundAnimals";
 import { FoundLostAnimals } from "./pages/public-pages/FoundLostAnimals";
 import { Demo } from "./pages/private-pages/Demo";
 import { PrivateLayout } from "./pages/public-pages/PrivateLayout";
-import { RefugeSite } from "./pages/RefugeSite";
+import { RefugeSite } from "./pages/public-pages/RefugeSite";
 import { Intro } from "./pages/Intro";
 import { LoginPage } from "./pages/public-pages/LoginPage";
 import { SignUpPage } from "./pages/public-pages/SignUpPage";
+import { RegisterPets } from "./pages/private-pages/RegisterPets";
 
 import { ProfilePage } from "./pages/public-pages/ProfilePage";
 
@@ -55,6 +56,7 @@ export const router = createBrowserRouter(
 
       <Route path="/auth" element={<PrivateLayout />} errorElement={<h1>Not found!</h1>} >
         <Route path="demo" element={<Demo />} />
+        <Route path="registerpets" element={<RegisterPets />} />
       </Route>
     </>
   )

@@ -16,7 +16,7 @@ export const FoundAnimals = () => {
                     <li className="card-text">Ojos verdes.</li>
                     <li className="card-text">Con una pequeña mancha blanca en el pecho.</li>
                 </ul>
-                <a href="#" className="boton btn btn-primary">Contactar</a>
+                <a href="#" className="button btn btn-primary">Contactar</a>
             </div>
         </div>
         </div>

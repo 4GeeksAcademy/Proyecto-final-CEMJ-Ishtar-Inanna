@@ -84,7 +84,7 @@ export const Home =()=> {
 					/>
 					<div>
 						<Link to="/filteredsearch">
-							<button className="btn btn-outline-success" type="submit">
+							<button className="button btn btn-outline-success" type="submit">
 								<i className="fa-solid fa-magnifying-glass"></i>
 							</button>
 						</Link>

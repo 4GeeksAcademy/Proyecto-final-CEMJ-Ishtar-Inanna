@@ -71,7 +71,7 @@ export const LoginPage = () => {
 
 				<div className="d-flex justify-content-end mb-3">
 					<button
-						className="btn btn-success px-4 py-2"
+						className="button btn btn-success px-4 py-2"
 						onClick={() => handleLogin(userName, password)}
 					>
 						Entrar
