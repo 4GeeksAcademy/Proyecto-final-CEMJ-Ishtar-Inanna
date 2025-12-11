@@ -17,6 +17,8 @@ export const SignUpPage = () => {
         try {
             const result = await registerUser(userData);
             console.log("Usuario registrado:", result);
+            navigate('/loginpage')
+
         } catch (err) {
             console.error(err);
             alert("No se pudo registrar el usuario.");

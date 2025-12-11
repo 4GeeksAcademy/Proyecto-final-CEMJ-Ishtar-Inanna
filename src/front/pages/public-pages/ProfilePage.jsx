@@ -3,8 +3,13 @@ import { getUserById } from "../../services/userServices";
 import { getAuthentication } from "../../services/loginServices";
 import { useNavigate } from "react-router-dom";
 import perrito from "../../assets/img/DobbyElElfo.JPG";
+import useGlobalReducer from "../../hooks/useGlobalReducer";
+
 export const ProfilePage = () => {
+    const { switchLogin } = useGlobalReducer();
+
     const [user, setUser] = useState(null);
+
     const navigate = useNavigate();
 
     const authenticationPrivateZone = async () => {
@@ -54,6 +59,9 @@ export const ProfilePage = () => {
             if (response.ok) {
                 // Limpiar datos del usuario
                 localStorage.removeItem("userId");
+                localStorage.removeItem("jwt-token");
+
+                switchLogin();
                 alert("Cuenta eliminada correctamente.");
                 navigate("/");
             } else {

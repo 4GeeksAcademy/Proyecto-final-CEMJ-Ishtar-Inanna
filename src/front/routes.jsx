@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { PublicLayout } from "./pages/public-pages/PublicLayout";
-import Home from "./pages/public-pages/Home";
+import { Home } from "./pages/public-pages/Home";
 import { Single } from "./pages/public-pages/Single";
 import { FilteredSearch } from "./pages/public-pages/FilteredSearch";
 import { Refuges } from "./pages/public-pages/Refuges";
