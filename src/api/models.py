@@ -79,6 +79,7 @@ class PetPost(db.Model):
             "name": self.name,
             "breed": self.breed,
             "physical_description": self.physical_description,
+            "is_lost":self.is_lost,
             "is_active" : self.is_active
         }
     

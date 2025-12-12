@@ -23,7 +23,7 @@ export const getAllPetPosts = async () => {
 };
 
 export const createPetPost = async (fetchData) => {
-  console.log("Hola estas dentro de createPetPost")
+  console.log("Hola estas dentro de createPetPost y esto es fetchdata", fetchData)
   const response = await fetch(
     `${BACKEND_URL}pets`,
     {
@@ -34,6 +34,7 @@ export const createPetPost = async (fetchData) => {
       },body : JSON.stringify(fetchData)
     }
   );
+  console.log(response)
   if (response.ok) {
     const data = await response.json();
     return data.agendas;
