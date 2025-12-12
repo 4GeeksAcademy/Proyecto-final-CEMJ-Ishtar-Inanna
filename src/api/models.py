@@ -73,7 +73,7 @@ class PetPost(db.Model):
     def serialize(self):
         return {
            "id": self.id,
-            "found_lcation": self.found_location,
+            "found_location": self.found_location,
             "actual_location": self.actual_location,
             "found_time": self.found_time,
             "name": self.name,
