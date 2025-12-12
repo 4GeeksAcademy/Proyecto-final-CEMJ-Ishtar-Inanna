@@ -152,27 +152,29 @@ def get_pet_post(pet_post_id):
 @api.route('/pets', methods=["POST"])
 def create_pet_post():
     data = request.get_json()
-    found_time_str=data.get("found_time")
+    found_time_str = data.get("found_time")
     found_time = None
     if found_time_str:
-        found_time = datetime.strptime(found_time_str,"%Y-%m-%dT%H:%M")
-    
-    print(data)        
-        
+        found_time = datetime.strptime(found_time_str, "%Y-%m-%dT%H:%M")
+
+    print(data)
+
     pet_post = PetPost(
-        user_id = data.get('user_id'),
-        found_location = data.get('found_location'),
-        actual_location = data.get('actual_location'),
-        found_time = data.get('found_time'),
-        name = data.get('name'),
-        breed = data.get('breed'),
-        physical_description = data.get('physical_description')
+        user_id=data.get('user_id'),
+        found_location=data.get('found_location'),
+        actual_location=data.get('actual_location'),
+        found_time=data.get('found_time'),
+        name=data.get('name'),
+        breed=data.get('breed'),
+        physical_description=data.get('physical_description')
     )
     db.session.add(pet_post)
     db.session.commit()
     return pet_post.serialize(), 200
 
 # GET USER INFORMATION
+
+
 @api.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = db.session.get(User, user_id)
@@ -194,6 +196,34 @@ def get_user(user_id):
 
     return jsonify(user_data), 200
 
+# UPDATE USER INFO
+
+
+@api.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+
+    user.name = data.get("name", user.name)
+    user.last_name = data.get("last_name", user.last_name)
+    user.username = data.get("username", user.username)
+    user.address = data.get("address", user.address)
+    user.phone = data.get("phone", user.phone)
+    user.prof_img = data.get("prof_img", user.prof_img)
+
+    # Nota: El email y password suelen requerir lógica extra de seguridad,
+    # por ahora no los incluimos en una edición simple.
+
+    try:
+        db.session.commit()
+        return jsonify(user.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating user", "error": str(e)}), 500
 
 # AUTHENTICATION TESTING
 # Protect a route with jwt_required, which will kick out requests without a valid JWT
