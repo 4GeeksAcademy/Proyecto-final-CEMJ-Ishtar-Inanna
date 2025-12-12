@@ -47,7 +47,7 @@ export const RegisterPets = () => {
         const arr = (name) => [...f.querySelectorAll(name)].filter(c => c.checked).map(c => c.value).join(';');
 
         setSummary(
-            ['Tamaño:' + txt('[name="tamano"]'),
+            ['Tamano:' + txt('[name="tamano"]'),
             'Pelo:' + txt('[name="pelo"]'),
             'Color:' + arr('input[name="color"]:checked'),
             'Marcas:' + arr('input[name="marca"]:checked')]

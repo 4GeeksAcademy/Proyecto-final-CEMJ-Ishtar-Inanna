@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { getAllPetPosts } from "../../services/petPostServices";
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom"
+import { useLocation } from 'react-router-dom';
 
 export const FoundAnimals = () => {
     //     // Access the global state and dispatch function using the useGlobalReducer hook.
@@ -13,9 +14,26 @@ export const FoundAnimals = () => {
         setPetList(response.pets)
     }
 
+    const enriched = petList.map(p => ({
+        ...p,
+        details: Object.fromEntries(
+            p.physical_description
+                .split('|')
+                .map(s => s.split(':', 2))
+                .map(([k, v]) => {
+                    const val = v.includes(';') ? v.split(';') : v || null;
+                    return [k, val];
+                })
+        )
+    }));
+
+    console.log("Aqui esta la variable separada", enriched)
+
+
     useEffect(() => { testFetchMascotas() }, [])
 
-    const newList = petList.filter(pets=>pets.is_lost==false)
+    const newList = enriched.filter(pets => pets.is_lost == false)
+
 
     return (
         <div className="container">
@@ -27,9 +45,14 @@ export const FoundAnimals = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{pets.name}</h5>
                                 <ul>
-                                    <li className="card-text">{pets.physical_description}</li>
+                                    <li className="card-text">{pets.details.Especie}</li>
                                 </ul>
-                                <a href="#" className="button btn btn-primary">Contactar</a>
+                                <ul>
+                                    <li className="card-text">{pets.details.Tamaño}</li>
+                                </ul>
+                                <Link to="/singleanimalview" state={{ id: pets.id }}>
+                                    <p href="#" className="button btn btn-primary">Más información</p>
+                                </Link>
                             </div>
                         </div>
                     </div>

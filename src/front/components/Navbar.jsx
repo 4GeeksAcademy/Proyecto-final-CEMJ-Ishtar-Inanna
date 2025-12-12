@@ -22,14 +22,24 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 
 					<ul className="navbar-nav me-auto">
-						<li className="nav-item mx-3">
+						{/* <li className="nav-item mx-3">
 							<Link to="/refuges" className="nav-link text-light">
 								<b>Refugios</b>
 							</Link>
+						</li> */}
+						<li className="nav-item">
+							<Link to="/lostanimals" className="nav-link text-light">
+								<b>Animales Perdidos</b>
+							</Link>
 						</li>
 						<li className="nav-item">
-							<Link to="/foundlostanimals" className="nav-link text-light">
-								<b>Animales Perdidos/Encontrados</b>
+							<Link to="/foundanimals" className="nav-link text-light">
+								<b>Animales Encontrados</b>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/auth/registerpets" className="nav-link text-light">
+								<b>Añadir Registro</b>
 							</Link>
 						</li>
 					</ul>
