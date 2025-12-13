@@ -16,6 +16,7 @@ export const FoundAnimals = () => {
 
         const deleteMascota = async (pet_id) => {
         const response = await deletePetPost(pet_id)
+        testFetchMascotas()
         console.log(response)
     }
 
