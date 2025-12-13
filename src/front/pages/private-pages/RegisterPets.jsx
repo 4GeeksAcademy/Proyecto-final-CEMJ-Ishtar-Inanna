@@ -35,6 +35,7 @@ export const RegisterPets = () => {
     useEffect(() => { setActualLocation(""), setFoundLocation("") }, [isLost])
 
     console.log(formData)
+// '2025-12-11T15:30'
 
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
