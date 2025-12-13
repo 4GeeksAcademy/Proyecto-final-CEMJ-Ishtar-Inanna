@@ -26,7 +26,7 @@ export const LostAnimals = () => {
                 .map(s => s.split(':', 2))
                 .map(([k, v]) => {
                     const val = v?.includes(';') ? v.split(';') : (v || null);
-                    return [k, val];
+                    return [k.trim(), val];
                 })
         )
     }));
