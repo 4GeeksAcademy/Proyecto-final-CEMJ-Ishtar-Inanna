@@ -133,7 +133,7 @@ def delete_pet_post(pet_post_id):
 
     db.session.delete(petpost)
     db.session.commit()
-    return jsonify("deleted petpost", petpost)
+    return jsonify({"Done":True}),200
 
 # GET SINGLE PET POST
 
