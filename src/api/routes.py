@@ -118,8 +118,7 @@ def delete_user(user_id):
 def get_all_pet_posts():
     data = db.session.execute(select(PetPost)).scalars()
     result = list(map(lambda item: item.serialize(), data))
-    response_body = {"All pets list": result}
-    print("hello")
+    response_body = {"pets": result}
     return jsonify(response_body), 200
 
 # DELETE PET POST
@@ -166,7 +165,8 @@ def create_pet_post():
         found_time = data.get('found_time'),
         name = data.get('name'),
         breed = data.get('breed'),
-        physical_description = data.get('physical_description')
+        physical_description = data.get('physical_description'),
+        is_lost = data.get('is_lost')
     )
     db.session.add(pet_post)
     db.session.commit()
