@@ -4,19 +4,18 @@ import { BACKEND_URL } from "../main";
 //Añadir los fetch
 export const getAllPetPosts = async () => {
   const response = await fetch(
-    'AQUI VA A IR LA URL DEL BACK',
+    `${BACKEND_URL}pets`,
     {
       method: "GET",
       headers: { 
         accept: "application/json",
-      },body : {
- 
       }
     }
   );
   if (response.ok) {
     const data = await response.json();
-    return data.agendas;
+    console.log(data)
+    return data;
   } else {
     const message = { error: response.statusText };
     console.log(message);
@@ -24,7 +23,7 @@ export const getAllPetPosts = async () => {
 };
 
 export const createPetPost = async (fetchData) => {
-  console.log("Hola estas dentro de createPetPost")
+  console.log("Hola estas dentro de createPetPost y esto es fetchdata", fetchData)
   const response = await fetch(
     `${BACKEND_URL}pets`,
     {
@@ -35,6 +34,7 @@ export const createPetPost = async (fetchData) => {
       },body : JSON.stringify(fetchData)
     }
   );
+  console.log(response)
   if (response.ok) {
     const data = await response.json();
     return data.agendas;

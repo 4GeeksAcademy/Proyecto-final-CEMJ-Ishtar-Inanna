@@ -4,6 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Navbar = () => {
 	const { login, switchLogin } = useGlobalReducer();
+	const isToken = localStorage.getItem("jwt-token") ? true : false
 
 	const handleLogout = () => {
 		localStorage.removeItem("jwt-token");
@@ -12,7 +13,7 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar navbar-expand-lg text-light color-text-light">
-			<div className="container-fluid text-light">
+			<div className="container-fluid text-light container">
 
 				<Link to="/" className="navbar-brand mx-5">
 					<img className="logo" src={Logo} alt="Logo Inanna" />
@@ -21,14 +22,24 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 
 					<ul className="navbar-nav me-auto">
-						<li className="nav-item mx-3">
+						{/* <li className="nav-item mx-3">
 							<Link to="/refuges" className="nav-link text-light">
 								<b>Refugios</b>
 							</Link>
+						</li> */}
+						<li className="nav-item">
+							<Link to="/lostanimals" className="nav-link text-light">
+								<b>Animales Perdidos</b>
+							</Link>
 						</li>
 						<li className="nav-item">
-							<Link to="/foundlostanimals" className="nav-link text-light">
-								<b>Animales Perdidos/Encontrados</b>
+							<Link to="/foundanimals" className="nav-link text-light">
+								<b>Animales Encontrados</b>
+							</Link>
+						</li>
+						<li className="nav-item">
+							<Link to="/auth/registerpets" className="nav-link text-light">
+								<b>Añadir Registro</b>
 							</Link>
 						</li>
 					</ul>
@@ -48,7 +59,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 
-					{login ? (
+					{isToken ? (
 
 						//     VISTA SI ESTÁ LOGUEADO
 						<div className="nav-item mx-3 d-flex align-items-center">
