@@ -133,14 +133,14 @@ export const ProfilePage = () => {
             <div className="card shadow-lg p-4" style={{ width: "28rem", borderRadius: "15px" }}>
                 <div className="text-center mb-3">
                     {loading ? (<img
-                        src={user.prof_img || "aa"}
+                        src={user.prof_img || "sin perfil"}
                         alt="Foto perfil cargada"
                         className="rounded-circle"
                         width="130"
                         height="130"
                         style={{ objectFit: "cover" }}
                     />) : (<img
-                        src={user.prof_img || image}
+                        src={image || user.prof_img}
                         alt="Foto perfil sin cargar"
                         className="rounded-circle"
                         width="130"
