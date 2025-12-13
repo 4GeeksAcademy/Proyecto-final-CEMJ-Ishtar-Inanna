@@ -12,24 +12,27 @@ bcrypt = Bcrypt()
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
-    __tablename__="user"
+    __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(30),nullable = False, unique = True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(String(250),nullable=False)
-    address: Mapped[str] = mapped_column(String(30), nullable = True)
-    name: Mapped[str] = mapped_column(String(30), nullable = False)
-    last_name: Mapped[str]= mapped_column(String(30), nullable = False)
-    phone: Mapped[str] = mapped_column(String(30), nullable = True)
-    prof_img: Mapped[str] = mapped_column(String(30),nullable = True)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable = True)
-    
-    #name , lastname username, email, password SON OBLIGATORIOS
-    #FK
-    
-    #Relationships
-    
+    username: Mapped[str] = mapped_column(
+        String(30), nullable=False, unique=True)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(250), nullable=False)
+    address: Mapped[str] = mapped_column(String(30), nullable=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    last_name: Mapped[str] = mapped_column(String(30), nullable=False)
+    phone: Mapped[str] = mapped_column(String(30), nullable=True)
+    prof_img: Mapped[str] = mapped_column(String(250), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+
+    # name , lastname username, email, password SON OBLIGATORIOS
+    # FK
+
+    # Relationships
+
     def serialize(self):
         return {
             "id": self.id,
@@ -40,18 +43,20 @@ class User(db.Model):
             "last_name": self.last_name,
             "phone": self.phone,
             "prof_img": self.prof_img,
-            "is_active" : self.is_active
+            "is_active": self.is_active
         }
-        
-    #HASHEO DE CONTRASEÑA(No touchy)
-    
+
+    # HASHEO DE CONTRASEÑA(No touchy)
+
     def set_password(self, plain_pwd):
-        self.password = bcrypt.generate_password_hash(plain_pwd).decode('utf-8')
+        self.password = bcrypt.generate_password_hash(
+            plain_pwd).decode('utf-8')
         return "contraseña hasheada guardada exitosamente"
 
     def check_password(self, plain_pwd):
         return bcrypt.check_password_hash(self.password, plain_pwd)
-           
+
+
 class PetPost(db.Model):
     __tablename__ = "pet_post"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -82,41 +87,44 @@ class PetPost(db.Model):
             "is_lost":self.is_lost,
             "is_active" : self.is_active
         }
-    
+
+
 class SocialMedia(db.Model):
-    __tablename__="social_media"
+    __tablename__ = "social_media"
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) 
-    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    type: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    username: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     email: Mapped[str] = mapped_column
 
-    #FK
-    
-    #Relationships
-    user_id : Mapped[int] = mapped_column(ForeignKey("user.id"))
-    user : Mapped["User"] = relationship()
-    
+    # FK
+
+    # Relationships
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user: Mapped["User"] = relationship()
+
     def serialize(self):
-        return{
-        "id":self.id,
-        "type":self.type,
-        "username":self.username,
-        "email":self.email
-    }
-    
+        return {
+            "id": self.id,
+            "type": self.type,
+            "username": self.username,
+            "email": self.email
+        }
+
+
 class PetImages(db.Model):
-    __tablename__="pet_images"
-    id: Mapped[int] = mapped_column(primary_key =  True)
-    url: Mapped[str] = mapped_column(String(30),nullable = False, unique = True) 
-    
-    #FK
-    
-    #Relationships
-    pet_post_id : Mapped[int] = mapped_column(ForeignKey("pet_post.id"))
-    pet_post : Mapped ["PetPost"] = relationship()
-    
+    __tablename__ = "pet_images"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    url: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+
+    # FK
+
+    # Relationships
+    pet_post_id: Mapped[int] = mapped_column(ForeignKey("pet_post.id"))
+    pet_post: Mapped["PetPost"] = relationship()
+
     def serialize(self):
-        return{
-            "id":self.id,
-            "url":self.url
+        return {
+            "id": self.id,
+            "url": self.url
         }
