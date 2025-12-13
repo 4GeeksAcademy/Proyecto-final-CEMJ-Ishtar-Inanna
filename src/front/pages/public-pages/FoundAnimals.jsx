@@ -17,7 +17,6 @@ export const FoundAnimals = () => {
         const deleteMascota = async (pet_id) => {
         const response = await deletePetPost(pet_id)
         testFetchMascotas()
-        console.log(response)
     }
 
     const enriched = petList.map(p => ({
@@ -27,19 +26,15 @@ export const FoundAnimals = () => {
                 .split('|')
                 .map(s => s.split(':', 2))
                 .map(([k, v]) => {
-                    const val = v.includes(';') ? v.split(';') : v || null;
+                    const val = v?.includes(';') ? v.split(';') : (v || null);
                     return [k, val];
                 })
         )
     }));
 
-    console.log("Aqui esta la variable separada", enriched)
-
-
     useEffect(() => { testFetchMascotas() }, [])
 
     const newList = enriched.filter(pets => pets.is_lost == false)
-
 
     return (
         <div className="container">

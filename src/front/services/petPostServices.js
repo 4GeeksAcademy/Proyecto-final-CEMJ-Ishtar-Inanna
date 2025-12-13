@@ -11,7 +11,6 @@ export const getAllPetPosts = async () => {
   });
   if (response.ok) {
     const data = await response.json();
-    console.log(data);
     return data;
   } else {
     const message = { error: response.statusText };
@@ -20,10 +19,6 @@ export const getAllPetPosts = async () => {
 };
 
 export const createPetPost = async (fetchData) => {
-  console.log(
-    "Hola estas dentro de createPetPost y esto es fetchdata",
-    fetchData
-  );
   const response = await fetch(`${BACKEND_URL}pets`, {
     method: "POST",
     headers: {
@@ -43,10 +38,6 @@ export const createPetPost = async (fetchData) => {
 };
 
 export const deletePetPost = async (fetchData) => {
-  console.log(
-    "Hola estas dentro de createPetPost y esto es fetchdata",
-    fetchData
-  );
   const response = await fetch(`${BACKEND_URL}pets/${fetchData}`, {
     method: "DELETE",
     headers: {
@@ -54,6 +45,6 @@ export const deletePetPost = async (fetchData) => {
     }
   });
 if (response.ok){
-  return "Eliminado"
+  return "Done"
 }
 };

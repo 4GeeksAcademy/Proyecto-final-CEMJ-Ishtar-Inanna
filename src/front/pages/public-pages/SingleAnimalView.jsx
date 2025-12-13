@@ -24,8 +24,8 @@ export const SingleAnimalView = () => {
                 .split('|')
                 .map(s => s.split(':', 2))
                 .map(([k, v]) => {
-                    const val = v.includes(';') ? v.split(';') : v || null;
-                    return [k, val];
+                    const val = v?.includes(';') ? v.split(';') : (v || null);
+                    return [k.trim(), val];
                 })
         )
     }));
@@ -34,7 +34,7 @@ export const SingleAnimalView = () => {
 
     const pet = enriched.find(p => p.id === id_mascota);
     if (!pet) return <p>Mascota no encontrada</p>;
-    console.log(pet)
+
     return (
         <div className="container">
             <div>
@@ -42,13 +42,14 @@ export const SingleAnimalView = () => {
                 <h5>Especie</h5>
                 <p>{pet.breed}</p>
                 <h5>Tamaño</h5>
-                <p>{pet.details.Tamano}</p>
+                <p>{pet.details.Tamaño}</p>
                 <h5>Tipo de pelaje</h5>
                 <p>{pet.details.Pelo}</p>
-                <h5>marcas características</h5>
+                <h5>Marcas características</h5>
+                <div>{Array.isArray(pet.details.Marcas) && pet.details.Marcas.map(m => <p key={m}>{m}</p>)}</div>
                 <h5>Colores del animal</h5>
                 <div>{Array.isArray(pet.details.Color) && pet.details.Color.map(m => <p key={m}>{m}</p>)}</div>
-                <p>{Array.isArray(pet.details.Marcas) && pet.details.Marcas.map(m => <li key={m}>{m}</li>)}</p>
+
             </div>
 
         </div>
