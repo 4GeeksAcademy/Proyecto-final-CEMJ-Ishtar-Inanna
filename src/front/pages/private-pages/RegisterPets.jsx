@@ -71,6 +71,7 @@ export const RegisterPets = () => {
                 {isLost ? <div className="mb-3">
                     <label className="form-label">Lugar donde se perdió</label>
                     <input
+                        required
                         className="form-control"
                         type="lugar"
                         placeholder="LUGAR DONDE SE VIO POR ÚLTIMA VEZ"
@@ -81,6 +82,7 @@ export const RegisterPets = () => {
                     <div className="mb-3">
                         <label className="form-label">Lugar donde se encontró</label>
                         <input
+                            required
                             className="form-control"
                             placeholder="LUGAR DONDE SE ENCONTRÓ"
                             onChange={({ target }) => setActualLocation(target.value)}
@@ -115,7 +117,7 @@ export const RegisterPets = () => {
                     >
                         <div className="mb-3">
                             <label className="form-label">Especie</label>
-                            <select onChange={e=>setBreed(e.target.value)}name="especie" className="form-select">
+                            <select onChange={e => setBreed(e.target.value)} name="especie" className="form-select" required>
                                 <option value="" disabled selected hidden>Seleccione una especie</option>
                                 <option>Perro</option>
                                 <option>Gato</option>
@@ -127,7 +129,7 @@ export const RegisterPets = () => {
 
                         <div className="mb-3">
                             <label className="form-label">Tamaño</label>
-                            <select name="tamano" className="form-select">
+                            <select name="tamano" className="form-select" required>
                                 <option value="" disabled selected hidden>Seleccione un tamaño</option>
                                 <option>Pequeño</option>
                                 <option>Mediano</option>
@@ -136,7 +138,7 @@ export const RegisterPets = () => {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Tipo de pelo / plumaje</label>
-                            <select name="pelo" className="form-select">
+                            <select name="pelo" className="form-select" required>
                                 <option value="" disabled selected hidden>Seleccione un tipo de pelaje</option>
                                 <option>Corto</option>
                                 <option>Mediano</option>

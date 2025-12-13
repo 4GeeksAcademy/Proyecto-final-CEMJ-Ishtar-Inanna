@@ -45,7 +45,7 @@ export const FoundAnimals = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{pets.name}</h5>
                                 <ul>
-                                    <li className="card-text">{pets.details.Especie}</li>
+                                    <li className="card-text">{pets.breed}</li>
                                 </ul>
                                 <ul>
                                     <li className="card-text">{pets.details.Tamaño}</li>
