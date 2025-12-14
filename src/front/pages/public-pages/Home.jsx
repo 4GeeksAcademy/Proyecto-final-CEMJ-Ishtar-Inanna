@@ -32,7 +32,7 @@ const slides = [
 
 const SLIDE_DURATION = 5000;
 
-export const Home =()=> {
+export const Home = () => {
 	const [index, setIndex] = useState(0);
 	const [progress, setProgress] = useState(0);
 

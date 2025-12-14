@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Map } from "../../components/Map"
 
 export const LostAnimals = () => {
     //     // Access the global state and dispatch function using the useGlobalReducer hook.
@@ -17,6 +18,7 @@ export const LostAnimals = () => {
                             <li className="card-text">Ojos verdes.</li>
                             <li className="card-text">Con una pequeña mancha blanca en el pecho.</li>
                         </ul>
+                        <Map />
                         <a href="#" className="boton btn btn-primary">Contactar</a>
                     </div>
                 </div>
