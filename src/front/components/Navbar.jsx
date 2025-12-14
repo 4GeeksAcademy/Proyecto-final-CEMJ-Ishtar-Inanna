@@ -3,8 +3,11 @@ import Logo from "../assets/img/Logo.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Navbar = () => {
+
 	const { login, switchLogin } = useGlobalReducer();
 	const isToken = localStorage.getItem("jwt-token") ? true : false
+	const navigate = useNavigate();
+
 
 	const handleLogout = () => {
 		localStorage.clear()
@@ -71,7 +74,7 @@ export const Navbar = () => {
 
 							<button
 								className="btn btn-danger"
-								onClick={handleLogout}
+								onClick={() => handleLogout()}
 							>
 								Logout
 							</button>

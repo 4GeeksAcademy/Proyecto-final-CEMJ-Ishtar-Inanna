@@ -34,13 +34,9 @@ export const RegisterPets = () => {
 
     useEffect(() => { setActualLocation(""), setFoundLocation("") }, [isLost])
 
-    console.log(formData)
-    // '2025-12-11T15:30'
-
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
     }
-
 
     const buildString = () => {
         const f = document.getElementById('optionForm');
@@ -51,11 +47,11 @@ export const RegisterPets = () => {
             ['Tamano:' + txt('[name="tamano"]'),
             'Pelo:' + txt('[name="pelo"]'),
             'Color:' + arr('input[name="color"]:checked'),
-            'Marcas:' + arr('input[name="marca"]:checked')]
+            'Marcas:' + arr('input[name="marca"]:checked')
+        ]
                 .filter(Boolean).join('|')
         );
     };
-    console.log(summary)
     return (
         <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
             <div className="card shadow-lg rounded-4 p-4 w-100" style={{ maxWidth: 480 }}>
