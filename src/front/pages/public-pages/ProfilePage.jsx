@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getUserById, updateUser, deleteUser } from "../../services/userServices";
 import { getAuthentication } from "../../services/loginServices";
 import { useNavigate } from "react-router-dom";
-import perrito from "../../assets/img/DobbyElElfo.JPG";
 import useGlobalReducer from "../../hooks/useGlobalReducer";
 
 export const ProfilePage = () => {
