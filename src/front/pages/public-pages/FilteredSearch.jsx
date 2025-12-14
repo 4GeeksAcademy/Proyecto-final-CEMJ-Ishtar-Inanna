@@ -35,7 +35,6 @@ export const FilteredSearch = () => {
       return chosen.every(c => petArr.includes(c));
     };
 
-    if (typeof form.is_lost === 'boolean' && pet.is_lost !== form.is_lost) return false;
     if (!eq(pet.name, form.name)) return false;
     if (!eq(pet.breed, form.breed)) return false;
     if (!eq(pet.actual_location, form.actual_location)) return false;
@@ -113,9 +112,9 @@ export const FilteredSearch = () => {
     <>
       <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
         <div className="card shadow-lg rounded-4 p-4 w-100" style={{ maxWidth: 480 }}>
-          <h1 className="text-center mb-4 fw-semibold">Crear registro</h1>
+          <h1 className="text-center mb-4 fw-semibold">Búsqueda filtrada</h1>
           <div className="my-3">
-            <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={() => setIsLost(true)}>PERDIDO DEFAULT</button>
+            <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={() => setIsLost(true)}>PERDIDO</button>
             <button className={`btn ${isLost ? "btn-danger" : "btn-success"}`} onClick={() => setIsLost(false)}>ENCONTRADO</button>
           </div>
           <form
@@ -174,6 +173,7 @@ export const FilteredSearch = () => {
                   <label className="form-label">Especie</label>
                   <select onChange={e => setBreed(e.target.value)} name="especie" className="form-select" required>
                     <option value="" disabled selected hidden>Seleccione una especie</option>
+                    <option value="">No especificado</option>
                     <option>Perro</option>
                     <option>Gato</option>
                     <option>Ave</option>
@@ -186,6 +186,7 @@ export const FilteredSearch = () => {
                   <label className="form-label">Tamaño</label>
                   <select name="tamano" className="form-select" required>
                     <option value="" disabled selected hidden>Seleccione un tamaño</option>
+                    <option value="">No especificado</option>
                     <option>Pequeño</option>
                     <option>Mediano</option>
                     <option>Grande</option>
@@ -195,6 +196,7 @@ export const FilteredSearch = () => {
                   <label className="form-label">Tipo de pelo / plumaje</label>
                   <select name="pelo" className="form-select" required>
                     <option value="" disabled selected hidden>Seleccione un tipo de pelaje</option>
+                    <option value="">No especificado</option>
                     <option>Corto</option>
                     <option>Mediano</option>
                     <option>Largo</option>
