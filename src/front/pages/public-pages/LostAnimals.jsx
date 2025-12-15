@@ -46,7 +46,8 @@ export const LostAnimals = () => {
                                 className="card-img-top"
                                 alt={pets.name}
                                 style={{ height: "200px", objectFit: "cover" }}
-                            />                            <p>{pets.found_location}</p>
+                            />                            
+                            <p>{pets.found_location}</p>
                             <div className="card-body">
                                 <h5 className="card-title">{pets.name}</h5>
                                 <ul>

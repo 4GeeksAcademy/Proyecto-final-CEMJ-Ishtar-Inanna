@@ -34,9 +34,11 @@ export const SingleAnimalView = () => {
                 const [lat, lng] = p.found_location.split(',').map(Number);
                 return { lat, lng };
             })()
-            : null,
+            : (() => {
+                const [lat, lng] = p.actual_location.split(',').map(Number);
+                return { lat, lng };
+            })(),
     }));
-
     console.log(enriched)
     useEffect(() => { testFetchMascotas() }, [])
 

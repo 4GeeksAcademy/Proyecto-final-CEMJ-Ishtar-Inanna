@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { createPetPost } from "../../services/petPostServices";
 import { useNavigate } from "react-router-dom"
 import { getAuthentication } from "../../services/loginServices";
-import { uploadToCloudinary } from "../../services/ImagesServices"; 
+import { uploadToCloudinary } from "../../services/ImagesServices";
 import GoogleMapWidget from "../../components/Map";
 
 
@@ -106,7 +106,7 @@ export const RegisterPets = () => {
             breed,
             physical_description: summary,
             is_lost: isLost,
-            images: imageUrls 
+            images: imageUrls
         })
     }, [foundLocation, actualLocation, foundTime, name, breed, summary, isLost, imageUrls])
 
@@ -344,6 +344,7 @@ export const RegisterPets = () => {
                         className="form-control"
                         type="datetime-local"
                         value={foundTime}
+                        onChange={(e) => setFoundTime(e.target.value)}   // <-- missing line
                     />
 
 
@@ -353,7 +354,7 @@ export const RegisterPets = () => {
                             type="file"
                             className="form-control"
                             accept="image/*"
-                            multiple 
+                            multiple
                             onChange={handleImageUpload}
                             disabled={uploading}
                         />
