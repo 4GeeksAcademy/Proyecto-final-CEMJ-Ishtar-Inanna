@@ -1,7 +1,7 @@
 import { GoogleMap, Marker, useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import { useState, useEffect, useRef } from "react";
 
-export const Map = ()=>{
+export default function MapLocation(onLocationSelected) {
     const { isLoaded, loadError } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyC3LNNrqNP8l6RH6EmjuNSW2h1go_engHk",
         libraries: ["places"],
@@ -50,8 +50,10 @@ export const Map = ()=>{
                 const location = {
                     lat: place.geometry.location.lat(),
                     lng: place.geometry.location.lng(),
+                    address: place.formatted_address || place.name,
                 };
                 setSearchLocation(location);
+                if (onLocationSelected) onLocationSelected(location); // ← SEND UP
             }
         }
     };

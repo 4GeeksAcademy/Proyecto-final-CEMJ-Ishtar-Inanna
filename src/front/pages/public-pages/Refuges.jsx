@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Map from "../../components/Map.jsx";
+import Map from "../../components/MapLocation.jsx";
 
 
 export const Refuges = () => {

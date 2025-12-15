@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { createPetPost } from "../../services/petPostServices";
 import { useNavigate } from "react-router-dom"
 import { getAuthentication } from "../../services/loginServices";
+import MapLocation from "../../components/MapLocation";
 
 export const RegisterPets = () => {
 
@@ -37,13 +38,16 @@ export const RegisterPets = () => {
 
     useEffect(() => { setActualLocation(""), setFoundLocation("") }, [isLost])
 
-    console.log(formData)
-    // '2025-12-11T15:30'
+    const [showMap, setShowMap] = useState("");
+    const handleMapPick = (place) => {
+        if (showMap === "found") setFoundLocation(place.address);
+        else if (showMap === "actual") setActualLocation(place.address);
+        setShowMap("");               // close modal
+    };
 
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
     }
-
 
     const buildString = () => {
         const f = document.getElementById('optionForm');
@@ -58,7 +62,7 @@ export const RegisterPets = () => {
                 .filter(Boolean).join('|')
         );
     };
-    console.log(summary)
+
     return (
         <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
             <div className="card shadow-lg rounded-4 p-4 w-100" style={{ maxWidth: 480 }}>
@@ -72,28 +76,65 @@ export const RegisterPets = () => {
                     className="w-100"
                     style={{ maxWidth: "420px" }}
                 >
-                    {isLost ? <div className="mb-3">
-                        <label className="form-label">Lugar donde se perdió</label>
-                        <input
-                            required
-                            className="form-control"
-                            type="lugar"
-                            placeholder="LUGAR DONDE SE VIO POR ÚLTIMA VEZ"
-                            onChange={({ target }) => setFoundLocation(target.value)}
-                            value={foundLocation}
-                        />
-                    </div> :
+                    {isLost ? (
                         <div className="mb-3">
-                            <label className="form-label">Lugar donde se encontró</label>
-                            <input
-                                required
-                                className="form-control"
-                                placeholder="LUGAR DONDE SE ENCONTRÓ"
-                                onChange={({ target }) => setActualLocation(target.value)}
-                                value={actualLocation}
-                            />
+                            <label>Lugar donde se perdió</label>
+                            <div className="input-group">
+                                <input
+                                    required
+                                    className="form-control"
+                                    placeholder="LUGAR DONDE SE VIO POR ÚLTIMA VEZ"
+                                    value={foundLocation}
+                                    onChange={e => setFoundLocation(e.target.value)}
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={() => setShowMap("found")}
+                                    title="Elegir en el mapa"
+                                >
+                                    📍
+                                </button>
+                            </div>
                         </div>
-                    }
+                    ) : (
+                        <div className="mb-3">
+                            <label>Lugar donde se encontró</label>
+                            <div className="input-group">
+                                <input
+                                    required
+                                    className="form-control"
+                                    placeholder="LUGAR DONDE SE ENCONTRÓ"
+                                    value={actualLocation}
+                                    onChange={e => setActualLocation(e.target.value)}
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={() => setShowMap("actual")}
+                                    title="Elegir en el mapa"
+                                >
+                                    📍
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {showMap && (
+                        <div
+                            className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                            style={{ background: "rgba(0,0,0,.45)", zIndex: 1050 }}
+                        >
+                            <div className="card" style={{ width: "90%", maxWidth: 700, height: 500 }}>
+                                <div className="card-header d-flex justify-content-between">
+                                    <span>Selecciona una ubicación</span>
+                                    <button type="button" className="btn-close" onClick={() => setShowMap("")} />
+                                </div>
+                                <div className="card-body p-0">
+                                    <MapLocation onLocationSelected={handleMapPick} />   {/* 3.  RENDER & PASS PROP */}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <div className="mb-3">
                         <label className="form-label">Nombre</label>
                         <input
