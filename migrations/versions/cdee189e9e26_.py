@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d45b2ba0bdc5
+Revision ID: cdee189e9e26
 Revises: 
-Create Date: 2025-12-11 14:16:37.438391
+Create Date: 2025-12-14 12:12:35.406114
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd45b2ba0bdc5'
+revision = 'cdee189e9e26'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,14 +40,14 @@ def upgrade():
     sa.Column('found_time', sa.DateTime(), nullable=True),
     sa.Column('name', sa.String(length=30), nullable=False),
     sa.Column('breed', sa.String(length=30), nullable=False),
-    sa.Column('physical_description', sa.String(length=30), nullable=True),
+    sa.Column('species', sa.String(length=30), nullable=False),
+    sa.Column('sex', sa.String(length=30), nullable=False),
+    sa.Column('physical_description', sa.String(length=256), nullable=True),
     sa.Column('is_lost', sa.Boolean(), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('actual_location'),
-    sa.UniqueConstraint('found_location')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('social_media',
     sa.Column('id', sa.Integer(), nullable=False),
