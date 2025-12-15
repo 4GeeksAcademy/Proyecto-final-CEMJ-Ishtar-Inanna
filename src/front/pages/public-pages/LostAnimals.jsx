@@ -35,8 +35,6 @@ export const LostAnimals = () => {
 
     const newList = enriched.filter(pets => pets.is_lost == true)
 
-    console.log(enriched)
-
     return (
         <div className="container">
             <div className="row my-3 mx-3">

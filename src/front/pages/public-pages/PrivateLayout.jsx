@@ -14,7 +14,6 @@ export const PrivateLayout = () => {
         if (!response.done) {
             navigate('/')
         }
-        console.log(response)
     }
 
     useEffect(() => {

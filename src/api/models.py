@@ -104,8 +104,7 @@ class SocialMedia(db.Model):
     __tablename__ = "social_media"
     id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-    username: Mapped[str] = mapped_column(
-        String(120), unique=True, nullable=False)
+    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     email: Mapped[str] = mapped_column
 
     # FK
