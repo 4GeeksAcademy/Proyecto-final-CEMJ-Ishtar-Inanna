@@ -159,14 +159,16 @@ def create_pet_post():
     print(data)
 
     pet_post = PetPost(
-        user_id=data.get('user_id'),
-        found_location=data.get('found_location'),
-        actual_location=data.get('actual_location'),
-        found_time=data.get('found_time'),
-        name=data.get('name'),
-        breed=data.get('breed'),
-        physical_description=data.get('physical_description'),
-        is_lost=data.get('is_lost')
+        user_id = data.get('user_id'),
+        found_location = data.get('found_location'),
+        actual_location = data.get('actual_location'),
+        found_time = data.get('found_time'),
+        name = data.get('name'),
+        breed = data.get('breed'),
+        species = data.get('species'),
+        sex = data.get('sex'),
+        physical_description = data.get('physical_description'),
+        is_lost = data.get('is_lost')
     )
     db.session.add(pet_post)
     db.session.commit()

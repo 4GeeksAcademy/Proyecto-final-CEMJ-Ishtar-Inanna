@@ -15,12 +15,15 @@ export const RegisterPets = () => {
     const [name, setName] = useState("");
     const [breed, setBreed] = useState("");
     const [physicalDescription, setPhysicalDescription] = useState("");
-    const [foundTime, setFoundTime] = useState("")
-    const [isLost, setIsLost] = useState(false)
-
-    // --- 2. ESTADOS PARA IMÁGENES ---
+    const [species, setSpecies] = useState("");
+    const [sex, setSex] = useState("");
+    const [foundTime, setFoundTime] = useState("");
+    const [isLost, setIsLost] = useState(false);
+  
+      // --- 2. ESTADOS PARA IMÁGENES ---
     const [imageUrls, setImageUrls] = useState([]);
     const [uploading, setUploading] = useState(false);
+
 
     const [formData, setFormData] = useState(
         { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_description: "", is_lost: "", images: [] })
@@ -31,6 +34,8 @@ export const RegisterPets = () => {
             found_location: foundLocation,
             actual_location: actualLocation,
             found_time: foundTime,
+            species,
+            sex,
             name,
             breed,
             physical_description: summary,

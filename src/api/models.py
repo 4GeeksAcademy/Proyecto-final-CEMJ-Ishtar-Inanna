@@ -65,12 +65,12 @@ class PetPost(db.Model):
     found_location: Mapped[str] = mapped_column(
         String(30), nullable=False)  # Donde se ha encontrado
     actual_location: Mapped[str] = mapped_column(String(120), nullable=False)
-    found_time: Mapped[datetime] = mapped_column(
-        DateTime, nullable=True)  # PONER VALOR POR DEFECTO
-    name: Mapped[str] = mapped_column(String(30), nullable=False)
-    breed: Mapped[str] = mapped_column(String(30), nullable=False)
-    physical_description: Mapped[str] = mapped_column(
-        String(256), nullable=True)
+    found_time: Mapped[datetime] = mapped_column(DateTime,nullable=True) # PONER VALOR POR DEFECTO
+    name: Mapped[str] = mapped_column(String(30), nullable = False)
+    breed: Mapped[str]= mapped_column(String(30), nullable = False)
+    species: Mapped[str]= mapped_column(String(30), nullable = True)
+    sex: Mapped[str]= mapped_column(String(30), nullable = True)
+    physical_description: Mapped[str] = mapped_column(String(256),nullable = True)
     is_lost: Mapped[bool] = mapped_column(Boolean(), default=True)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
 
@@ -90,6 +90,8 @@ class PetPost(db.Model):
             "found_time": self.found_time,
             "name": self.name,
             "breed": self.breed,
+            "species": self.species,
+            "sex": self.sex,
             "physical_description": self.physical_description,
             "is_lost": self.is_lost,
             "is_active": self.is_active,
