@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d45b2ba0bdc5
+Revision ID: 543a24b5e6e0
 Revises: 
-Create Date: 2025-12-11 14:16:37.438391
+Create Date: 2025-12-13 11:33:21.943122
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd45b2ba0bdc5'
+revision = '543a24b5e6e0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,7 +27,7 @@ def upgrade():
     sa.Column('name', sa.String(length=30), nullable=False),
     sa.Column('last_name', sa.String(length=30), nullable=False),
     sa.Column('phone', sa.String(length=30), nullable=True),
-    sa.Column('prof_img', sa.String(length=30), nullable=True),
+    sa.Column('prof_img', sa.String(length=250), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
@@ -40,14 +40,12 @@ def upgrade():
     sa.Column('found_time', sa.DateTime(), nullable=True),
     sa.Column('name', sa.String(length=30), nullable=False),
     sa.Column('breed', sa.String(length=30), nullable=False),
-    sa.Column('physical_description', sa.String(length=30), nullable=True),
+    sa.Column('physical_description', sa.String(length=256), nullable=True),
     sa.Column('is_lost', sa.Boolean(), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('actual_location'),
-    sa.UniqueConstraint('found_location')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('social_media',
     sa.Column('id', sa.Integer(), nullable=False),

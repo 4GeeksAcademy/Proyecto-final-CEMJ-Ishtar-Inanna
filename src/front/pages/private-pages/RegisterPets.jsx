@@ -1,6 +1,9 @@
 
 import { useState, useEffect } from "react";
 import { createPetPost } from "../../services/petPostServices";
+import { useNavigate } from "react-router-dom"
+import { getAuthentication } from "../../services/loginServices";
+import { uploadToCloudinary } from "../../services/ImagesServices"; 
 import GoogleMapWidget from "../../components/Map";
 
 
@@ -82,17 +85,16 @@ export const RegisterPets = () => {
     const [actualLocation, setActualLocation] = useState("");
     const [name, setName] = useState("");
     const [breed, setBreed] = useState("");
-    const [foundTime, setFoundTime] = useState("");
-    const [isLost, setIsLost] = useState(false);
-    const [formData, setFormData] = useState({
-        found_location: "",
-        actual_location: "",
-        found_time: "",
-        name: "",
-        breed: "",
-        physical_description: "",
-        is_lost: "",
-    });
+    const [physicalDescription, setPhysicalDescription] = useState("");
+    const [foundTime, setFoundTime] = useState("")
+    const [isLost, setIsLost] = useState(false)
+
+    // --- 2. ESTADOS PARA IMÁGENES ---
+    const [imageUrls, setImageUrls] = useState([]);
+    const [uploading, setUploading] = useState(false);
+
+    const [formData, setFormData] = useState(
+        { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_description: "", is_lost: "", images: [] })
 
     useEffect(() => {
         setFormData({
@@ -104,17 +106,35 @@ export const RegisterPets = () => {
             breed,
             physical_description: summary,
             is_lost: isLost,
-        });
-    }, [foundLocation, actualLocation, foundTime, name, breed, summary, isLost]);
+            images: imageUrls 
+        })
+    }, [foundLocation, actualLocation, foundTime, name, breed, summary, isLost, imageUrls])
 
-    useEffect(() => {
-        setActualLocation("");
-        setFoundLocation("");
-    }, [isLost]);
+    useEffect(() => { setActualLocation(""), setFoundLocation("") }, [isLost])
+
+    const handleImageUpload = async (e) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+
+        setUploading(true);
+        const uploadPromises = Array.from(files).map(file => uploadToCloudinary(file));
+
+        try {
+            const urls = await Promise.all(uploadPromises);
+            setImageUrls(prev => [...prev, ...urls]);
+            setUploading(false);
+        } catch (error) {
+            console.error("Error subiendo imagenes", error);
+            setUploading(false);
+        }
+    };
 
     const sendNewPetPost = async (formData) => {
-        await createPetPost(formData);
-    };
+        const response = await createPetPost(formData)
+        if (response) {
+            alert("Mascota registrada correctamente");
+        }
+    }
 
     const buildString = () => {
         const f = document.getElementById("optionForm");
@@ -324,16 +344,42 @@ export const RegisterPets = () => {
                         className="form-control"
                         type="datetime-local"
                         value={foundTime}
-                        onChange={(e) => setFoundTime(e.target.value)}
                     />
 
-                    <div className="mb-3 d-flex justify-content-end">
+
+                    <div className="mb-3 mt-3">
+                        <label className="form-label fw-bold">Fotos de la mascota</label>
+                        <input
+                            type="file"
+                            className="form-control"
+                            accept="image/*"
+                            multiple 
+                            onChange={handleImageUpload}
+                            disabled={uploading}
+                        />
+                        {uploading && <div className="text-warning mt-2">Subiendo imágenes...</div>}
+
+                        {/* Vista previa de imágenes */}
+                        <div className="d-flex flex-wrap gap-2 mt-2">
+                            {imageUrls.map((url, index) => (
+                                <img
+                                    key={index}
+                                    src={url}
+                                    alt={`preview-${index}`}
+                                    style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="mb-3 mt-3 d-flex justify-content-end">
                         <button
-                            type="button"
-                            className="btn btn-success px-4 py-2"
                             onClick={() => sendNewPetPost(formData)}
+                            type="button"
+                            className="boton btn btn-success px-4 py-2"
+                            disabled={uploading} // Desactivar si se está subiendo
                         >
-                            REGISTRAR
+                            {uploading ? "CARGANDO..." : "REGISTRAR"}
                         </button>
                     </div>
                 </form>
