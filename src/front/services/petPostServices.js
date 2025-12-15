@@ -1,6 +1,5 @@
 import { act } from "react";
 import { BACKEND_URL } from "../main";
-// import { searchPets } from "../services/petPostServices";
 
 //Añadir los fetch
 export const getAllPetPosts = async () => {

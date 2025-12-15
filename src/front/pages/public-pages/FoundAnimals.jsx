@@ -14,7 +14,7 @@ export const FoundAnimals = () => {
         setPetList(response.pets)
     }
 
-    const deleteMascota = async (pet_id) => {
+        const deleteMascota = async (pet_id) => {
         const response = await deletePetPost(pet_id)
         testFetchMascotas()
     }
@@ -41,12 +41,7 @@ export const FoundAnimals = () => {
             <div className="row my-3 mx-3">
                 {newList.map((pets =>
                     <div className="col-3" key={pets.id}>
-                        <div className="card mx-3 my-2" style={{ width: "18rem" }}>                                       <img
-                            src={pets.images && pets.images.length > 0 ? pets.images[0] : 'https://raquelgarciabayarri.es/wp-content/uploads/2022/04/defectoproducto.jpg'}
-                            className="card-img-top"
-                            alt={pets.name}
-                            style={{ height: "200px", objectFit: "cover" }}
-                        />
+                        <div className="card mx-3 my-2" style={{ width: "18rem" }}>           <img src="..." className="card-img-top" alt="..." />
                             <p>{pets.found_location}</p>
                             <div className="card-body">
                                 <h5 className="card-title">{pets.name}</h5>
@@ -60,7 +55,7 @@ export const FoundAnimals = () => {
                                     <Link to="/singleanimalview" state={{ id: pets.id }}>
                                         <p href="#" className="button btn btn-primary">Más información</p>
                                     </Link>
-                                    <button onClick={() => deleteMascota(pets.id)} className="button btn btn-primary">
+                                    <button onClick={()=>deleteMascota(pets.id)} className="button btn btn-primary">
                                         Delete entry
                                     </button>
                                 </div>

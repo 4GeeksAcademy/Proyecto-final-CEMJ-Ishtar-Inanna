@@ -133,7 +133,7 @@ def delete_pet_post(pet_post_id):
 
     db.session.delete(petpost)
     db.session.commit()
-    return jsonify({"Done": True}), 200
+    return jsonify({"Done":True}),200
 
 # GET SINGLE PET POST
 
@@ -165,26 +165,11 @@ def create_pet_post():
         found_time = data.get('found_time'),
         name = data.get('name'),
         breed = data.get('breed'),
-        species = data.get('species'),
-        sex = data.get('sex'),
         physical_description = data.get('physical_description'),
         is_lost = data.get('is_lost')
     )
     db.session.add(pet_post)
     db.session.commit()
-
-    # AQUI SE GUARDAN LAS IMAGENES
-    images_urls = data.get('images', [])
-
-    for url in images_urls:
-        new_image = PetImages(
-            url=url,
-            pet_post_id=pet_post.id
-        )
-        db.session.add(new_image)
-
-    db.session.commit()
-
     return pet_post.serialize(), 200
 
 # GET USER INFORMATION
@@ -229,6 +214,9 @@ def update_user(user_id):
     user.address = data.get("address", user.address)
     user.phone = data.get("phone", user.phone)
     user.prof_img = data.get("prof_img", user.prof_img)
+
+    # Nota: El email y password suelen requerir lógica extra de seguridad,
+    # por ahora no los incluimos en una edición simple.
 
     try:
         db.session.commit()
