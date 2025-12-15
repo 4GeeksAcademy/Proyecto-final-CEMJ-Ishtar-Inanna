@@ -44,7 +44,7 @@ export const LostAnimals = () => {
                     <div className="col-3" key={pets.id}>
                         <div className="card mx-3 my-2" style={{ width: "18rem" }}>
                             <img
-                                src={pets.images && pets.images.length > 0 ? pets.images[0] : 'https://loremipsum.imgix.net/2uTVCl4WzwqJP5ywFNzukO/8acb2b2cf872f3f5706c4bd63295ba31/placekitten.jpeg?w=1280&q=60&auto=format,compress'}
+                                src={pets.images && pets.images.length > 0 ? pets.images[0] : 'https://raquelgarciabayarri.es/wp-content/uploads/2022/04/defectoproducto.jpg'}
                                 className="card-img-top"
                                 alt={pets.name}
                                 style={{ height: "200px", objectFit: "cover" }}

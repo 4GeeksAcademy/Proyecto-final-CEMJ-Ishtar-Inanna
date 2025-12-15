@@ -287,7 +287,7 @@ export const RegisterPets = () => {
                             onClick={() => sendNewPetPost(formData)}
                             type="button"
                             className="boton btn btn-success px-4 py-2"
-                            disabled={uploading} // Desactivar si se está subiendo
+                            disabled={uploading}
                         >
                             {uploading ? "CARGANDO..." : "REGISTRAR"}
                         </button>
