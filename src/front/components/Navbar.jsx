@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/img/Logo.png";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
@@ -7,8 +7,10 @@ export const Navbar = () => {
 	const isToken = localStorage.getItem("jwt-token") ? true : false
 
 	const handleLogout = () => {
-		localStorage.removeItem("jwt-token");
+		localStorage.clear()
 		switchLogin();
+		navigate("/");
+
 	};
 
 	return (
