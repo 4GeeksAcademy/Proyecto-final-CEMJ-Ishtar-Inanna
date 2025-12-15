@@ -41,13 +41,13 @@ export const FoundAnimals = () => {
             <div className="row my-3 mx-3">
                 {newList.map((pets =>
                     <div className="col-3" key={pets.id}>
-                        <div className="card mx-3 my-2" style={{ width: "18rem" }}>                                       <img
-                            src={pets.images && pets.images.length > 0 ? pets.images[0] : 'https://raquelgarciabayarri.es/wp-content/uploads/2022/04/defectoproducto.jpg'}
-                            className="card-img-top"
-                            alt={pets.name}
-                            style={{ height: "200px", objectFit: "cover" }}
-                        />
-                            <p>{pets.found_location}</p>
+                        <div className="card mx-3 my-2" style={{ width: "18rem" }}>
+                            <img
+                                src={pets.images && pets.images.length > 0 ? pets.images[0] : 'https://raquelgarciabayarri.es/wp-content/uploads/2022/04/defectoproducto.jpg'}
+                                className="card-img-top"
+                                alt={pets.name}
+                                style={{ height: "200px", objectFit: "cover" }}
+                            />                            <p>{pets.found_location}</p>
                             <div className="card-body">
                                 <h5 className="card-title">{pets.name}</h5>
                                 <ul>
