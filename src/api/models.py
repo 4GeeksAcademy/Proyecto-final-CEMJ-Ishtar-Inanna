@@ -32,6 +32,8 @@ class User(db.Model):
     # FK
 
     # Relationships
+    pet_posts = db.relationship(
+        "PetPost", back_populates="user", cascade="all, delete-orphan")
 
     def serialize(self):
         return {
@@ -60,7 +62,8 @@ class User(db.Model):
 class PetPost(db.Model):
     __tablename__ = "pet_post"
     id: Mapped[int] = mapped_column(primary_key=True)
-    found_location: Mapped[str] = mapped_column(String(30), nullable = False) #Donde se ha encontrado
+    found_location: Mapped[str] = mapped_column(
+        String(30), nullable=False)  # Donde se ha encontrado
     actual_location: Mapped[str] = mapped_column(String(120), nullable=False)
     found_time: Mapped[datetime] = mapped_column(DateTime,nullable=True) # PONER VALOR POR DEFECTO
     name: Mapped[str] = mapped_column(String(30), nullable = False)
@@ -69,17 +72,19 @@ class PetPost(db.Model):
     sex: Mapped[str]= mapped_column(String(30), nullable = True)
     physical_description: Mapped[str] = mapped_column(String(256),nullable = True)
     is_lost: Mapped[bool] = mapped_column(Boolean(), default=True)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable = True)
-    
-    #FK
-    
-    #Relationships
-    user_id : Mapped[int] = mapped_column(ForeignKey("user.id"))
-    user : Mapped["User"] = relationship()
-    
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+
+    # FK
+
+    # Relationships
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user: Mapped["User"] = relationship()
+    images = db.relationship(
+        "PetImages", back_populates="pet_post",  cascade="all, delete-orphan")
+
     def serialize(self):
         return {
-           "id": self.id,
+            "id": self.id,
             "found_location": self.found_location,
             "actual_location": self.actual_location,
             "found_time": self.found_time,
@@ -88,8 +93,10 @@ class PetPost(db.Model):
             "species": self.species,
             "sex": self.sex,
             "physical_description": self.physical_description,
-            "is_lost":self.is_lost,
-            "is_active" : self.is_active
+            "is_lost": self.is_lost,
+            "is_active": self.is_active,
+
+            "images": [img.url for img in self.images]
         }
 
 
@@ -117,16 +124,16 @@ class SocialMedia(db.Model):
 
 
 class PetImages(db.Model):
-    __tablename__="pet_images"
-    id: Mapped[int] = mapped_column(primary_key =  True)
-    url: Mapped[str] = mapped_column(String(250),nullable = False, unique = True) 
-    
-    #FK
-    
-    #Relationships
-    pet_post_id : Mapped[int] = mapped_column(ForeignKey("pet_post.id"))
-    pet_post : Mapped ["PetPost"] = relationship()
-    
+    __tablename__ = "pet_images"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    url: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+
+    # FK
+
+    # Relationships
+    pet_post_id: Mapped[int] = mapped_column(ForeignKey("pet_post.id"))
+    pet_post: Mapped["PetPost"] = relationship(back_populates="images")
+
     def serialize(self):
         return {
             "id": self.id,
