@@ -1,5 +1,5 @@
 import { useContext, useReducer, createContext, useState } from "react";
-import storeReducer, { initialStore } from "../store"  
+import storeReducer, { initialStore } from "../store"
 
 
 const StoreContext = createContext()
@@ -7,13 +7,13 @@ const StoreContext = createContext()
 
 export function StoreProvider({ children }) {
 
-    const [login, setLogin] = useState(false)
+    const [login, setLogin] = useState(localStorage.getItem("jwt-token") ? true : false)
     const [store, dispatch] = useReducer(storeReducer, initialStore)
 
-    const switchLogin=()=>{setLogin(!login)}
+    const switchLogin = () => { setLogin(!login) }
 
 
-    return <StoreContext.Provider value={{store, dispatch, login, switchLogin}}>
+    return <StoreContext.Provider value={{ store, dispatch, login, switchLogin }}>
         {children}
     </StoreContext.Provider>
 }

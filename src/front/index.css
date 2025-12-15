@@ -11,12 +11,12 @@
   border-color: #d97a00;
 }
 
-.boton {
+.button {
   background-color: #00afaf; /* Un color púrpura personalizado */
   border-color: #00afaf;
 }
 
-.boton:hover {
+.button:hover {
   background-color: #d97a00;
 }
 
@@ -27,7 +27,9 @@ nav {
 }
 
 .background {
-  background-image: url("./assets/img/Fondo.png");
+  /* background-image: url("./assets/img/Fondo.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+  background-color: rgb(235, 247, 247);
 }
+

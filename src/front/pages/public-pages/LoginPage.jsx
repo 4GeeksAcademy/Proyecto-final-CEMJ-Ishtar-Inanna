@@ -28,10 +28,7 @@ export const LoginPage = () => {
 			localStorage.setItem("userId", response.user_id);
 			navigate("/profilepage");
 
-
 		}
-
-
 
 
 	}
@@ -73,7 +70,7 @@ export const LoginPage = () => {
 
 				<div className="d-flex justify-content-end mb-3">
 					<button
-						className="btn btn-success px-4 py-2"
+						className="button btn btn-success px-4 py-2"
 						onClick={() => handleLogin(userName, password)}
 					>
 						Entrar
@@ -82,15 +79,6 @@ export const LoginPage = () => {
 			</div>
 
 			<div className="w-100" style={{ maxWidth: "420px" }}>
-				<button
-					className="btn btn-primary w-100 mb-2"
-					onClick={getAuthentication}
-				>
-					Testear sistema de login
-				</button>
-
-				<button className="btn btn-danger w-100">Logout</button>
-
 				<p className="mt-3 text-center">
 					{token ? "You are logged in" : "You are not logged in"}
 				</p>

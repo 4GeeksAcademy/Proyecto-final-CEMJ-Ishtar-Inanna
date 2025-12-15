@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Map from "../../components/Map.jsx";
 
+
 export const Refuges = () => {
 
    return (

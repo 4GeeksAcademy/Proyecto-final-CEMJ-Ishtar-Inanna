@@ -8,6 +8,7 @@ from flask_cors import CORS
 from sqlalchemy import select
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import check_password_hash
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -117,8 +118,7 @@ def delete_user(user_id):
 def get_all_pet_posts():
     data = db.session.execute(select(PetPost)).scalars()
     result = list(map(lambda item: item.serialize(), data))
-    response_body = {"All pets list": result}
-    print("hello")
+    response_body = {"pets": result}
     return jsonify(response_body), 200
 
 # DELETE PET POST
@@ -133,7 +133,7 @@ def delete_pet_post(pet_post_id):
 
     db.session.delete(petpost)
     db.session.commit()
-    return jsonify("deleted petpost", petpost)
+    return jsonify({"Done":True}),200
 
 # GET SINGLE PET POST
 
@@ -151,19 +151,32 @@ def get_pet_post(pet_post_id):
 @api.route('/pets', methods=["POST"])
 def create_pet_post():
     data = request.get_json()
+    found_time_str = data.get("found_time")
+    found_time = None
+    if found_time_str:
+        found_time = datetime.strptime(found_time_str, "%Y-%m-%dT%H:%M")
+
+    print(data)
+
     pet_post = PetPost(
-        found_location=data.get('found_location'),
-        actual_location=data.get('actual_location'),
-        found_time=data.get('found_time'),
-        name=data.get('name'),
-        breed=data.get('breed'),
-        physical_description=data.get('physical_description')
+        user_id = data.get('user_id'),
+        found_location = data.get('found_location'),
+        actual_location = data.get('actual_location'),
+        found_time = data.get('found_time'),
+        name = data.get('name'),
+        breed = data.get('breed'),
+        species = data.get('species'),
+        sex = data.get('sex'),
+        physical_description = data.get('physical_description'),
+        is_lost = data.get('is_lost')
     )
     db.session.add(pet_post)
     db.session.commit()
     return pet_post.serialize(), 200
 
 # GET USER INFORMATION
+
+
 @api.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = db.session.get(User, user_id)
@@ -185,6 +198,34 @@ def get_user(user_id):
 
     return jsonify(user_data), 200
 
+# UPDATE USER INFO
+
+
+@api.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+
+    user.name = data.get("name", user.name)
+    user.last_name = data.get("last_name", user.last_name)
+    user.username = data.get("username", user.username)
+    user.address = data.get("address", user.address)
+    user.phone = data.get("phone", user.phone)
+    user.prof_img = data.get("prof_img", user.prof_img)
+
+    # Nota: El email y password suelen requerir lógica extra de seguridad,
+    # por ahora no los incluimos en una edición simple.
+
+    try:
+        db.session.commit()
+        return jsonify(user.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating user", "error": str(e)}), 500
 
 # AUTHENTICATION TESTING
 # Protect a route with jwt_required, which will kick out requests without a valid JWT

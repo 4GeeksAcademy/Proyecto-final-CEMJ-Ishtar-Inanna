@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { PublicLayout } from "./pages/public-pages/PublicLayout";
-import Home from "./pages/public-pages/Home";
+import { Home } from "./pages/public-pages/Home";
 import { Single } from "./pages/public-pages/Single";
 import { FilteredSearch } from "./pages/public-pages/FilteredSearch";
 import { Refuges } from "./pages/public-pages/Refuges";
@@ -15,12 +15,13 @@ import { FoundAnimals } from "./pages/public-pages/FoundAnimals";
 import { FoundLostAnimals } from "./pages/public-pages/FoundLostAnimals";
 import { Demo } from "./pages/private-pages/Demo";
 import { PrivateLayout } from "./pages/public-pages/PrivateLayout";
-import { RefugeSite } from "./pages/RefugeSite";
+import { RefugeSite } from "./pages/public-pages/RefugeSite";
 import { Intro } from "./pages/Intro";
 import { LoginPage } from "./pages/public-pages/LoginPage";
 import { SignUpPage } from "./pages/public-pages/SignUpPage";
-
+import { RegisterPets } from "./pages/private-pages/RegisterPets";
 import { ProfilePage } from "./pages/public-pages/ProfilePage";
+import { SingleAnimalView } from "./pages/public-pages/SingleAnimalView";
 
 
 
@@ -50,11 +51,13 @@ export const router = createBrowserRouter(
         <Route path="/refugesite" element={<RefugeSite />} />
         <Route path="/intro" element={<Intro />} />
         <Route path="/profilepage" element={<ProfilePage />} />
+        <Route path="/singleanimalview" element={<SingleAnimalView/>}/>
 
       </Route>
 
       <Route path="/auth" element={<PrivateLayout />} errorElement={<h1>Not found!</h1>} >
         <Route path="demo" element={<Demo />} />
+        <Route path="registerpets" element={<RegisterPets />} />
       </Route>
     </>
   )

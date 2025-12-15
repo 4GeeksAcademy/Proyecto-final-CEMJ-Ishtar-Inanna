@@ -1,68 +1,214 @@
+import React, { useState, useEffect } from "react";
+import { getAllPetPosts } from "../../services/petPostServices";
 
 export const FilteredSearch = () => {
-  // Access the global state and dispatch function using the useGlobalReducer hook.
+  const [allPets, setAllPets] = useState([]);
+  const [filteredPets, setFilteredPets] = useState([]);
 
+  // Filtros
+  const [speciesFilter, setSpeciesFilter] = useState("");
+  const [sexFilter, setSexFilter] = useState("");
+  const [breedFilter, setBreedFilter] = useState("");
+  const [physicalDescriptionFilter, setPhysicalDescriptionFilter] = useState("");
+  const [colorFilter, setColorFilter] = useState([]);
+  const [eyesColorFilter, setEyesColorFilter] = useState([]);
+  const [sizeFilter, setSizeFilter] = useState("");
+  const [marksFilter, setMarksFilter] = useState([]);
+  const [foundTimeFilter, setFoundTimeFilter] = useState("");
+  const [actualLocationFilter, setActualLocationFilter] = useState("");
+
+  // Normalizador
+  const normalizePet = (pet) => ({
+    ...pet,
+    colors: Array.isArray(pet.colors)
+      ? pet.colors
+      : pet.colors?.split(",").map((c) => c.trim()) || [],
+    marks: Array.isArray(pet.marks)
+      ? pet.marks
+      : pet.marks?.split(",").map((m) => m.trim()) || [],
+    eyes_color: Array.isArray(pet.eyes_color)
+      ? pet.eyes_color
+      : pet.eyes_color?.split(",").map((e) => e.trim()) || [],
+  });
+
+  // Fetch inicial
+  useEffect(() => {
+    const fetchPets = async () => {
+      const data = await getAllPetPosts();
+      const normalized = Array.isArray(data) ? data.map(normalizePet) : [];
+      setAllPets(normalized);
+      setFilteredPets(normalized);
+    };
+    fetchPets();
+  }, []);
+
+  // Filtrado automático
+  useEffect(() => {
+    const results = allPets.filter((pet) => (
+      (!speciesFilter || String(pet.species_id) === speciesFilter) &&
+      (!sexFilter || pet.sex === sexFilter) &&
+      (!breedFilter || pet.breed?.toLowerCase().includes(breedFilter.toLowerCase())) &&
+      (!physicalDescriptionFilter || pet.physical_description?.toLowerCase().includes(physicalDescriptionFilter.toLowerCase())) &&
+      (!actualLocationFilter || pet.actual_location?.toLowerCase().includes(actualLocationFilter.toLowerCase())) &&
+      (!foundTimeFilter || new Date(pet.found_time) >= new Date(foundTimeFilter)) &&
+      (!sizeFilter || pet.size === sizeFilter) &&
+      (!colorFilter.length || colorFilter.some(c => pet.colors.includes(c))) &&
+      (!eyesColorFilter.length || eyesColorFilter.some(c => pet.eyes_color.includes(c))) &&
+      (!marksFilter.length || marksFilter.some(m => pet.marks.includes(m)))
+    ));
+
+    setFilteredPets(results);
+  }, [allPets, speciesFilter, sexFilter, breedFilter, physicalDescriptionFilter, actualLocationFilter, foundTimeFilter, sizeFilter, colorFilter, eyesColorFilter, marksFilter]);
+
+  const clearAllFilters = () => {
+    setSpeciesFilter("");
+    setSexFilter("");
+    setBreedFilter("");
+    setPhysicalDescriptionFilter("");
+    setColorFilter([]);
+    setEyesColorFilter([]);
+    setSizeFilter("");
+    setMarksFilter([]);
+    setFoundTimeFilter("");
+    setActualLocationFilter("");
+  };
+
+  const sendFilter = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="background">
-      
-        <form className="container">
-          <div className="input-group mb-3">
-            <select className="form-select" id="inputGroupSelect01">
-              <option placeholder="Especie" selected>Especie</option>
-              <option value="1">Perro</option>
-              <option value="2">Gato</option>
-              <option value="3">Hurón</option>
-              <option value="4">Pájaro</option>
-              <option value="5">Conejo</option>
-              <option value="3">Otro</option>
-            </select>
-          </div>
+      <form className="container mt-5" onSubmit={sendFilter}>
 
-          <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Raza, mestizo, mezcla de ..." aria-label="Raza" />
-          </div>
+        {/* Especie */}
+        <select className="form-select mb-3" value={speciesFilter} onChange={e => setSpeciesFilter(e.target.value)}>
+          <option value="">Especie</option>
+          <option value="1">Perro</option>
+          <option value="2">Gato</option>
+          <option value="3">Hurón</option>
+          <option value="4">Pájaro</option>
+          <option value="5">Conejo</option>
+          <option value="6">Otro</option>
+        </select>
 
-          <div className="mb-3">
-            <div className="input-group">
-              <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" placeholder="Color de pelo" />
+        {/* Sexo */}
+        <div className="mb-3">
+          <input type="checkbox" value="male" checked={sexFilter === "male"} onChange={e => setSexFilter(sexFilter === e.target.value ? "" : e.target.value)} />
+          <label className="mx-2">Macho</label>
+
+          <input type="checkbox" value="female" checked={sexFilter === "female"} onChange={e => setSexFilter(sexFilter === e.target.value ? "" : e.target.value)} />
+          <label className="mx-2">Hembra</label>
+        </div>
+
+        {/* Raza */}
+        <input type="text" className="form-control mb-3" placeholder="Raza" value={breedFilter} onChange={e => setBreedFilter(e.target.value)} />
+
+        {/* Color pelaje */}
+        <div className="mb-3 row">
+          <label className="form-label">Color del pelaje / plumaje</label>
+          {[ ["Negro", "Blanco", "Marrón"], ["Crema", "Amarillo", "Canela"], ["Atigrado", "Carey", "Naranja"] ].map((group, i) => (
+            <div key={i} className="col-3">
+              {group.map(color => (
+                <div key={color} className="form-check mb-2">
+                  <input
+                    type="checkbox"
+                    id={`color-${color}`}
+                    value={color}
+                    checked={colorFilter.includes(color)}
+                    onChange={e => {
+                      if (e.target.checked) setColorFilter(prev => [...prev, color]);
+                      else setColorFilter(prev => prev.filter(c => c !== color));
+                    }}
+                    className="form-check-input"
+                  />
+                  <label className="form-check-label" htmlFor={`color-${color}`}>{color}</label>
+                </div>
+              ))}
             </div>
-            <div className="form-text" id="basic-addon4">Ej: gris, negro con el pecho blanco, atigrado, tricolor...</div>
-          </div>
+          ))}
+        </div>
 
-          <div className="input-group mt-3 mb-3">
-            <input type="text" className="form-control" placeholder="Color de ojos" />
-          </div>
-
-          <div className="mb-3">
-            <div className="input-group">
-              <input type="text" className="form-control" placeholder="Otros detalles" aria-label="Username" />
+        {/* Color ojos */}
+        <div className="mb-3 row">
+          <label className="form-label">Color de ojos</label>
+          {["Verde", "Marrón", "Azul", "Gris", "Heterocromía", "Naranja"].map(color => (
+            <div key={color} className="col-2 mb-2 form-check">
+              <input
+                type="checkbox"
+                id={`eye-${color}`}
+                value={color}
+                checked={eyesColorFilter.includes(color)}
+                onChange={e => {
+                  if (e.target.checked) setEyesColorFilter(prev => [...prev, color]);
+                  else setEyesColorFilter(prev => prev.filter(c => c !== color));
+                }}
+                className="form-check-input"
+              />
+              <label className="form-check-label" htmlFor={`eye-${color}`}>{color}</label>
             </div>
-            <div className="form-text" id="basic-addon4">Ej: oreja cortada, rabo cortado, le falta la pata..., le falta el ojo...,mancha en la espalda con forma...,...</div>
-          </div>
+          ))}
+        </div>
 
-          <div className="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label className="form-check-label" for="exampleCheck1">Castrado</label>
-          </div>
+        {/* Tamaño */}
+        <select className="form-select mb-3 col-3" value={sizeFilter} onChange={e => setSizeFilter(e.target.value)}>
+          <option value="">Tamaño</option>
+          <option>Pequeño</option>
+          <option>Mediano</option>
+          <option>Grande</option>
+        </select>
 
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-            <label className="form-check-label" for="exampleCheck1">Tiene chip</label>
-          </div>
+        {/* Marcas */}
+        <div className="mb-3 row">
+          <label className="form-label">Marcas distintivas</label>
+          {[ ["Collar", "Arnés", "OrejaDañada"], ["ColaCorta", "OjosDistintos", "Cicatriz"], ["Ninguna", "Castrado", "TieneChip"] ].map((group, i) => (
+            <div key={i} className="col-3">
+              {group.map(mark => (
+                <div key={mark} className="mb-2 form-check">
+                  <input
+                    type="checkbox"
+                    id={`mark-${mark}`}
+                    value={mark}
+                    checked={marksFilter.includes(mark)}
+                    onChange={e => {
+                      if (e.target.checked) setMarksFilter(prev => [...prev, mark]);
+                      else setMarksFilter(prev => prev.filter(m => m !== mark));
+                    }}
+                    className="form-check-input"
+                  />
+                  <label className="form-check-label" htmlFor={`mark-${mark}`}>{mark}</label>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
 
-          <div action="upload_script.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="archivo" />
-            <input type="submit" value="Subir Archivo" />
+        <div className="mb-3 row">
+          <div className="col-3">
+            <input required className="form-control" placeholder="LUGAR DONDE SE ENCONTRÓ" value={actualLocationFilter} onChange={e => setActualLocationFilter(e.target.value)} />
           </div>
+          <div className="col-3">
+            <input type="datetime-local" className="form-control" value={foundTimeFilter} onChange={e => setFoundTimeFilter(e.target.value)} />
+          </div>
+        </div>
 
-          <div className="d-flex justify-content-end">
-            <button type="submit" className="boton btn btn-md mt-5 text-light">Buscar</button>
+        <div className="d-flex justify-content-end gap-2 mt-3">
+          <button type="submit" className="btn btn-primary">Buscar</button>
+          <button type="button" className="btn btn-outline-secondary" onClick={clearAllFilters}>Limpiar filtros</button>
+        </div>
+      </form>
+
+      <div className="container mt-4">
+        <h5>Resultados ({filteredPets.length})</h5>
+        {filteredPets.map(pet => (
+          <div key={pet.id} className="card mb-3 p-3">
+            <h5>{pet.name || "Sin nombre"}</h5>
+            <p><strong>Raza:</strong> {pet.breed}</p>
+            <p><strong>Descripción:</strong> {pet.physical_description}</p>
           </div>
-        </form>
-      
+        ))}
+        {filteredPets.length === 0 && <p className="text-muted">No se encontraron resultados</p>}
+      </div>
     </div>
-
-
   );
 };
