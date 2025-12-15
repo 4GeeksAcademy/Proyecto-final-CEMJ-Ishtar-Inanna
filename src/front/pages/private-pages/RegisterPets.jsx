@@ -13,9 +13,10 @@ export const RegisterPets = () => {
     const [actualLocation, setActualLocation] = useState("");
     const [name, setName] = useState("");
     const [breed, setBreed] = useState("");
-    const [physicalDescription, setPhysicalDescription] = useState("");
-    const [foundTime, setFoundTime] = useState("")
-    const [isLost, setIsLost] = useState(false)
+    const [species, setSpecies] = useState("");
+    const [sex, setSex] = useState("");
+    const [foundTime, setFoundTime] = useState("");
+    const [isLost, setIsLost] = useState(false);
     const [formData, setFormData] = useState(
         { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_description: "", is_lost: "" })
 
@@ -25,6 +26,8 @@ export const RegisterPets = () => {
             found_location: foundLocation,
             actual_location: actualLocation,
             found_time: foundTime,
+            species,
+            sex,
             name,
             breed,
             physical_description: summary,
@@ -35,7 +38,7 @@ export const RegisterPets = () => {
     useEffect(() => { setActualLocation(""), setFoundLocation("") }, [isLost])
 
     console.log(formData)
-// '2025-12-11T15:30'
+    // '2025-12-11T15:30'
 
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
@@ -118,8 +121,8 @@ export const RegisterPets = () => {
                     >
                         <div className="mb-3">
                             <label className="form-label">Especie</label>
-                            <select onChange={e => setBreed(e.target.value)} name="especie" className="form-select" required>
-                                <option value="" disabled selected hidden>Seleccione una especie</option>
+                            <select onChange={e => setSpecies(e.target.value)} name="specie" className="form-select" required>
+                                <option value="specie" disabled hidden>Seleccione una especie</option>
                                 <option>Perro</option>
                                 <option>Gato</option>
                                 <option>Ave</option>
@@ -129,9 +132,21 @@ export const RegisterPets = () => {
                         </div>
 
                         <div className="mb-3">
+                            <input type="checkbox" value="male" checked={sex === "male"} onChange={e => setSex(e.target.value)} />
+                            <label className="mx-2">Macho</label>
+                            <input type="checkbox" value="female" checked={sex === "female"} onChange={e => setSex(e.target.value)} />
+                            <label className="mx-2">Hembra</label>
+                        </div>
+
+                        <div className="mb-3">
+                            <label className="form-label">Raza</label>
+                            <input onChange={e => setBreed(e.target.value)} name="raza" className="form-select" required />
+                        </div>
+
+                        <div className="mb-3">
                             <label className="form-label">Tamaño</label>
                             <select name="tamano" className="form-select" required>
-                                <option value="" disabled selected hidden>Seleccione un tamaño</option>
+                                <option value="" disabled hidden>Seleccione un tamaño</option>
                                 <option>Pequeño</option>
                                 <option>Mediano</option>
                                 <option>Grande</option>
@@ -140,7 +155,7 @@ export const RegisterPets = () => {
                         <div className="mb-3">
                             <label className="form-label">Tipo de pelo / plumaje</label>
                             <select name="pelo" className="form-select" required>
-                                <option value="" disabled selected hidden>Seleccione un tipo de pelaje</option>
+                                <option value="" disabled hidden>Seleccione un tipo de pelaje</option>
                                 <option>Corto</option>
                                 <option>Mediano</option>
                                 <option>Largo</option>

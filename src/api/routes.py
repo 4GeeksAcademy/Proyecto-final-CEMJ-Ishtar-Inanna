@@ -165,6 +165,8 @@ def create_pet_post():
         found_time = data.get('found_time'),
         name = data.get('name'),
         breed = data.get('breed'),
+        species = data.get('species'),
+        sex = data.get('sex'),
         physical_description = data.get('physical_description'),
         is_lost = data.get('is_lost')
     )
