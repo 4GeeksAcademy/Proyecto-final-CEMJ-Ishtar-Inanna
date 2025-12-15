@@ -1,7 +1,7 @@
 import { GoogleMap, Marker, useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import { useState, useEffect, useRef } from "react";
 
-export default function Map() {
+export const Map = ()=>{
     const { isLoaded, loadError } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyC3LNNrqNP8l6RH6EmjuNSW2h1go_engHk",
         libraries: ["places"],
