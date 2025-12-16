@@ -1,10 +1,14 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from flask import Flask, request, jsonify, url_for, Blueprint, current_app
+from api.models import db, User, PetImages, PetPost, SocialMedia
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from sqlalchemy import select
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import check_password_hash
+from datetime import datetime
 
 api = Blueprint('api', __name__)
 
@@ -20,3 +24,310 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+# GET ALL USERS ROUTE (NOT GONNA BE USED)
+
+
+@api.route('/users', methods=['GET'])
+def get_all_users():
+    data = db.session.execute(select(User)).scalars()
+    result = list(map(lambda item: item.serialize(), data))
+    response_body = {"All user list": result}
+    return jsonify(response_body), 200
+
+# CREATE NEW USER ROUTE
+
+
+@api.route('/users/register', methods=["POST"])
+def create_user():
+    data = request.get_json()
+    user = User(
+        email=data.get('email'),
+        username=data.get('username'),
+        password=data.get('password'),
+        address=data.get('address'),
+        name=data.get('name'),
+        last_name=data.get('last_name'),
+        phone=data.get('phone'),
+        prof_img=data.get('prof_img')
+    )
+    user.set_password(data.get('password'))
+
+    db.session.add(user)
+    db.session.commit()
+
+    return user.serialize(), 200
+
+# LOGIN USER SERVICES
+
+
+@api.route('/users/login', methods=['POST'])
+def login_users():
+    body = request.get_json()
+    username = body.get("username", None)
+    password = body.get("password", None)
+    if not username:
+        return jsonify({"message": "username is a required field"}), 400
+
+    user = db.session.execute(select(User).where(
+        User.username == username)).scalars().first()
+
+    if not user:
+        return jsonify({"message": "user not found"}), 404
+
+    if not user.check_password(password):
+        return jsonify({"message": "Bad credentials"}), 400
+
+    print('LOGIN secret:', current_app.config['JWT_SECRET_KEY'])
+    access_token = create_access_token(identity=str(user.id))
+    return jsonify({"token": access_token, "user_id": user.id})
+
+# PROTECTED ROUTE
+
+
+@api.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"done": False}), 404
+
+    return jsonify({"done": True}), 200
+
+# DELETE USER
+
+
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"Message": "User_id not found in database"})
+
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify("deleted user", user_id)
+
+
+### PETPOST ENDPOINTS###
+
+# GET PET POST
+@api.route('/pets', methods=['GET'])
+def get_all_pet_posts():
+    data = db.session.execute(select(PetPost)).scalars()
+    result = list(map(lambda item: item.serialize(), data))
+    response_body = {"pets": result}
+    return jsonify(response_body), 200
+
+# DELETE PET POST
+
+
+@api.route('/pets/<int:pet_post_id>', methods=['DELETE'])
+def delete_pet_post(pet_post_id):
+    petpost = db.session.get(PetPost, pet_post_id)
+
+    if not petpost:
+        return jsonify({"Message": "UPet_post not found in database"})
+
+    db.session.delete(petpost)
+    db.session.commit()
+    return jsonify({"Done": True}), 200
+
+# GET SINGLE PET POST
+
+
+@api.route('/pets/<int:pet_post_id>', methods=['GET'])
+def get_pet_post(pet_post_id):
+    petpost = db.session.get(PetPost, pet_post_id)
+    if not petpost:
+        return jsonify({"Message": "pet_post not found in database"})
+    return jsonify(petpost.serialize()), 200
+
+# PUPLOAD A PET POST
+
+
+@api.route('/pets', methods=["POST"])
+def create_pet_post():
+    data = request.get_json()
+    found_time_str = data.get("found_time")
+    found_time = None
+    if found_time_str:
+        found_time = datetime.strptime(found_time_str, "%Y-%m-%dT%H:%M")
+
+    print(data)
+
+    pet_post = PetPost(
+        user_id=data.get('user_id'),
+        found_location=data.get('found_location'),
+        actual_location=data.get('actual_location'),
+        found_time=data.get('found_time'),
+        name=data.get('name'),
+        breed=data.get('breed'),
+        physical_description=data.get('physical_description'),
+        is_lost=data.get('is_lost')
+    )
+    db.session.add(pet_post)
+    db.session.commit()
+
+    # AQUI SE GUARDAN LAS IMAGENES
+    images_urls = data.get('images', [])
+
+    for url in images_urls:
+        new_image = PetImages(
+            url=url,
+            pet_post_id=pet_post.id
+        )
+        db.session.add(new_image)
+
+    db.session.commit()
+
+    return pet_post.serialize(), 200
+
+
+# update pet post
+@api.route('/pets/<int:pet_post_id>', methods=['PUT'])
+def update_pet_post(pet_post_id):
+    pet_post = db.session.get(PetPost, pet_post_id)
+
+    if not pet_post:
+        return jsonify({"message": "Pet_post not found"}), 404
+
+    data = request.get_json()
+    found_time_str = data.get("found_time")
+    if found_time_str:
+        pet_post.found_time = datetime.strptime(
+            found_time_str, "%Y-%m-%dT%H:%M")
+
+    pet_post.found_location = data.get(
+        'found_location', pet_post.found_location)
+    pet_post.actual_location = data.get(
+        'actual_location', pet_post.actual_location)
+    pet_post.name = data.get('name', pet_post.name)
+    pet_post.breed = data.get('breed', pet_post.breed)
+    pet_post.physical_description = data.get(
+        'physical_description', pet_post.physical_description)
+    pet_post.is_lost = data.get('is_lost', pet_post.is_lost)
+
+    deleted_urls = data.get("deleted_image_urls", [])
+    for url in deleted_urls:
+        image = next((img for img in pet_post.images if img.url == url), None)
+        if image:
+            db.session.delete(image)
+
+    new_images_urls = data.get('new_images', [])
+    for url in new_images_urls:
+        if url:
+            new_img = PetImages(url=url, pet_post_id=pet_post.id)
+            db.session.add(new_img)
+
+    db.session.commit()
+    return jsonify(pet_post.serialize()), 200
+
+
+# GET USER INFORMATION
+
+
+@api.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    user_data = {
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "name": user.name,
+        "last_name": user.last_name,
+        "address": user.address,
+        "phone": user.phone,
+        "prof_img": user.prof_img,
+        "is_active": user.is_active
+    }
+
+    return jsonify(user_data), 200
+
+# UPDATE USER INFO
+
+
+@api.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+
+    user.name = data.get("name", user.name)
+    user.last_name = data.get("last_name", user.last_name)
+    user.username = data.get("username", user.username)
+    user.address = data.get("address", user.address)
+    user.phone = data.get("phone", user.phone)
+    user.prof_img = data.get("prof_img", user.prof_img)
+
+    try:
+        db.session.commit()
+        return jsonify(user.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "Error updating user", "error": str(e)}), 500
+
+# GET SOCIAL MEDIA BY USER
+
+
+@api.route('/users/<int:user_id>/social-media', methods=['GET'])
+def get_user_social_media(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    return jsonify(
+        [social.serialize() for social in user.social_medias]
+    ), 200
+
+# CREATE SOCIAL MEDIA FOR USER
+
+
+@api.route('/users/<int:user_id>/social-media', methods=['POST'])
+def create_social_media(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+
+    social = SocialMedia(
+        type=data.get("type"),
+        value=data.get("value"),
+        user_id=user_id
+    )
+
+    db.session.add(social)
+    db.session.commit()
+
+    return jsonify(social.serialize()), 201
+
+# DELETE SOCIAL MEDIA BY USER
+
+
+@api.route('/social-media/<int:social_media_id>', methods=['DELETE'])
+def delete_social_media(social_media_id):
+    social = db.session.get(SocialMedia, social_media_id)
+
+    if not social:
+        return jsonify({"message": "Social media not found"}), 404
+
+    db.session.delete(social)
+    db.session.commit()
+
+    return jsonify({"done": True}), 200
+
+
+# AUTHENTICATION TESTING
+# Protect a route with jwt_required, which will kick out requests without a valid JWT

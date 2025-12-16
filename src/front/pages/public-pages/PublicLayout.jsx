@@ -1,0 +1,15 @@
+import { Outlet } from "react-router-dom/dist"
+import ScrollToTop from "../../components/ScrollToTop"
+import { Navbar } from "../../components/Navbar"
+import { Footer } from "../../components/Footer"
+import Map from "../../components/Map";
+
+export const PublicLayout = () => {
+    return (
+        <ScrollToTop>
+            <Navbar />
+            <Outlet />
+            <Footer />
+        </ScrollToTop>
+    )
+}

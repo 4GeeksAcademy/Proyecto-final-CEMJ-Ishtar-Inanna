@@ -1,19 +1,140 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import String, Boolean, DateTime, ForeignKey
+from datetime import datetime
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.sql import func
+from flask import Flask
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
+
+bcrypt = Bcrypt()
 
 db = SQLAlchemy()
 
-class User(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
+class User(db.Model):
+    __tablename__ = "user"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(
+        String(30), nullable=False, unique=True)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(250), nullable=False)
+    address: Mapped[str] = mapped_column(String(30), nullable=True)
+    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    last_name: Mapped[str] = mapped_column(String(30), nullable=False)
+    phone: Mapped[str] = mapped_column(String(30), nullable=True)
+    prof_img: Mapped[str] = mapped_column(String(250), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+
+    # name , lastname username, email, password SON OBLIGATORIOS
+    # FK
+
+    # Relationships
+    pet_posts = db.relationship(
+        "PetPost", back_populates="user", cascade="all, delete-orphan")
+
+    social_medias = db.relationship(
+        "SocialMedia", back_populates="user", cascade="all, delete-orphan"
+    )
 
     def serialize(self):
         return {
             "id": self.id,
+            "username": self.username,
             "email": self.email,
-            # do not serialize the password, its a security breach
+            "address": self.address,
+            "name": self.name,
+            "last_name": self.last_name,
+            "phone": self.phone,
+            "prof_img": self.prof_img,
+            "is_active": self.is_active
+        }
+
+    # HASHEO DE CONTRASEÑA(No touchy)
+
+    def set_password(self, plain_pwd):
+        self.password = bcrypt.generate_password_hash(
+            plain_pwd).decode('utf-8')
+        return "contraseña hasheada guardada exitosamente"
+
+    def check_password(self, plain_pwd):
+        return bcrypt.check_password_hash(self.password, plain_pwd)
+
+
+class PetPost(db.Model):
+    __tablename__ = "pet_post"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    found_location: Mapped[str] = mapped_column(
+        String(120), nullable=False)  # Donde se ha encontrado
+    actual_location: Mapped[str] = mapped_column(String(120), nullable=False)
+    found_time: Mapped[datetime] = mapped_column(
+        DateTime, nullable=True)  # PONER VALOR POR DEFECTO
+    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    breed: Mapped[str] = mapped_column(String(30), nullable=False)
+    physical_description: Mapped[str] = mapped_column(
+        String(256), nullable=True)
+    is_lost: Mapped[bool] = mapped_column(Boolean(), default=True)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=True)
+
+    # FK
+
+    # Relationships
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user: Mapped["User"] = relationship()
+    images = db.relationship(
+        "PetImages", back_populates="pet_post",  cascade="all, delete-orphan")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "found_location": self.found_location,
+            "actual_location": self.actual_location,
+            "found_time": self.found_time,
+            "name": self.name,
+            "breed": self.breed,
+            "physical_description": self.physical_description,
+            "is_lost": self.is_lost,
+            "is_active": self.is_active,
+
+            "images": [img.url for img in self.images]
+        }
+
+
+class SocialMedia(db.Model):
+    __tablename__ = "social_media"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    type: Mapped[str] = mapped_column(String(30), nullable=False)
+    value: Mapped[str] = mapped_column(String(120), nullable=False)
+
+    # FK
+
+    # Relationships
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user: Mapped["User"] = relationship(back_populates="social_medias")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "type": self.type,
+            "value": self.value
+        }
+
+
+class PetImages(db.Model):
+    __tablename__ = "pet_images"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    url: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+
+    # FK
+
+    # Relationships
+    pet_post_id: Mapped[int] = mapped_column(ForeignKey("pet_post.id"))
+    pet_post: Mapped["PetPost"] = relationship(back_populates="images")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "url": self.url
         }

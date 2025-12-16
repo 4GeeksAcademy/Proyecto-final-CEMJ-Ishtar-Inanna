@@ -1,0 +1,180 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 80%;
+  border-color: #d97a00;
+}
+
+.button {
+  background-color: #00afaf; /* Un color púrpura personalizado */
+  border-color: #00afaf;
+}
+
+.button:hover {
+  background-color: #00afaf;
+}
+
+nav {
+  background-color: #00afaf;
+  height: 70px;
+  color: white;
+}
+
+.background {
+  /* background-image: url("./assets/img/Fondo.png");
+  background-repeat: no-repeat;
+  background-size: cover; */
+  background-color: rgb(235, 247, 247);
+}
+
+/* ---------- PET-CARD THEME ---------- */
+.pet-card {
+  --primary: #00afaf;
+  --primary-light: #00afaf;
+  --text: #333;
+  --text-light: #666;
+  --bg: #fff;
+  --radius: 12px;
+  --shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  --font: "Inter", system-ui, sans-serif;
+}
+
+.pet-card.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  font-family: var(--font);
+  color: var(--text);
+}
+
+/* --- carousel --- */
+.pet-card .carousel {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.pet-card .carousel-item img {
+  height: 320px;
+  object-fit: cover;
+}
+.pet-card .carousel-control-prev-icon,
+.pet-card .carousel-control-next-icon {
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
+}
+
+/* --- headers --- */
+.pet-card h5 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 1.25rem 0 0.4rem 0;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+/* --- text blocks --- */
+.pet-card p {
+  margin: 0 0 0.8rem 0;
+  line-height: 1.55;
+  color: var(--text-light);
+}
+
+/* --- list-like colors / marks --- */
+.pet-card .color-list,
+.pet-card .mark-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.pet-card .color-list p,
+.pet-card .mark-list p {
+  background: var(--primary-light);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* --- map --- */
+.pet-card .map-wrapper {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  height: 300px;
+}
+.pet-card .text-muted {
+  font-size: 0.9rem;
+}
+
+/* --- responsive tweak --- */
+@media (max-width: 767px) {
+  .pet-card .row > * {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* ---------- ACTION-BUTTON BAR ---------- */
+.action-bar {
+  --accent: #00afaf;
+  --accent-dark: #008080;
+  --danger: #e63946;
+  --radius: 8px;
+  --transition: 0.2s ease;
+}
+
+.action-bar {
+  margin-top: auto;          /* keeps it pinned to the bottom inside flex containers */
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+/* base button shape */
+.action-bar .btn {
+  flex: 1;                   /* same width */
+  max-width: 160px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  padding: 0.45rem 0;
+  transition: var(--transition);
+}
+
+/* “More info” solid button */
+.action-bar .btn[style*="background-color: #00afaf"] {
+  background-color: var(--accent) !important;
+  border: 1px solid var(--accent);
+  color: #fff;
+}
+.action-bar .btn[style*="background-color: #00afaf"]:hover {
+  background-color: var(--accent-dark) !important;
+  border-color: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 175, 175, 0.25);
+}
+
+/* “Delete” outline button */
+.action-bar .btn-outline-danger {
+  border-width: 2px;
+}
+.action-bar .btn-outline-danger:hover {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.25);
+}
+
+/* mobile: stack on very small screens */
+@media (max-width: 360px) {
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
