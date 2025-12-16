@@ -20,7 +20,6 @@ const LocationPicker = ({ onDone }) => {
         setShow(false);
     };
 
-
     return (
         <>
             <button
@@ -81,7 +80,7 @@ const LocationPicker = ({ onDone }) => {
 export const RegisterPets = () => {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyAJ36Mp6CXQ0u5bZpQuByVe1t5xZMam_bs", // cambiar key
+        googleMapsApiKey: "AIzaSyAJ36Mp6CXQ0u5bZpQuByVe1t5xZMam_bs",
     });
 
     const [open, setOpen] = useState(false);
@@ -90,7 +89,6 @@ export const RegisterPets = () => {
     const [foundLocation, setFoundLocation] = useState("");
     const [actualLocation, setActualLocation] = useState("");
 
-    // useStates para guardar las direcciones 
     const [foundAddress, setFoundAddress] = useState("");
     const [actualAddress, setActualAddress] = useState("");
 
@@ -100,14 +98,14 @@ export const RegisterPets = () => {
     const [foundTime, setFoundTime] = useState("")
     const [isLost, setIsLost] = useState(false)
 
-    // Estados para las imagenes
     const [imageUrls, setImageUrls] = useState([]);
     const [uploading, setUploading] = useState(false);
+
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState(
         { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_description: "", is_lost: "", images: [] })
 
-    // uso de la Api
     const reverseGeocode = (coordsString, setTextFunc) => {
         if (isLoaded) {
             if (coordsString) {
@@ -138,7 +136,6 @@ export const RegisterPets = () => {
         }
     };
 
-    // use effect para traducir 
     useEffect(() => {
         if (foundLocation) reverseGeocode(foundLocation, setFoundAddress);
         else setFoundAddress("");
@@ -184,9 +181,8 @@ export const RegisterPets = () => {
 
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
-        if (response) {
-            alert("Mascota registrada correctamente");
-        }
+        navigate('/')
+        
     }
 
     const buildString = () => {
@@ -211,98 +207,112 @@ export const RegisterPets = () => {
 
     return (
         <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
+
             <div
                 className="card shadow-lg rounded-4 p-4 w-100"
-                style={{ maxWidth: 480 }}
-            >
-                <h1 className="text-center mb-4 fw-semibold">Crear registro</h1>
+                style={{
+                    maxWidth: 480,
+                    background: '#ffffff',
+                    border: '1px solid #80cbc4',
+                    boxShadow: '0 8px 30px rgba(0,105,92,.15)'
+                }}>
 
-                <div className="my-3">
+                <h1 className="text-center mb-4 fw-semibold"
+                    style={{ color: '#00695c', letterSpacing: '.5px' }}>
+                    Crear registro
+                </h1>
+
+                <div className="my-3 d-flex gap-2 justify-content-center">
                     <button
-                        className={`btn ${isLost ? "btn-success" : "btn-danger"}`}
+                        className={`btn ${isLost ? 'btn-success' : 'btn-outline-danger'}`}
                         onClick={() => setIsLost(true)}
-                    >
-                        PERDIDO DEFAULT
+                        style={{
+                            transition: '.25s ease',
+                            boxShadow: isLost ? '0 4px 14px #28a74560' : 'none'
+                        }}>
+                        PERDIDO
                     </button>
                     <button
-                        className={`btn ${isLost ? "btn-danger" : "btn-success"}`}
+                        className={`btn ${isLost ? 'btn-outline-danger' : 'btn-success'}`}
                         onClick={() => setIsLost(false)}
-                    >
+                        style={{
+                            transition: '.25s ease',
+                            boxShadow: !isLost ? '0 4px 14px #28a74560' : 'none'
+                        }}>
                         ENCONTRADO
                     </button>
                 </div>
 
+                {/* ----  FORM  ---- */}
                 <form className="w-100" style={{ maxWidth: 420 }}>
+
+                    {/* Location block (lost) */}
                     {isLost ? (
                         <div className="mb-3">
-                            <label className="form-label">Lugar donde se perdió</label>
-                            <div className="input-group">
+                            <label className="form-label fw-medium" style={{ color: '#00796b' }}>Lugar donde se perdió</label>
+                            <div className="input-group shadow-sm rounded">
                                 <input
                                     required
-                                    className="form-control"
+                                    className="form-control border-0"
                                     placeholder="LUGAR DONDE SE VIO POR ÚLTIMA VEZ"
                                     value={foundLocation}
-                                    onChange={(e) => setFoundLocation(e.target.value)}
-                                />
+                                    onChange={(e) => setFoundLocation(e.target.value)} />
                                 <LocationPicker onDone={setFoundLocation} />
                             </div>
                             {foundAddress && <small className="text-muted fst-italic ms-1">{foundAddress}</small>}
                         </div>
                     ) : (
+                        /* Location block (found) */
                         <div className="mb-3">
-                            <label className="form-label">Lugar donde se encontró</label>
-                            <div className="input-group">
+                            <label className="form-label fw-medium" style={{ color: '#00796b' }}>Lugar donde se encontró</label>
+                            <div className="input-group shadow-sm rounded">
                                 <input
                                     required
-                                    className="form-control"
+                                    className="form-control border-0"
                                     placeholder="LUGAR DONDE SE ENCONTRÓ"
                                     value={actualLocation}
-                                    onChange={(e) => setActualLocation(e.target.value)}
-                                />
+                                    onChange={(e) => setActualLocation(e.target.value)} />
                                 <LocationPicker onDone={setActualLocation} />
                             </div>
                             {actualAddress && <p className="text-muted fst-italic ms-1">{actualAddress}</p>}
                         </div>
                     )}
 
+                    {/* Name */}
                     <div className="mb-3">
-                        <label className="form-label">Nombre</label>
+                        <label className="form-label fw-medium" style={{ color: '#00796b' }}>Nombre</label>
                         <input
-                            className="form-control"
+                            className="form-control shadow-sm rounded border-0"
                             placeholder="NOMBRE"
                             value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
+                            onChange={(e) => setName(e.target.value)} />
                     </div>
 
-                    <div className="p-4">
+                    {/* Collapsible options */}
+                    <div className="p-4 rounded-3" style={{ background: '#e0f2f1' }}>
                         <button
                             type="button"
-                            className="btn btn-primary"
+                            className="btn btn-primary w-100"
                             onClick={() => setOpen((v) => !v)}
                             aria-expanded={open}
                             aria-controls="optionForm"
-                        >
-                            {open ? "Hide options" : "Show options"}
+                            style={{ background: '#00695c', border: 'none' }}>
+                            {open ? 'Ocultar opciones' : 'Mostrar opciones'}
                         </button>
 
                         <div
                             id="optionForm"
                             onChange={buildString}
-                            className={`collapse ${open ? "show" : ""} mt-3`}
-                        >
-                            {/*  all your existing option markup  */}
+                            className={`collapse ${open ? 'show' : ''} mt-3`}>
+
+                            {/* Especie */}
                             <div className="mb-3">
-                                <label className="form-label">Especie</label>
+                                <label className="form-label fw-medium" style={{ color: '#00796b' }}>Especie</label>
                                 <select
                                     onChange={(e) => setBreed(e.target.value)}
                                     name="especie"
-                                    className="form-select"
-                                    required
-                                >
-                                    <option value="" disabled hidden>
-                                        Seleccione una especie
-                                    </option>
+                                    className="form-select shadow-sm rounded border-0"
+                                    required>
                                     <option value="" disabled selected hidden>Seleccione una especie</option>
                                     <option>Perro</option>
                                     <option>Gato</option>
@@ -312,9 +322,10 @@ export const RegisterPets = () => {
                                 </select>
                             </div>
 
+                            {/* Tamaño */}
                             <div className="mb-3">
-                                <label className="form-label">Tamaño</label>
-                                <select name="tamano" className="form-select" required>
+                                <label className="form-label fw-medium" style={{ color: '#00796b' }}>Tamaño</label>
+                                <select name="tamano" className="form-select shadow-sm rounded border-0" required>
                                     <option value="" disabled selected hidden>Seleccione tamaño</option>
                                     <option>Pequeño</option>
                                     <option>Mediano</option>
@@ -322,9 +333,10 @@ export const RegisterPets = () => {
                                 </select>
                             </div>
 
+                            {/* Pelo / plumaje */}
                             <div className="mb-3">
-                                <label className="form-label">Tipo de pelo / plumaje</label>
-                                <select name="pelo" className="form-select" required>
+                                <label className="form-label fw-medium" style={{ color: '#00796b' }}>Tipo de pelo / plumaje</label>
+                                <select name="pelo" className="form-select shadow-sm rounded border-0" required>
                                     <option value="" disabled selected hidden>Seleccione tipo de pelo</option>
                                     <option>Corto</option>
                                     <option>Mediano</option>
@@ -335,106 +347,82 @@ export const RegisterPets = () => {
                                 </select>
                             </div>
 
+                            {/* Colores */}
                             <div className="mb-3">
-                                <label className="form-label">Color del pelaje</label>
-                                {[
-                                    "Negro",
-                                    "Blanco",
-                                    "Marrón",
-                                    "Crema",
-                                    "Gris",
-                                    "Dorado",
-                                    "Amarillo",
-                                    "Atigrado",
-                                ].map((c) => (
+                                <label className="form-label fw-medium" style={{ color: '#00796b' }}>Color del pelaje</label>
+                                {["Negro", "Blanco", "Marrón", "Crema", "Gris", "Dorado", "Amarillo", "Atigrado"].map((c) => (
                                     <div key={c} className="form-check">
                                         <input
                                             name="color"
                                             className="form-check-input"
                                             type="checkbox"
                                             value={c}
-                                            id={`color${c}`}
-                                        />
-                                        <label className="form-check-label" htmlFor={`color${c}`}>
-                                            {c}
-                                        </label>
+                                            id={`color${c}`} />
+                                        <label className="form-check-label" htmlFor={`color${c}`}>{c}</label>
                                     </div>
                                 ))}
                             </div>
 
+                            {/* Marcas distintivas */}
                             <div className="mb-3">
-                                <label className="form-label">Marcas distintivas (opcional)</label>
-                                {[
-                                    "Collar",
-                                    "Arnés",
-                                    "Oreja dañada",
-                                    "Cola corta",
-                                    "Ojos distintos",
-                                    "Cicatriz",
-                                    "Ninguna",
-                                ].map((m) => (
+                                <label className="form-label fw-medium" style={{ color: '#00796b' }}>Marcas distintivas (opcional)</label>
+                                {["Collar", "Arnés", "Oreja dañada", "Cola corta", "Ojos distintos", "Cicatriz", "Ninguna"].map((m) => (
                                     <div key={m} className="form-check">
                                         <input
                                             name="marca"
                                             className="form-check-input"
                                             type="checkbox"
                                             value={m}
-                                            id={`marca${m}`}
-                                        />
-                                        <label className="form-check-label" htmlFor={`marca${m}`}>
-                                            {m}
-                                        </label>
+                                            id={`marca${m}`} />
+                                        <label className="form-check-label" htmlFor={`marca${m}`}>{m}</label>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
 
-                    <label className="form-label">
-                        {isLost
-                            ? "Día y hora aproximada en que se perdió"
-                            : "Día y hora aproximada en que se encontró"}
+                    {/* Datetime */}
+                    <label className="form-label fw-medium mt-3" style={{ color: '#00796b' }}>
+                        {isLost ? "Día y hora aproximada en que se perdió" : "Día y hora aproximada en que se encontró"}
                     </label>
                     <input
-                        className="form-control"
+                        className="form-control shadow-sm rounded border-0"
                         type="datetime-local"
                         value={foundTime}
-                        onChange={(e) => setFoundTime(e.target.value)}   // <-- missing line
-                    />
+                        onChange={(e) => setFoundTime(e.target.value)} />
 
-
+                    {/* Images */}
                     <div className="mb-3 mt-3">
-                        <label className="form-label fw-bold">Fotos de la mascota</label>
+                        <label className="form-label fw-bold" style={{ color: '#00796b' }}>Fotos de la mascota</label>
                         <input
                             type="file"
-                            className="form-control"
+                            className="form-control shadow-sm rounded border-0"
                             accept="image/*"
                             multiple
                             onChange={handleImageUpload}
-                            disabled={uploading}
-                        />
+                            disabled={uploading} />
                         {uploading && <div className="text-warning mt-2">Subiendo imágenes...</div>}
 
-                        {/* Vista previa de imágenes */}
                         <div className="d-flex flex-wrap gap-2 mt-2">
                             {imageUrls.map((url, index) => (
                                 <img
                                     key={index}
                                     src={url}
                                     alt={`preview-${index}`}
-                                    style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }}
+                                    style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid #80cbc4' }}
                                 />
                             ))}
                         </div>
                     </div>
 
+                    {/* Submit */}
                     <div className="mb-3 mt-3 d-flex justify-content-end">
                         <button
                             onClick={() => sendNewPetPost(formData)}
                             type="button"
-                            className="boton btn btn-success px-4 py-2"
-                            disabled={uploading} // Desactivar si se está subiendo
-                        >
+                            className="boton btn btn-success px-4 py-2 shadow"
+                            disabled={uploading}
+                            style={{ background: '#d84315', border: 'none' }}>
                             {uploading ? "CARGANDO..." : "REGISTRAR"}
                         </button>
                     </div>

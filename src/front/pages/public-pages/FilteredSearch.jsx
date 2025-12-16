@@ -273,17 +273,7 @@ export const FilteredSearch = () => {
                 </div>
               </div>
             </div>
-            {isLost ? <label className="form-label">Día y hora aproximada en que se perdió</label> :
-              <label className="form-label">Día y hora aproximada en que se encontró</label>
-            }
-            <input
-              className="form-control"
-              placeholder="HORA DE ENCUENTRO"
-              type="datetime-local"
-              onChange={({ target }) => setFoundTime(target.value)}
-              value={foundTime}
-
-            />
+            
             <div className="mb-3 d-flex justify-content-end">
               <button
                 type="button"
