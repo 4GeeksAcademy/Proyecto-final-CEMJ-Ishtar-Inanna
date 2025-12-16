@@ -25,9 +25,7 @@ app = Flask(__name__)
 
 app.url_map.strict_slashes = False
 # AÑADIR LA URL DEL FRONT
-CORS(app, resources={
-     r"/api/*": {"origins": "http://localhost:3000/"}}, supports_credentials=True)
-
+CORS(app)
 # JWT MANAGER CONFIG
 app.config["JWT_SECRET_KEY"] = "super-secret-string"   # change this!
 jwt = JWTManager(app)
