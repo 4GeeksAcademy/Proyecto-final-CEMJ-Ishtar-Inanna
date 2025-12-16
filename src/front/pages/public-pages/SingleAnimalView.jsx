@@ -79,7 +79,7 @@ export const SingleAnimalView = () => {
         <div className="container py-4">
             <div className="row">
                 {/*  left column – data  */}
-                <div className="col-md-6">
+                <div className="col-md-8">
                     {Array.isArray(pet.images) && pet.images.length > 0 ? (
                         <div id="carouselExample" className="carousel slide mb-3">
                             <div className="carousel-inner">
@@ -115,7 +115,7 @@ export const SingleAnimalView = () => {
                     <p>{pet.breed}</p>
 
                     <h5>Tamaño</h5>
-                    <p>{pet.details.Tamaño}</p>
+                    <p>{pet.details.Tamano}</p>
 
                     <h5>Tipo de pelaje</h5>
                     <p>{pet.details.Pelo}</p>
@@ -134,7 +134,7 @@ export const SingleAnimalView = () => {
                 </div>
 
                 {/*  right column – mapa con Embed API  */}
-                <div className="col-md-6">
+                <div className="col-md-3">
                     <h5>Lugar donde se encontró</h5>
                     <p className="text-muted">
                         {address}
