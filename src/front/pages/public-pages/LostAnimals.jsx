@@ -36,32 +36,43 @@ export const LostAnimals = () => {
     const newList = enriched.filter(pets => pets.is_lost == true)
 
     return (
-        <div className="container">
-            <div className="row my-3 mx-3">
-                {newList.map((pets =>
-                    <div className="col-3" key={pets.id}>
-                        <div className="card mx-3 my-2" style={{ width: "18rem" }}>
+        <div className="container py-4">
+            <div className="row g-4">
+                {newList.map(pet => (
+                    <div key={pet.id} className="col-12 col-md-6 col-lg-4">
+                        <div className="card h-100 shadow-sm">
                             <img
-                                src={pets.images && pets.images.length > 0 ? pets.images[0] : 'https://loremipsum.imgix.net/2uTVCl4WzwqJP5ywFNzukO/8acb2b2cf872f3f5706c4bd63295ba31/placekitten.jpeg?w=1280&q=60&auto=format,compress'}
+                                src={
+                                    pet.images?.[0] ||
+                                    'https://loremipsum.imgix.net/2uTVCl4WzwqJP5ywFNzukO/8acb2b2cf872f3f5706c4bd63295ba31/placekitten.jpeg?w=1280&q=60&auto=format,compress'
+                                }
                                 className="card-img-top"
-                                alt={pets.name}
-                                style={{ height: "200px", objectFit: "cover" }}
-                            />                            
-                            <p>{pets.found_location}</p>
-                            <div className="card-body">
-                                <h5 className="card-title">{pets.name}</h5>
-                                <ul>
-                                    <li className="card-text">{pets.breed}</li>
+                                alt={pet.name}
+                                style={{ height: '200px', objectFit: 'cover' }}
+                            />
+
+                            <div className="card-body d-flex flex-column">
+                                <h5 className="card-title">{pet.name}</h5>
+
+                                <ul className="list-unstyled mb-3">
+                                    <li className="text-muted">{pet.breed}</li>
+                                    <li className="text-muted">{pet.details?.Tamano}</li>
                                 </ul>
-                                <ul>
-                                    <li className="card-text">{pets.details.Tamano}</li>
-                                </ul>
-                                <div>
-                                    <Link to="/singleanimalview" state={{ id: pets.id }}>
-                                        <p href="#" className="button btn btn-primary">Más información</p>
+
+                                <div className="mt-auto d-flex gap-2 justify-content-center">
+                                    <Link
+                                        to="/singleanimalview"
+                                        state={{ id: pet.id }}
+                                        className="btn btn-primary btn-sm"
+                                    >
+                                        Más información
                                     </Link>
-                                    <button onClick={() => deleteMascota(pets.id)} className="button btn btn-primary">
-                                        Delete entry
+
+                                    <button
+                                        onClick={() => deleteMascota(pet.id)}
+                                        className="btn btn-outline-danger btn-sm"
+                                    >
+                                        Delete
                                     </button>
                                 </div>
                             </div>

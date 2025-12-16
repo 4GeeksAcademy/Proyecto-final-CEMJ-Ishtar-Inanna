@@ -49,13 +49,6 @@ export const Navbar = () => {
 						</li>
 					</ul>
 
-					<input
-						className="form-control bi bi-camera w-25"
-						type="search"
-						placeholder="Búsqueda avanzada"
-						aria-label="Search"
-					/>
-
 					<div>
 						<Link to="/filteredsearch">
 							<button className="btn btn-outline-success mx-1" type="submit">
