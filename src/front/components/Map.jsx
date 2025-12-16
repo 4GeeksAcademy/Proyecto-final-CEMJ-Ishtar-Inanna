@@ -3,7 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 
 export default function Map({ onPick }) {
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyC3LNNrqNP8l6RH6EmjuNSW2h1go_engHk", // ← your key
+    id: 'google-map-script',
+    googleMapsApiKey: "AIzaSyAJ36Mp6CXQ0u5bZpQuByVe1t5xZMam_bs", // ← your key  
   });
 
   const [userLocation, setUserLocation] = useState(null);
@@ -20,7 +21,7 @@ export default function Map({ onPick }) {
         clearTimeout(t);
         const loc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         setUserLocation(loc);
-        setMarker(loc);       
+        setMarker(loc);
       },
       () => {
         clearTimeout(t);
@@ -33,8 +34,8 @@ export default function Map({ onPick }) {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
     const pos = { lat, lng };
-    setMarker(pos);       
-    onPick?.(lat, lng);  
+    setMarker(pos);
+    onPick?.(lat, lng);
   }, [onPick]);
 
   if (loadError) return <p>Error cargando Google Maps…</p>;

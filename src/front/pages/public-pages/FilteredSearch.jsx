@@ -297,15 +297,37 @@ export const FilteredSearch = () => {
         </div>
       </div>
       {filtered.length > 0 && (
-        <div className="container mt-4">
+        <>
           <h5>Coincidencias ({filtered.length})</h5>
-          {filtered.map(p => (
-            <div key={p.id} className="alert alert-info">
-              {p.name} – {p.breed} – {p.details.Tamano}
-            </div>
-          ))}
-        </div>
+          <div className="d-flex flex-wrap justify-content-center">
+            {filtered.map(p => (
+              <div key={p.id} className="card mx-3 my-2" style={{ width: "18rem" }}>
+                <img
+                  src={p.images && p.images.length > 0
+                    ? p.images[0]
+                    : 'https://loremipsum.imgix.net/2uTVCl4WzwqJP5ywFNzukO/8acb2b2cf872f3f5706c4bd63295ba31/placekitten.jpeg?w=1280&q=60&auto=format,compress'}
+                  className="card-img-top"
+                  alt={p.name}
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{p.name}</h5>
+                  <ul>
+                    <li className="card-text">{p.breed}</li>
+                  </ul>
+                  <ul>
+                    <li className="card-text">{p.details.Tamano}</li>
+                  </ul>
+                  <Link to="/singleanimalview" state={{ id: p.id }}>
+                    <p className="button btn btn-primary">Más información</p>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
+
     </>
 
   );

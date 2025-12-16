@@ -35,6 +35,10 @@ class User(db.Model):
     pet_posts = db.relationship(
         "PetPost", back_populates="user", cascade="all, delete-orphan")
 
+    social_medias = db.relationship(
+        "SocialMedia", back_populates="user", cascade="all, delete-orphan"
+    )
+
     def serialize(self):
         return {
             "id": self.id,
@@ -101,22 +105,20 @@ class PetPost(db.Model):
 class SocialMedia(db.Model):
     __tablename__ = "social_media"
     id: Mapped[int] = mapped_column(primary_key=True)
-    type: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
-    username: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    email: Mapped[str] = mapped_column
+    type: Mapped[str] = mapped_column(String(30), nullable=False)
+    value: Mapped[str] = mapped_column(String(120), nullable=False)
 
     # FK
 
     # Relationships
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
-    user: Mapped["User"] = relationship()
+    user: Mapped["User"] = relationship(back_populates="social_medias")
 
     def serialize(self):
         return {
             "id": self.id,
             "type": self.type,
-            "username": self.username,
-            "email": self.email
+            "value": self.value
         }
 
 

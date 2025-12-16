@@ -185,6 +185,47 @@ def create_pet_post():
 
     return pet_post.serialize(), 200
 
+
+# update pet post
+@api.route('/pets/<int:pet_post_id>', methods=['PUT'])
+def update_pet_post(pet_post_id):
+    pet_post = db.session.get(PetPost, pet_post_id)
+
+    if not pet_post:
+        return jsonify({"message": "Pet_post not found"}), 404
+
+    data = request.get_json()
+    found_time_str = data.get("found_time")
+    if found_time_str:
+        pet_post.found_time = datetime.strptime(
+            found_time_str, "%Y-%m-%dT%H:%M")
+
+    pet_post.found_location = data.get(
+        'found_location', pet_post.found_location)
+    pet_post.actual_location = data.get(
+        'actual_location', pet_post.actual_location)
+    pet_post.name = data.get('name', pet_post.name)
+    pet_post.breed = data.get('breed', pet_post.breed)
+    pet_post.physical_description = data.get(
+        'physical_description', pet_post.physical_description)
+    pet_post.is_lost = data.get('is_lost', pet_post.is_lost)
+
+    deleted_urls = data.get("deleted_image_urls", [])
+    for url in deleted_urls:
+        image = next((img for img in pet_post.images if img.url == url), None)
+        if image:
+            db.session.delete(image)
+
+    new_images_urls = data.get('new_images', [])
+    for url in new_images_urls:
+        if url:
+            new_img = PetImages(url=url, pet_post_id=pet_post.id)
+            db.session.add(new_img)
+
+    db.session.commit()
+    return jsonify(pet_post.serialize()), 200
+
+
 # GET USER INFORMATION
 
 
@@ -234,6 +275,59 @@ def update_user(user_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": "Error updating user", "error": str(e)}), 500
+
+# GET SOCIAL MEDIA BY USER
+
+
+@api.route('/users/<int:user_id>/social-media', methods=['GET'])
+def get_user_social_media(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    return jsonify(
+        [social.serialize() for social in user.social_medias]
+    ), 200
+
+# CREATE SOCIAL MEDIA FOR USER
+
+
+@api.route('/users/<int:user_id>/social-media', methods=['POST'])
+def create_social_media(user_id):
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.get_json()
+
+    social = SocialMedia(
+        type=data.get("type"),
+        value=data.get("value"),
+        user_id=user_id
+    )
+
+    db.session.add(social)
+    db.session.commit()
+
+    return jsonify(social.serialize()), 201
+
+# DELETE SOCIAL MEDIA BY USER
+
+
+@api.route('/social-media/<int:social_media_id>', methods=['DELETE'])
+def delete_social_media(social_media_id):
+    social = db.session.get(SocialMedia, social_media_id)
+
+    if not social:
+        return jsonify({"message": "Social media not found"}), 404
+
+    db.session.delete(social)
+    db.session.commit()
+
+    return jsonify({"done": True}), 200
+
 
 # AUTHENTICATION TESTING
 # Protect a route with jwt_required, which will kick out requests without a valid JWT

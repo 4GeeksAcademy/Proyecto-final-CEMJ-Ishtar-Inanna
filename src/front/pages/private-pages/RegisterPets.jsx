@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { getAuthentication } from "../../services/loginServices";
 import { uploadToCloudinary } from "../../services/ImagesServices";
 import GoogleMapWidget from "../../components/Map";
+import { useJsApiLoader } from "@react-google-maps/api";
 
 
 const LocationPicker = ({ onDone }) => {
@@ -78,23 +79,75 @@ const LocationPicker = ({ onDone }) => {
 };
 
 export const RegisterPets = () => {
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: "AIzaSyAJ36Mp6CXQ0u5bZpQuByVe1t5xZMam_bs", // cambiar key
+    });
+
     const [open, setOpen] = useState(false);
     const [summary, setSummary] = useState("");
 
     const [foundLocation, setFoundLocation] = useState("");
     const [actualLocation, setActualLocation] = useState("");
+
+    // useStates para guardar las direcciones 
+    const [foundAddress, setFoundAddress] = useState("");
+    const [actualAddress, setActualAddress] = useState("");
+
     const [name, setName] = useState("");
     const [breed, setBreed] = useState("");
     const [physicalDescription, setPhysicalDescription] = useState("");
     const [foundTime, setFoundTime] = useState("")
     const [isLost, setIsLost] = useState(false)
 
-    // --- 2. ESTADOS PARA IMÁGENES ---
+    // Estados para las imagenes
     const [imageUrls, setImageUrls] = useState([]);
     const [uploading, setUploading] = useState(false);
 
     const [formData, setFormData] = useState(
         { found_location: "", actual_location: "", found_time: "", name: "", breed: "", physical_description: "", is_lost: "", images: [] })
+
+    // uso de la Api
+    const reverseGeocode = (coordsString, setTextFunc) => {
+        if (isLoaded) {
+            if (coordsString) {
+                if (coordsString.includes(',')) {
+                    const parts = coordsString.split(',');
+                    const lat = parseFloat(parts[0]);
+                    const lng = parseFloat(parts[1]);
+
+                    if (!isNaN(lat)) {
+                        if (!isNaN(lng)) {
+                            const geocoder = new window.google.maps.Geocoder();
+                            const latLngObj = { lat: lat, lng: lng };
+
+                            geocoder.geocode({ location: latLngObj }, (results, status) => {
+                                if (status === "OK") {
+                                    if (results[0]) {
+                                        setTextFunc(results[0].formatted_address);
+                                    }
+                                } else {
+                                    console.log("No se pudo traducir la coordenada: " + status);
+                                    setTextFunc("Dirección no encontrada");
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    // use effect para traducir 
+    useEffect(() => {
+        if (foundLocation) reverseGeocode(foundLocation, setFoundAddress);
+        else setFoundAddress("");
+    }, [foundLocation, isLoaded]);
+
+    useEffect(() => {
+        if (actualLocation) reverseGeocode(actualLocation, setActualAddress);
+        else setActualAddress("");
+    }, [actualLocation, isLoaded]);
 
     useEffect(() => {
         setFormData({
@@ -193,6 +246,7 @@ export const RegisterPets = () => {
                                 />
                                 <LocationPicker onDone={setFoundLocation} />
                             </div>
+                            {foundAddress && <small className="text-muted fst-italic ms-1">{foundAddress}</small>}
                         </div>
                     ) : (
                         <div className="mb-3">
@@ -207,6 +261,7 @@ export const RegisterPets = () => {
                                 />
                                 <LocationPicker onDone={setActualLocation} />
                             </div>
+                            {actualAddress && <p className="text-muted fst-italic ms-1">{actualAddress}</p>}
                         </div>
                     )}
 
