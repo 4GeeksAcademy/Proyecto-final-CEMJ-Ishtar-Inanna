@@ -59,13 +59,14 @@ export const LostAnimals = () => {
                                     <li className="text-muted">{pet.details?.Tamano}</li>
                                 </ul>
 
-                                <div className="mt-auto d-flex gap-2 justify-content-center">
+                                <div className="mt-auto d-flex gap-2 justify-content-center action-bar">
                                     <Link
                                         to="/singleanimalview"
                                         state={{ id: pet.id }}
-                                        className="btn btn-primary btn-sm"
+                                        className="btn btn-sm"
+                                        style={{ backgroundColor: "#00afaf" }}
                                     >
-                                        Más información
+                                        Mas informacion
                                     </Link>
 
                                     <button

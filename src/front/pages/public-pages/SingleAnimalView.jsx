@@ -76,10 +76,10 @@ export const SingleAnimalView = () => {
     if (!pet) return <p>Mascota no encontrada</p>;
 
     return (
-        <div className="container py-4">
+        <div className="container py-4 pet-card">
             <div className="row">
-                {/*  left column – data  */}
-                <div className="col-md-8">
+
+                <div className="col-md-7">
                     {Array.isArray(pet.images) && pet.images.length > 0 ? (
                         <div id="carouselExample" className="carousel slide mb-3">
                             <div className="carousel-inner">
@@ -132,9 +132,7 @@ export const SingleAnimalView = () => {
                             pet.details.Color.map(m => <p key={m}>{m}</p>)}
                     </div>
                 </div>
-
-                {/*  right column – mapa con Embed API  */}
-                <div className="col-md-3">
+                <div className="col-md-4">
                     <h5>Lugar donde se encontró</h5>
                     <p className="text-muted">
                         {address}
@@ -155,6 +153,8 @@ export const SingleAnimalView = () => {
                     )}
                 </div>
             </div>
+
         </div>
+
     );
 };

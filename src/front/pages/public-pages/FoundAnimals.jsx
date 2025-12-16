@@ -60,7 +60,7 @@ export const FoundAnimals = () => {
                                     <li className="text-muted">{pet.details?.Tamano}</li>
                                 </ul>
 
-                                <div className="mt-auto d-flex gap-2 justify-content-center" >
+                                <div className="mt-auto d-flex gap-2 justify-content-center action-bar" >
                                     <Link
                                         to="/singleanimalview"
                                         state={{ id: pet.id }}
