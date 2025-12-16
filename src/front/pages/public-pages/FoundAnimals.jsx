@@ -3,6 +3,7 @@ import { getAllPetPosts, deletePetPost } from "../../services/petPostServices";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { useLocation } from 'react-router-dom';
+import { Button } from "bootstrap";
 
 export const FoundAnimals = () => {
 
@@ -59,16 +60,18 @@ export const FoundAnimals = () => {
                                     <li className="text-muted">{pet.details?.Tamano}</li>
                                 </ul>
 
-                                <div className="mt-auto d-flex gap-2 justify-content-center">
+                                <div className="mt-auto d-flex gap-2 justify-content-center" >
                                     <Link
                                         to="/singleanimalview"
                                         state={{ id: pet.id }}
-                                        className="btn btn-primary btn-sm"
+                                        className="btn btn-sm"
+                                        style={{ backgroundColor: "#00afaf" }}
                                     >
-                                        Más información
+                                        Mas informacion
                                     </Link>
 
                                     <button
+
                                         onClick={() => deleteMascota(pet.id)}
                                         className="btn btn-outline-danger btn-sm"
                                     >
