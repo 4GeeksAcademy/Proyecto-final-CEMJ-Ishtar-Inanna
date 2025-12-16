@@ -6,8 +6,9 @@ export const FilteredSearch = () => {
   const [filteredPets, setFilteredPets] = useState([]);
 
   // Filtros
+
   const [speciesFilter, setSpeciesFilter] = useState("");
-  const [sexFilter, setSexFilter] = useState("");
+  const [genderFilter, setGenderFilter] = useState("");
   const [breedFilter, setBreedFilter] = useState("");
   const [physicalDescriptionFilter, setPhysicalDescriptionFilter] = useState("");
   const [colorFilter, setColorFilter] = useState([]);
@@ -35,34 +36,38 @@ export const FilteredSearch = () => {
   useEffect(() => {
     const fetchPets = async () => {
       const data = await getAllPetPosts();
-      const normalized = Array.isArray(data) ? data.map(normalizePet) : [];
-      setAllPets(normalized);
-      setFilteredPets(normalized);
+      console.log(data);
+
+      // const normalized = Array.isArray(data) ? data.map(normalizePet) : [];
+      setAllPets(data.pets);
+      // setFilteredPets(normalized);
     };
     fetchPets();
   }, []);
 
   // Filtrado automático
-  useEffect(() => {
+  const filteredEverything = () => {
+    console.log("especies que queremos filtrar:" + speciesFilter);
+    console.log("array sobre el que vamos a filtrar:" + allPets);
     const results = allPets.filter((pet) => (
-      (!speciesFilter || String(pet.species_id) === speciesFilter) &&
-      (!sexFilter || pet.sex === sexFilter) &&
-      (!breedFilter || pet.breed?.toLowerCase().includes(breedFilter.toLowerCase())) &&
-      (!physicalDescriptionFilter || pet.physical_description?.toLowerCase().includes(physicalDescriptionFilter.toLowerCase())) &&
-      (!actualLocationFilter || pet.actual_location?.toLowerCase().includes(actualLocationFilter.toLowerCase())) &&
-      (!foundTimeFilter || new Date(pet.found_time) >= new Date(foundTimeFilter)) &&
-      (!sizeFilter || pet.size === sizeFilter) &&
-      (!colorFilter.length || colorFilter.some(c => pet.colors.includes(c))) &&
-      (!eyesColorFilter.length || eyesColorFilter.some(c => pet.eyes_color.includes(c))) &&
-      (!marksFilter.length || marksFilter.some(m => pet.marks.includes(m)))
+      ((pet.species) === speciesFilter)
+      // (!genderFilter || pet.gender === genderFilter) &&
+      // (!breedFilter || pet.breed?.toLowerCase().includes(breedFilter.toLowerCase())) &&
+      // (!physicalDescriptionFilter || pet.physical_description?.toLowerCase().includes(physicalDescriptionFilter.toLowerCase())) &&
+      // (pet.actual_location?.toLowerCase().includes(actualLocationFilter.toLowerCase()))
+      // (!foundTimeFilter || new Date(pet.found_time) >= new Date(foundTimeFilter)) &&
+      // (!sizeFilter || pet.size === sizeFilter) &&
+      // (!colorFilter.length || colorFilter.some(c => pet.colors.includes(c))) &&
+      // (!eyesColorFilter.length || eyesColorFilter.some(c => pet.eyes_color.includes(c))) &&
+      // (!marksFilter.length || marksFilter.some(m => pet.marks.includes(m)))
     ));
-
+    console.log(results);
     setFilteredPets(results);
-  }, [allPets, speciesFilter, sexFilter, breedFilter, physicalDescriptionFilter, actualLocationFilter, foundTimeFilter, sizeFilter, colorFilter, eyesColorFilter, marksFilter]);
+  }
 
   const clearAllFilters = () => {
     setSpeciesFilter("");
-    setSexFilter("");
+    setGenderFilter("");
     setBreedFilter("");
     setPhysicalDescriptionFilter("");
     setColorFilter([]);
@@ -75,6 +80,11 @@ export const FilteredSearch = () => {
 
   const sendFilter = (e) => {
     e.preventDefault();
+    filteredEverything();
+    console.log(allPets);
+    console.log(filteredPets);
+    console.log("especie:" + speciesFilter);
+    console.log("location:" + actualLocationFilter);
   };
 
   return (
@@ -84,20 +94,20 @@ export const FilteredSearch = () => {
         {/* Especie */}
         <select className="form-select mb-3" value={speciesFilter} onChange={e => setSpeciesFilter(e.target.value)}>
           <option value="">Especie</option>
-          <option value="1">Perro</option>
-          <option value="2">Gato</option>
-          <option value="3">Hurón</option>
-          <option value="4">Pájaro</option>
-          <option value="5">Conejo</option>
-          <option value="6">Otro</option>
+          <option value="Perro">Perro</option>
+          <option value="Gato">Gato</option>
+          <option value="Hurón">Hurón</option>
+          <option value="Pájaro">Pájaro</option>
+          <option value="Conejo">Conejo</option>
+          <option value="Otro">Otro</option>
         </select>
 
         {/* Sexo */}
         <div className="mb-3">
-          <input type="checkbox" value="male" checked={sexFilter === "male"} onChange={e => setSexFilter(sexFilter === e.target.value ? "" : e.target.value)} />
+          <input type="checkbox" value="male" checked={genderFilter === "male"} onChange={e => setGenderFilter(genderFilter === e.target.value ? "" : e.target.value)} />
           <label className="mx-2">Macho</label>
 
-          <input type="checkbox" value="female" checked={sexFilter === "female"} onChange={e => setSexFilter(sexFilter === e.target.value ? "" : e.target.value)} />
+          <input type="checkbox" value="female" checked={genderFilter === "female"} onChange={e => setGenderFilter(genderFilter === e.target.value ? "" : e.target.value)} />
           <label className="mx-2">Hembra</label>
         </div>
 
@@ -107,7 +117,7 @@ export const FilteredSearch = () => {
         {/* Color pelaje */}
         <div className="mb-3 row">
           <label className="form-label">Color del pelaje / plumaje</label>
-          {[ ["Negro", "Blanco", "Marrón"], ["Crema", "Amarillo", "Canela"], ["Atigrado", "Carey", "Naranja"] ].map((group, i) => (
+          {[["Negro", "Blanco", "Marrón"], ["Crema", "Amarillo", "Canela"], ["Atigrado", "Carey", "Naranja"]].map((group, i) => (
             <div key={i} className="col-3">
               {group.map(color => (
                 <div key={color} className="form-check mb-2">
@@ -161,7 +171,7 @@ export const FilteredSearch = () => {
         {/* Marcas */}
         <div className="mb-3 row">
           <label className="form-label">Marcas distintivas</label>
-          {[ ["Collar", "Arnés", "OrejaDañada"], ["ColaCorta", "OjosDistintos", "Cicatriz"], ["Ninguna", "Castrado", "TieneChip"] ].map((group, i) => (
+          {[["Collar", "Arnés", "OrejaDañada"], ["ColaCorta", "OjosDistintos", "Cicatriz"], ["Ninguna", "Castrado", "TieneChip"]].map((group, i) => (
             <div key={i} className="col-3">
               {group.map(mark => (
                 <div key={mark} className="mb-2 form-check">
@@ -185,7 +195,7 @@ export const FilteredSearch = () => {
 
         <div className="mb-3 row">
           <div className="col-3">
-            <input required className="form-control" placeholder="LUGAR DONDE SE ENCONTRÓ" value={actualLocationFilter} onChange={e => setActualLocationFilter(e.target.value)} />
+            <input className="form-control" placeholder="LUGAR DONDE SE ENCONTRÓ" value={actualLocationFilter} onChange={e => setActualLocationFilter(e.target.value)} />
           </div>
           <div className="col-3">
             <input type="datetime-local" className="form-control" value={foundTimeFilter} onChange={e => setFoundTimeFilter(e.target.value)} />
@@ -193,7 +203,7 @@ export const FilteredSearch = () => {
         </div>
 
         <div className="d-flex justify-content-end gap-2 mt-3">
-          <button type="submit" className="btn btn-primary">Buscar</button>
+          <button type="submit" className="button btn btn-primary">Buscar</button>
           <button type="button" className="btn btn-outline-secondary" onClick={clearAllFilters}>Limpiar filtros</button>
         </div>
       </form>
@@ -203,8 +213,11 @@ export const FilteredSearch = () => {
         {filteredPets.map(pet => (
           <div key={pet.id} className="card mb-3 p-3">
             <h5>{pet.name || "Sin nombre"}</h5>
+            <p><strong>Especie:</strong> {pet.species}</p>
+            <p><strong>Gender:</strong> {pet.gender}</p>
             <p><strong>Raza:</strong> {pet.breed}</p>
-            <p><strong>Descripción:</strong> {pet.physical_description}</p>
+            <p><strong>Size:</strong> {pet.size}</p>
+            <p><strong>Ubicación:</strong> {pet.actual_location}</p>
           </div>
         ))}
         {filteredPets.length === 0 && <p className="text-muted">No se encontraron resultados</p>}
