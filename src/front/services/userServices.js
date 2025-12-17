@@ -53,3 +53,19 @@ export const deleteUser = async (userId) => {
 
   return true; // Retornamos true si salió bien
 };
+
+// PERFIL PUBLICO DE USUARIO
+export const getPublicUser = async (userId) => {
+  const response = await fetch(`${BACKEND_URL}users/${userId}/public`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error al obtener perfil: ${response.statusText}`);
+  }
+
+  return await response.json();
+};
