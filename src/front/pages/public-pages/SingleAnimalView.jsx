@@ -1,30 +1,60 @@
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getAllPetPosts } from "../../services/petPostServices";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"
-import { useLocation } from 'react-router-dom';
+import LogoLosAristogatos from "../../assets/img/LogoLosAristogatos.png";
 import Map from "../../components/Map"; // no sirve ya esta el embebed
 import { useJsApiLoader } from "@react-google-maps/api";
 
 
 export const SingleAnimalView = () => {
-
+    const navigate = useNavigate();
     const { state } = useLocation();   // { id: 25 }
     const id_mascota = state?.id;
 
     // Estado para la dirección en texto
     const [address, setAddress] = useState("Cargando ubicación...");
     const [petList, setPetList] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyAJ36Mp6CXQ0u5bZpQuByVe1t5xZMam_bs", // key cambiar 
         id: 'google-map-script'
     });
 
+    const Info = ({ label, value }) => (
+        <div className="col-6 col-md-3 mb-2">
+            <div className="border rounded py-2">
+                <small className="text-muted">{label}</small>
+                <div className="fw-semibold">{value}</div>
+            </div>
+        </div>
+    );
+
+    const Section = ({ title, children }) => (
+        <div className="mb-3">
+            <h6 className="fw-semibold">{title}</h6>
+            <div>{children}</div>
+        </div>
+    );
+
     const testFetchMascotas = async () => {
         const response = await getAllPetPosts()
         setPetList(response.pets)
     }
+
+    useEffect(() => {
+        const fetchPets = async () => {
+            try {
+                const res = await getAllPetPosts();
+                setPetList(res?.pets || []);
+            } catch (error) {
+                console.error("Error fetching pets:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPets();
+    }, []);
 
     const enriched = petList.map(p => ({
         ...p,
@@ -76,10 +106,17 @@ export const SingleAnimalView = () => {
     if (!pet) return <p>Mascota no encontrada</p>;
 
     return (
-        <div className="container py-4 pet-card">
-            <div className="row">
+        <div className="container">
+            <div className="container my-4">
+                <button className="btn btn-link mb-3" onClick={() => navigate(-1)}>
+                    ← Volver
+                </button>
+            </div>
 
+            <div className="row g-4">
+                {/* MAIN CONTENT */}
                 <div className="col-md-7">
+                    <div className="card shadow-sm mb-4">
                     {Array.isArray(pet.images) && pet.images.length > 0 ? (
                         <div id="carouselExample" className="carousel slide mb-3">
                             <div className="carousel-inner">
@@ -110,35 +147,76 @@ export const SingleAnimalView = () => {
                     ) : (
                         <p>No hay imágenes disponibles</p>
                     )}
+                    
+                       
+                        <div className="card-body">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h2 className="fw-bold mb-0">{pet.name}</h2>
+                                    <small className="text-muted">{pet.found_location}</small>
+                                </div>
+                                <span className="badge bg-success">Adoptable</span>
+                            </div>
 
-                    <h5>Especie</h5>
-                    <p>{pet.breed}</p>
-
-                    <h5>Tamaño</h5>
-                    <p>{pet.details.Tamano}</p>
-
-                    <h5>Tipo de pelaje</h5>
-                    <p>{pet.details.Pelo}</p>
-
-                    <h5>Marcas características</h5>
-                    <div>
-                        {Array.isArray(pet.details.Marcas) &&
-                            pet.details.Marcas.map(m => <p key={m}>{m}</p>)}
+                            <div className="row text-center mb-4">
+                                <Info label="Edad" value={pet.age || "N/A"} />
+                                <Info label="Género" value={pet.gender || "N/A"} />
+                                <Info label="Raza" value={pet.breed || "N/A"} />
+                                <Info label="Especie" value={pet.specie || "N/A"} />
+                            </div>
+                        </div>
                     </div>
 
-                    <h5>Colores del animal</h5>
-                    <div>
-                        {Array.isArray(pet.details.Color) &&
-                            pet.details.Color.map(m => <p key={m}>{m}</p>)}
+                    <div className="card shadow-sm mb-5">
+                        <div className="card-body">
+                            <Section title="Sobre mí">
+                                {pet.description || "Esta mascota está buscando un hogar lleno de amor."}
+                            </Section>
+
+                            <Section title="Detalles físicos">
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <h5>Tamaño</h5>
+                                            <p>{pet.size}</p>
+                                        </li>
+                                        <li>
+                                            <h5>Tipo de pelaje</h5>
+                                            <p>{pet.color}</p>
+                                        </li>
+                                        <li>
+                                            <h5>Otros detalles</h5>
+                                            <div>{Array.isArray(pet.marks) && pet.Marks.map(m => <p key={m}>{m}</p>)}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </Section>
+                        </div>
                     </div>
                 </div>
-                <div className="col-md-4">
+
+                {/* SIDEBAR */}
+                <div className="col-lg-4">
+                    <div className="card shadow-sm mb-4">
+                        <div className="card-body">
+                            <h5 className="fw-semibold d-flex align-items-center gap-2">
+                                <img
+                                    src={LogoLosAristogatos}
+                                    alt="Los Aristogatos logo"
+                                    style={{ width: "40px", height: "40px" }}
+                                />
+                                Los Aristogatos de Boadilla
+                            </h5>
+                            <button className="btn btn-primary w-100 my-2">Iniciar adopción</button>
+                            <button className="btn btn-outline-secondary w-100 mb-3">Contactar</button>
+                        </div>
+                    </div>
                     <h5>Lugar donde se encontró</h5>
                     <p className="text-muted">
                         {address}
                     </p>
                     {pet.foundCoords ? (
-                        <div className="rounded overflow-hidden" style={{ height: 300 }}>
+                        <div className="rounded overflow-hidden mb-5" style={{ height: 300 }}>
                             <iframe
                                 width="100%"
                                 height="100%"
@@ -153,8 +231,6 @@ export const SingleAnimalView = () => {
                     )}
                 </div>
             </div>
-
         </div>
-
     );
 };
