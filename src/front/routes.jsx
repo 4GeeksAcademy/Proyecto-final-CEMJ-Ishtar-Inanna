@@ -23,6 +23,7 @@ import { RegisterPets } from "./pages/private-pages/RegisterPets";
 import { ProfilePage } from "./pages/public-pages/ProfilePage";
 import { SingleAnimalView } from "./pages/public-pages/SingleAnimalView";
 import { PublicProfilePage } from "./pages/public-pages/PublicProfilePage";
+import { AboutUs } from "./pages/public-pages/AboutUs";
 
 
 
@@ -53,6 +54,7 @@ export const router = createBrowserRouter(
         <Route path="/profilepage" element={<ProfilePage />} />
         <Route path="/singleanimalview" element={<SingleAnimalView />} />
         <Route path="/PublicProfilePage" element={<PublicProfilePage />} />
+        <Route path="/aboutus" element={<AboutUs/>}/>
 
       </Route>
 
