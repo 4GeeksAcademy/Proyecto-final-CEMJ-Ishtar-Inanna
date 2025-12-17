@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx"
-import PerdidosVista from "../../assets/img/PerdidosVista.png";
-import RefugiosVista from "../../assets/img/RefugiosVista.png";
-import BusquedaVista from "../../assets/img/BusquedaFiltrada.png";
+import Fondo from "../../assets/img/Fondo.png";
 import Perros1 from "../../assets/img/Perros1.jpg";
 import Perros2 from "../../assets/img/Perros2.jpg";
+import "../Home.css"
 
 const slides = [
 	{
-		img: PerdidosVista,
-		title: "Animales perdidos y encontrados",
-		text: "Una forma de encontrar a tu animal perdido ya sea mediante su busqueda por los refugios mas cercanos a ti o por fotos de animales encontrados en la calle subidas por otros usuarios"
+		img: Fondo,
+		title: "Ishtar Innana",
+		text: "Una plataforma colaborativa diseñada para ayudar a reencontrar mascotas perdidas y apoyar la adopción responsable mediante la participación de la comunidad."
 	},
 	{
-		img: RefugiosVista,
-		title: "Refugios",
-		text: "Una lista de refugios que colaboran con nosotros para facilitar la busqueda de animales perdidos y promocionar la adopcion de animales en necesidad"
+		img: Fondo,
+		title: "Búsqueda simple y avanzada",
+		text: "Busca mascotas por nombre o características específicas y accede a resultados filtrados que reducen el tiempo de búsqueda."
 	},
 	{
-		img: BusquedaVista,
-		title: "Busqueda avanzada",
-		text: "Introduce cualquier caracteristica del animal al que estas buscando, se filtran segun los datos introducidos para reducir el tiempo de busqueda y facilitar resultados optimos"
+		img: Fondo,
+		title: "Contacto directo entre usuarios",
+		text: "Comunícate fácilmente con quienes han encontrado o reportado mascotas para obtener información precisa y actuar de forma inmediata."
+	},
+	{
+		img: Fondo,
+		title: "Reporta y explora mascotas encontradas",
+		text: "Publica mascotas encontradas o revisa el listado disponible para ayudar a otros y aumentar las posibilidades de reencuentro."
 	}
-	// {
-	// 	img: Perros2,
-	// 	title: "Ishtar Inanna",
-	// 	text: "Ayudanos a ayudarlos"
-	// }
 ];
 
 const SLIDE_DURATION = 5000;
@@ -57,18 +56,13 @@ export const Home = () => {
 
 			<div className="row justify-content-center mb-5">
 				<div className="col-lg-10">
-					<div className="card shadow-lg p-0 position-relative">
+					<div className="card shadow-lg p-0 position-relative home-carousel-card">
 
-						<div className="bg-light rounded-top overflow-hidden" style={{ height: "250px" }}>
-							<img
-								src={slides[index].img}
-								alt="slide"
-								className="w-100 h-100 object-fit-contain"
-							/>
+						<div className="home-carousel-image-wrapper rounded-top overflow-hidden">
+							<img src={slides[index].img} alt="slide" />
 						</div>
 
-						{/* Search */}
-						<div className="position-absolute top-50 start-50 translate-middle w-75" style={{ zIndex: 10 }}>
+						<div className="position-absolute top-50 start-50 translate-middle w-75 home-carousel-search">
 							<div className="d-flex">
 								<input
 									className="form-control me-2"
@@ -82,7 +76,7 @@ export const Home = () => {
 							</div>
 						</div>
 
-						<div className="p-3">
+						<div className="home-carousel-content">
 							<h4 className="fw-bold">{slides[index].title}</h4>
 							<p className="text-muted mb-0">{slides[index].text}
 							</p>
@@ -97,15 +91,12 @@ export const Home = () => {
 								overflow: "hidden"
 							}}
 						>
-							<div
-								className="progress-bar"
-								role="progressbar"
-								style={{
-									width: `${progress}%`,
-									backgroundColor: "#6c757d",
-									transition: "width 0.05s linear"
-								}}
-							></div>
+							<div className="home-carousel-progress">
+								<div
+									className="progress-bar"
+									style={{ width: `${progress}%` }}
+								/>
+							</div>
 						</div>
 					</div>
 

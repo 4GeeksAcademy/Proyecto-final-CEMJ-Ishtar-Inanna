@@ -1,0 +1,79 @@
+.home-carousel-card {
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.home-carousel-image-wrapper {
+    height: 250px;
+    background-color: #f8f9fa;
+    overflow: hidden;
+}
+
+.home-carousel-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.home-carousel-search {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.home-carousel-search input {
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+}
+
+.home-carousel-search input:focus {
+    box-shadow: none;
+    border-color: #198754;
+}
+
+.home-carousel-search button {
+    border-radius: 0.5rem;
+}
+
+.home-carousel-content {
+    padding: 1rem 1.25rem;
+}
+
+.home-carousel-content h4 {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.home-carousel-content p {
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+.home-carousel-progress {
+    height: 6px;
+    background-color: transparent;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.home-carousel-progress .progress-bar {
+    background-color: #6c757d;
+    transition: width 0.05s linear;
+}
+
+@media (max-width: 768px) {
+    .home-carousel-image-wrapper {
+        height: 200px;
+    }
+
+    .home-carousel-search {
+        width: 90%;
+        padding: 0.5rem;
+    }
+
+    .home-carousel-content h4 {
+        font-size: 1.1rem;
+    }
+}
