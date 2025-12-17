@@ -39,6 +39,7 @@ export const PublicProfilePage = () => {
 
                 <h3>{user.name} {user.last_name}</h3>
                 <p className="text-muted">@{user.username}</p>
+                <p> <strong>Número de teléfono:</strong> {user.phone}</p>
 
                 <hr />
 
@@ -55,7 +56,7 @@ export const PublicProfilePage = () => {
                 {user.email && (
                     <a
                         href={`mailto:${user.email}?subject=Mascota encontrada`}
-                        className="btn btn-outline-primary w-100 mt-2"
+                        className="btn btn-primary w-100 mt-2"
                     >
                         Contactar por correo
                     </a>

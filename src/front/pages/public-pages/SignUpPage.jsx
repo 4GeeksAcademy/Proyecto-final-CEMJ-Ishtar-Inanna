@@ -10,6 +10,7 @@ export const SignUpPage = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const registerUsers = async (e) => {
         e.preventDefault();
 
@@ -68,17 +69,28 @@ export const SignUpPage = () => {
                         value={username}
                     />
                 </div>
-
-                {/* Password */}
                 <div className="mb-3">
                     <label className="form-label">Contraseña</label>
-                    <input
-                        className="form-control"
-                        type="password"
-                        placeholder="Introduce tu contraseña"
-                        onChange={({ target }) => setPassword(target.value)}
-                        value={password}
-                    />
+                    <div className="input-group">
+                        <input
+                            className="form-control"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Introduce tu contraseña"
+                            onChange={({ target }) => setPassword(target.value)}
+                            value={password}
+                        />
+                        <span
+                            className="input-group-text"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <i className="bi bi-eye-slash-fill"></i>
+                            ) : (
+                                <i className="bi bi-eye-fill"></i>
+                            )}
+                        </span>
+                    </div>
                 </div>
 
                 <div className="mb-3">
@@ -91,7 +103,6 @@ export const SignUpPage = () => {
                     />
                 </div>
 
-                {/* Last name */}
                 <div className="mb-4">
                     <label className="form-label">Apellido</label>
                     <input

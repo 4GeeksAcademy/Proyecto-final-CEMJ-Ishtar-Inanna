@@ -26,7 +26,6 @@ export const Footer = () => (
 					</ul>
 				</div>
 
-				{/* Información */}
 				<div className="col-md-4 mb-4">
 					<h6 className="text-uppercase fw-semibold mb-3 text-dark">
 						Información
