@@ -9,17 +9,17 @@ import "../Home.css"
 const slides = [
 	{
 		img: Fondo,
-		title: "Ishtar Innana",
-		text: "Una plataforma colaborativa diseñada para ayudar a reencontrar mascotas perdidas y apoyar la adopción responsable mediante la participación de la comunidad."
+		title: "Ishtar",
+		text: "Una plataforma colaborativa diseñada para ayudar a reencontrar mascotas perdidas mediante la participación de la comunidad."
 	},
 	{
 		img: Fondo,
-		title: "Búsqueda simple y avanzada",
+		title: "Búsqueda avanzada",
 		text: "Busca mascotas por nombre o características específicas y accede a resultados filtrados que reducen el tiempo de búsqueda."
 	},
 	{
 		img: Fondo,
-		title: "Contacto directo entre usuarios",
+		title: "Contacto entre usuarios",
 		text: "Comunícate fácilmente con quienes han encontrado o reportado mascotas para obtener información precisa y actuar de forma inmediata."
 	},
 	{
@@ -62,19 +62,6 @@ export const Home = () => {
 							<img src={slides[index].img} alt="slide" />
 						</div>
 
-						<div className="position-absolute top-50 start-50 translate-middle w-75 home-carousel-search">
-							<div className="d-flex">
-								<input
-									className="form-control me-2"
-									placeholder="Búsqueda avanzada"
-								/>
-								<Link to="/filteredsearch">
-									<button className="btn btn-outline-success">
-										<i className="fa-solid fa-magnifying-glass"></i>
-									</button>
-								</Link>
-							</div>
-						</div>
 
 						<div className="home-carousel-content">
 							<h4 className="fw-bold">{slides[index].title}</h4>
@@ -147,7 +134,7 @@ export const Home = () => {
 										<img src={Perros1} className="card-img-top" style={{ height: "300px", objectFit: "cover" }} />
 										<div className="card-body p-4">
 											<h5 className="fw-bold">Encontraste una mascota?</h5>
-											<p className="text-success fw-semibold mb-2">Reportar mascota perdida</p>
+											<p className="text-success fw-semibold mb-2">Ver mascotas perdidas</p>
 											<p className="text-muted small">
 												Ayuda a otros a encontrar a sus mascotas reportando las que encuentres.										</p>
 										</div>
