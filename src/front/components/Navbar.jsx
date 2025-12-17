@@ -42,11 +42,13 @@ export const Navbar = () => {
 								<b>Animales Encontrados</b>
 							</Link>
 						</li>
-						<li className="nav-item">
-							<Link to="/auth/registerpets" className="nav-link text-light">
-								<b>Añadir Registro</b>
-							</Link>
-						</li>
+
+						{isToken ? (
+							<li className="nav-item">
+								<Link to="/auth/registerpets" className="nav-link text-light">
+									<b>Añadir Registro</b>
+								</Link>
+							</li>) : null}
 					</ul>
 
 					<div>
@@ -69,7 +71,7 @@ export const Navbar = () => {
 								className="btn btn-danger"
 								onClick={() => handleLogout()}
 							>
-								Logout
+								Cerrar Sesión
 							</button>
 						</div>
 					) : (
@@ -79,7 +81,7 @@ export const Navbar = () => {
 								<i className="fa-solid fa-pen-to-square me-1"></i>Registro
 							</Link>
 							<Link to="/loginpage" className="nav-link">
-								<i className="fa-regular fa-user me-1"></i>Login
+								<i className="fa-regular fa-user me-1"></i>Iniciar Sesión
 							</Link>
 						</div>
 					)}

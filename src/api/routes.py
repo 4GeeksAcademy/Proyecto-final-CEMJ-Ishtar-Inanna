@@ -329,5 +329,20 @@ def delete_social_media(social_media_id):
     return jsonify({"done": True}), 200
 
 
+@api.route("/users/<int:user_id>/public", methods=["GET"])
+def get_public_user(user_id):
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    return jsonify({
+        "username": user.username,
+        "name": user.name,
+        "last_name": user.last_name,
+        "prof_img": user.prof_img,
+        "phone": user.phone,
+        "email": user.email
+
+    }), 200
 # AUTHENTICATION TESTING
 # Protect a route with jwt_required, which will kick out requests without a valid JWT

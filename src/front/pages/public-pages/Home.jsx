@@ -32,7 +32,7 @@ const slides = [
 
 const SLIDE_DURATION = 5000;
 
-export const Home =()=> {
+export const Home = () => {
 	const [index, setIndex] = useState(0);
 	const [progress, setProgress] = useState(0);
 
@@ -53,72 +53,134 @@ export const Home =()=> {
 	}, []);
 
 	return (
-		<div className="d-flex justify-content-center mt-4">
-			<div
-				className="card shadow-lg position-relative p-0"
-				style={{
-					width: "80%",
-					maxWidth: "90%",
-					minWidth: "80%"
-				}}
-			>
+		<div className="container my-5">
 
-				<div className="position-relative bg-light rounded-top overflow-hidden" style={{ height: "250px" }}>
-					<img
-						src={slides[index].img}
-						alt={`slide-${index}`}
-						className="w-100 h-100 object-fit-contain position-absolute top-0 start-0"
-					/>
-				</div>
+			<div className="row justify-content-center mb-5">
+				<div className="col-lg-10">
+					<div className="card shadow-lg p-0 position-relative">
 
-				<form
-					className="d-flex position-absolute top-50 start-50 translate-middle w-75"
-					role="search"
-					style={{ zIndex: 10 }}
-				>
-					<input
-						className="form-control me-2"
-						type="search"
-						placeholder="Búsqueda avanzada"
-						aria-label="Search"
-					/>
-					<div>
-						<Link to="/filteredsearch">
-							<button className="button btn btn-outline-success" type="submit">
-								<i className="fa-solid fa-magnifying-glass"></i>
-							</button>
-						</Link>
+						<div className="bg-light rounded-top overflow-hidden" style={{ height: "250px" }}>
+							<img
+								src={slides[index].img}
+								alt="slide"
+								className="w-100 h-100 object-fit-contain"
+							/>
+						</div>
+
+						{/* Search */}
+						<div className="position-absolute top-50 start-50 translate-middle w-75" style={{ zIndex: 10 }}>
+							<div className="d-flex">
+								<input
+									className="form-control me-2"
+									placeholder="Búsqueda avanzada"
+								/>
+								<Link to="/filteredsearch">
+									<button className="btn btn-outline-success">
+										<i className="fa-solid fa-magnifying-glass"></i>
+									</button>
+								</Link>
+							</div>
+						</div>
+
+						<div className="p-3">
+							<h4 className="fw-bold">{slides[index].title}</h4>
+							<p className="text-muted mb-0">{slides[index].text}
+							</p>
+						</div>
+
+						<div
+							className="progress mt-2"
+							style={{
+								height: "6px",
+								backgroundColor: "transparent",
+								borderRadius: "3px",
+								overflow: "hidden"
+							}}
+						>
+							<div
+								className="progress-bar"
+								role="progressbar"
+								style={{
+									width: `${progress}%`,
+									backgroundColor: "#6c757d",
+									transition: "width 0.05s linear"
+								}}
+							></div>
+						</div>
 					</div>
-				</form>
 
-				<div className="p-3" style={{ height: "130px", overflow: "hidden" }}>
-					<h4 className="fw-bold mb-2">{slides[index].title}</h4>
-					<p className="mb-0 text-truncate text-wrap" style={{ maxHeight: "80px", overflowY: "auto" }}>
-						{slides[index].text}
-					</p>
-				</div>
+					<div className="mb-5 pt-5">
+						<h5 className="fw-bold mb-3 text-center text-dark">Como funciona?</h5>
+						<h2 className="fw-bold mb-4 text-center">Encuentra a tu mascota en dos pasos</h2>
+						<p className="text-muted mb-3 text-center">
+							Nuestra plataforma ayuda el proceso de búsqueda y adopción de mascotas, haciendo que sea más fácil que nunca traer un nuevo compañero a tu vida.
+						</p>
 
-				<div
-					className="progress mt-2"
-					style={{
-						height: "6px",
-						backgroundColor: "transparent",
-						borderRadius: "3px",
-						overflow: "hidden"
-					}}
-				>
-					<div
-						className="progress-bar"
-						role="progressbar"
-						style={{
-							width: `${progress}%`,
-							backgroundColor: "#6c757d",
-							transition: "width 0.05s linear"
-						}}
-					></div>
+						<div className="row col-sm g-4 pt-5">
+							<div className="col-sm">
+								<div className="card h-100 border-light shadow-sm p-3 rounded-4">
+									<div className="card-body">
+										<div className="mb-3">
+											<i className="fa-solid fa-magnifying-glass fs-2 text-dark"></i>
+										</div>
+										<h5 className="card-title fw-bold">Busca</h5>
+										<p className="card-text text-muted small">
+											Busca por nombre o características para encontrar mascotas perdidas o encontradas.
+										</p>
+									</div>
+								</div>
+							</div>
+							<div className="col-sm">
+								<div className="card h-100 border-light shadow-sm p-3 rounded-4">
+									<div className="card-body">
+										<div className="mb-3">
+											<i className="fa-solid fa-handshake-angle fs-2 text-dark"></i>
+										</div>
+										<h5 className="card-title fw-bold">Contacta</h5>
+										<p className="card-text text-muted small">
+											Contacta directamente con el usuario para obtener más información sobre la mascota.
+										</p>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<section className="mb-5 mt-5">
+						<h3 className="fw-bold mb-4 text-center">Mascotas perdidas y encontradas</h3>
+
+						<div className="row g-4">
+							<div className="col-md-6">
+								<Link to="/lostanimals" className="text-decoration-none">
+									<div className="card border-0 rounded-4 shadow-sm overflow-hidden">
+										<img src={Perros1} className="card-img-top" style={{ height: "300px", objectFit: "cover" }} />
+										<div className="card-body p-4">
+											<h5 className="fw-bold">Encontraste una mascota?</h5>
+											<p className="text-success fw-semibold mb-2">Reportar mascota perdida</p>
+											<p className="text-muted small">
+												Ayuda a otros a encontrar a sus mascotas reportando las que encuentres.										</p>
+										</div>
+									</div>
+								</Link>
+							</div>
+
+							<div className="col-md-6">
+								<Link to="/foundanimals" className="text-decoration-none">
+									<div className="card border-0 rounded-4 shadow-sm overflow-hidden">
+										<img src={Perros2} className="card-img-top" style={{ height: "300px", objectFit: "cover" }} />
+										<div className="card-body p-4">
+											<h5 className="fw-bold">Buscando una mascota perdida?</h5>
+											<p className="text-success fw-semibold mb-2">Ver mascotas encontradas</p>
+											<p className="text-muted small">
+												Explora el listado para ver si su compañero desaparecido ha sido encontrado.										</p>
+										</div>
+									</div>
+								</Link>
+							</div>
+						</div>
+					</section>
 				</div>
 			</div>
 		</div>
-
 	);
-}
+};

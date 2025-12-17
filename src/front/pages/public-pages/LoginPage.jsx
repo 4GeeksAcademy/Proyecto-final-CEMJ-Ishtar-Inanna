@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { getAuthentication, login } from "../../services/loginServices.js"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import useGlobalReducer from "../../hooks/useGlobalReducer.jsx"
 
 export const LoginPage = () => {
 
 	const [password, setPassword] = useState("")
 	const [userName, setUserName] = useState("")
+	const [showPassword, setShowPassword] = useState(false)
 	const token = localStorage.getItem("jwt-token")
 
 	const navigate = useNavigate()
@@ -57,16 +58,28 @@ export const LoginPage = () => {
 					/>
 				</div>
 
-				<div className="mb-4">
-					<label className="form-label">Contraseña</label>
+				<div className="input-group mb-3">
 					<input
+						type={showPassword ? "text" : "password"}
 						className="form-control"
-						type="password"
 						placeholder="Introduce tu contraseña"
 						value={password}
-						onChange={e => setPassword(e.target.value)}
+						onChange={(e) => setPassword(e.target.value)}
+						aria-label="Password"
 					/>
+					<span
+						className="input-group-text"
+						style={{ cursor: "pointer" }}
+						onClick={() => setShowPassword(!showPassword)}
+					>
+						{showPassword ? (
+							<i className="bi bi-eye-slash-fill"></i>
+						) : (
+							<i className="bi bi-eye-fill"></i>
+						)}
+					</span>
 				</div>
+
 
 				<div className="d-flex justify-content-end mb-3">
 					<button
@@ -76,12 +89,18 @@ export const LoginPage = () => {
 						Entrar
 					</button>
 				</div>
-			</div>
 
-			<div className="w-100" style={{ maxWidth: "420px" }}>
-				<p className="mt-3 text-center">
-					{token ? "You are logged in" : "You are not logged in"}
-				</p>
+				<div className="text-center mt-1 pb-5">
+					<p className="mb-0">
+						¿No tienes cuenta?{" "}
+						<Link
+							to="/signup-page"
+							className="text-success fw-bold text-decoration-none"
+						>
+							Créala aquí
+						</Link>
+					</p>
+				</div>
 			</div>
 		</div>
 	)
