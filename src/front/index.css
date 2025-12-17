@@ -188,3 +188,8 @@ body {
     "SOFT" 0,
     "WONK" 0;
 }
+
+.register-filter {
+  color: #00695c;
+  letter-spacing: 0.5px;
+}

@@ -40,7 +40,7 @@ export const FilteredSearch = () => {
     if (!eq(pet.actual_location, form.actual_location)) return false;
     if (!eq(pet.found_location, form.found_location)) return false;
 
-    
+
     if (form.physical_description) {
       const d = pet.details;
       const f = form.physical_description.split('|').reduce((acc, chunk) => {
@@ -116,38 +116,13 @@ export const FilteredSearch = () => {
     <>
       <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
         <div className="card shadow-lg rounded-4 p-4 w-100" style={{ maxWidth: 480 }}>
-          <h1 className="text-center mb-4 fw-semibold">Búsqueda filtrada</h1>
-          <div className="my-3 d-flex gap-3">
-            <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={() => setIsLost(true)}>PERDIDO</button>
-            <button className={`btn ${isLost ? "btn-danger" : "btn-success"}`} onClick={() => setIsLost(false)}>ENCONTRADO</button>
-          </div>
+          <h1 className="text-center mb-4 fw-semibold register-filter">Búsqueda filtrada</h1>
+
           <form
             //onSubmit={}
             className="w-100"
             style={{ maxWidth: "420px" }}
           >
-            {isLost ? <div className="mb-3">
-              <label className="form-label">Lugar donde se perdió</label>
-              <input
-                required
-                className="form-control"
-                type="lugar"
-                placeholder="LUGAR DONDE SE VIO POR ÚLTIMA VEZ"
-                onChange={({ target }) => setFoundLocation(target.value)}
-                value={foundLocation}
-              />
-            </div> :
-              <div className="mb-3">
-                <label className="form-label">Lugar donde se encontró</label>
-                <input
-                  required
-                  className="form-control"
-                  placeholder="LUGAR DONDE SE ENCONTRÓ"
-                  onChange={({ target }) => setActualLocation(target.value)}
-                  value={actualLocation}
-                />
-              </div>
-            }
             <div className="mb-3">
               <label className="form-label">Nombre</label>
               <input
@@ -157,142 +132,129 @@ export const FilteredSearch = () => {
                 value={name}
               />
             </div>
-            <div className="p-4">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setOpen((v) => !v)}
-                aria-expanded={open}
-                aria-controls="optionForm"
-              >
-                {open ? 'Hide options' : 'Show options'}
-              </button>
+            <div
+              id="optionForm"
+              onChange={() => buildString()}
+              className="show"
+            >
+              <div className="mb-3">
+                <label className="form-label">Especie</label>
+                <select onChange={e => setBreed(e.target.value)} name="especie" className="form-select" required>
+                  <option value="" disabled selected hidden>Seleccione una especie</option>
+                  <option value="">No especificado</option>
+                  <option>Perro</option>
+                  <option>Gato</option>
+                  <option>Ave</option>
+                  <option>Conejo</option>
+                  <option>Otro</option>
+                </select>
+              </div>
 
-              <div
-                id="optionForm"
-                onChange={() => buildString()}
-                className={`collapse ${open ? 'show' : ''} mt-3`}
-              >
-                <div className="mb-3">
-                  <label className="form-label">Especie</label>
-                  <select onChange={e => setBreed(e.target.value)} name="especie" className="form-select" required>
-                    <option value="" disabled selected hidden>Seleccione una especie</option>
-                    <option value="">No especificado</option>
-                    <option>Perro</option>
-                    <option>Gato</option>
-                    <option>Ave</option>
-                    <option>Conejo</option>
-                    <option>Otro</option>
-                  </select>
-                </div>
+              <div className="mb-3">
+                <label className="form-label">Tamaño</label>
+                <select name="tamano" className="form-select" required>
+                  <option value="" disabled selected hidden>Seleccione un tamaño</option>
+                  <option value="">No especificado</option>
+                  <option>Pequeño</option>
+                  <option>Mediano</option>
+                  <option>Grande</option>
+                </select>
+              </div>
 
-                <div className="mb-3">
-                  <label className="form-label">Tamaño</label>
-                  <select name="tamano" className="form-select" required>
-                    <option value="" disabled selected hidden>Seleccione un tamaño</option>
-                    <option value="">No especificado</option>
-                    <option>Pequeño</option>
-                    <option>Mediano</option>
-                    <option>Grande</option>
-                  </select>
-                </div>
+              <div className="mb-3">
+                <label className="form-label">Género</label>
+                <select name="genero" className="form-select" required>
+                  <option value="" disabled selected hidden>Seleccione género</option>
+                  <option value="">No especificado</option>
+                  <option>Hembra</option>
+                  <option>Macho</option>
+                </select>
+              </div>
 
-                <div className="mb-3">
-                  <label className="form-label">Género</label>
-                  <select name="genero" className="form-select" required>
-                    <option value="" disabled selected hidden>Seleccione género</option>
-                    <option value="">No especificado</option>
-                    <option>Hembra</option>
-                    <option>Macho</option>
-                  </select>
+              <div className="mb-3">
+                <label className="form-label">Tipo de pelo / plumaje</label>
+                <select name="pelo" className="form-select" required>
+                  <option value="" disabled selected hidden>Seleccione un tipo de pelaje</option>
+                  <option value="">No especificado</option>
+                  <option>Corto</option>
+                  <option>Mediano</option>
+                  <option>Largo</option>
+                  <option>Rizado</option>
+                  <option>No aplica</option>
+                  <option>No lo sé</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Color del pelaje</label>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Negro" id="colorNegro" />
+                  <label className="form-check-label" htmlFor="colorNegro">Negro</label>
                 </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Tipo de pelo / plumaje</label>
-                  <select name="pelo" className="form-select" required>
-                    <option value="" disabled selected hidden>Seleccione un tipo de pelaje</option>
-                    <option value="">No especificado</option>
-                    <option>Corto</option>
-                    <option>Mediano</option>
-                    <option>Largo</option>
-                    <option>Rizado</option>
-                    <option>No aplica</option>
-                    <option>No lo sé</option>
-                  </select>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Blanco" id="colorBlanco" />
+                  <label className="form-check-label" htmlFor="colorBlanco">Blanco</label>
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Color del pelaje</label>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Negro" id="colorNegro" />
-                    <label className="form-check-label" htmlFor="colorNegro">Negro</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Blanco" id="colorBlanco" />
-                    <label className="form-check-label" htmlFor="colorBlanco">Blanco</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Marrón" id="colorMarron" />
-                    <label className="form-check-label" htmlFor="colorMarron">Marrón</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Crema" id="colorBeige" />
-                    <label className="form-check-label" htmlFor="colorBeige">Crema</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Gris" id="colorGris" />
-                    <label className="form-check-label" htmlFor="colorGris">Gris</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Dorado" id="colorBicolor" />
-                    <label className="form-check-label" htmlFor="colorBicolor">Dorado</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Amarillo" id="colorTricolor" />
-                    <label className="form-check-label" htmlFor="colorTricolor">Amarillo</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="color" className="form-check-input" type="checkbox" value="Atigrado" id="colorAtigrado" />
-                    <label className="form-check-label" htmlFor="colorAtigrado">Atigrado</label>
-                  </div>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Marrón" id="colorMarron" />
+                  <label className="form-check-label" htmlFor="colorMarron">Marrón</label>
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Marcas distintivas (opcional)</label>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Collar" id="marcaCollar" />
-                    <label className="form-check-label" htmlFor="marcaCollar">Collar</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Arnés" id="marcaArnes" />
-                    <label className="form-check-label" htmlFor="marcaArnes">Arnés</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Oreja dañada" id="marcaOreja" />
-                    <label className="form-check-label" htmlFor="marcaOreja">Oreja dañada o caída</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Cola corta" id="marcaCola" />
-                    <label className="form-check-label" htmlFor="marcaCola">Cola corta</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Ojos distintos" id="marcaOjos" />
-                    <label className="form-check-label" htmlFor="marcaOjos">Ojos de distinto color</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Cicatriz" id="marcaCicatriz" />
-                    <label className="form-check-label" htmlFor="marcaCicatriz">Cicatriz visible</label>
-                  </div>
-                  <div className="form-check">
-                    <input name="marca" className="form-check-input" type="checkbox" value="Ninguna" id="marcaNinguna" />
-                    <label className="form-check-label" htmlFor="marcaNinguna">Ninguna / No lo sé</label>
-                  </div>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Crema" id="colorBeige" />
+                  <label className="form-check-label" htmlFor="colorBeige">Crema</label>
+                </div>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Gris" id="colorGris" />
+                  <label className="form-check-label" htmlFor="colorGris">Gris</label>
+                </div>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Dorado" id="colorBicolor" />
+                  <label className="form-check-label" htmlFor="colorBicolor">Dorado</label>
+                </div>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Amarillo" id="colorTricolor" />
+                  <label className="form-check-label" htmlFor="colorTricolor">Amarillo</label>
+                </div>
+                <div className="form-check">
+                  <input name="color" className="form-check-input" type="checkbox" value="Atigrado" id="colorAtigrado" />
+                  <label className="form-check-label" htmlFor="colorAtigrado">Atigrado</label>
+                </div>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Marcas distintivas (opcional)</label>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Collar" id="marcaCollar" />
+                  <label className="form-check-label" htmlFor="marcaCollar">Collar</label>
+                </div>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Arnés" id="marcaArnes" />
+                  <label className="form-check-label" htmlFor="marcaArnes">Arnés</label>
+                </div>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Oreja dañada" id="marcaOreja" />
+                  <label className="form-check-label" htmlFor="marcaOreja">Oreja dañada o caída</label>
+                </div>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Cola corta" id="marcaCola" />
+                  <label className="form-check-label" htmlFor="marcaCola">Cola corta</label>
+                </div>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Ojos distintos" id="marcaOjos" />
+                  <label className="form-check-label" htmlFor="marcaOjos">Ojos de distinto color</label>
+                </div>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Cicatriz" id="marcaCicatriz" />
+                  <label className="form-check-label" htmlFor="marcaCicatriz">Cicatriz visible</label>
+                </div>
+                <div className="form-check">
+                  <input name="marca" className="form-check-input" type="checkbox" value="Ninguna" id="marcaNinguna" />
+                  <label className="form-check-label" htmlFor="marcaNinguna">Ninguna / No lo sé</label>
                 </div>
               </div>
             </div>
-
             <div className="mb-3 d-flex justify-content-end">
               <button
                 type="button"
-                className="boton btn btn-success px-4 py-2"
+                className="boton button btn btn-success px-4 py-2"
                 onClick={() => filterPets()}          // <-- ADD THIS LINE
               >
                 Buscar
@@ -303,7 +265,7 @@ export const FilteredSearch = () => {
       </div>
       {filtered.length > 0 && (
         <>
-          <h5>Coincidencias ({filtered.length})</h5>
+          <h5 className="ms-5">Coincidencias ({filtered.length})</h5>
           <div className="d-flex flex-wrap justify-content-center mb-5">
             {filtered.map(p => (
               <div key={p.id} className="card mx-3 my-2" style={{ width: "18rem" }}>

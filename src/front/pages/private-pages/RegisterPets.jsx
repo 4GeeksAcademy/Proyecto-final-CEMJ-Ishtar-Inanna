@@ -220,8 +220,7 @@ export const RegisterPets = () => {
                     boxShadow: '0 8px 30px rgba(0,105,92,.15)'
                 }}>
 
-                <h1 className="text-center mb-4 fw-semibold"
-                    style={{ color: '#00695c', letterSpacing: '.5px' }}>
+                <h1 className="text-center mb-4 fw-semibold register-filter">
                     Crear registro
                 </h1>
 
