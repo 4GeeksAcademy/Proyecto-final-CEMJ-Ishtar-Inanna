@@ -97,7 +97,7 @@ class PetPost(db.Model):
             "physical_description": self.physical_description,
             "is_lost": self.is_lost,
             "is_active": self.is_active,
-
+            "user": self.user.serialize(),
             "images": [img.url for img in self.images]
         }
 

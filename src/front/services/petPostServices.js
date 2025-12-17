@@ -41,10 +41,10 @@ export const deletePetPost = async (fetchData) => {
   const response = await fetch(`${BACKEND_URL}pets/${fetchData}`, {
     method: "DELETE",
     headers: {
-      accept: "application/json"
+      accept: "application/json",
     }
   });
-if (response.ok){
-  return "Done"
-}
+  if (response.ok) {
+    return "Done";
+  }
 };

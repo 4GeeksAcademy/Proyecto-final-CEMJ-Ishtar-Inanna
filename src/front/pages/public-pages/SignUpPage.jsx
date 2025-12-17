@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { registerUser } from "../../services/registerUserServices";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { getAuthentication } from "../../services/loginServices";
 
 export const SignUpPage = () => {
@@ -108,52 +108,18 @@ export const SignUpPage = () => {
                     </button>
                 </div>
             </form>
+            <div className="text-center mt-4 pb-5">
+                <p className="mb-0">
+                    ¿Tienes una cuenta creada?{" "}
+                    <Link
+                        to="/loginpage"
+                        className="text-success fw-bold text-decoration-none"
+                    >
+                        Iniciar sesión
+                    </Link>
+                </p>
+            </div>
         </div>
+
     );
 }
-
-
-// import React, { useEffect, useState } from "react"
-// import { getAuthentication, login } from "../../services/loginServices.js"
-// import { useNavigate } from "react-router-dom"
-
-// export const RegisterPage = () => {
-
-//     const [password, setPassword] = useState("")
-//     const [userName, setUserName] = useState("")
-
-//     //PARA PRIVATIZAR PÁGINAS
-//     const navigate = useNavigate()
-
-//     const authenticationPrivateZone = async () => {
-//         const response = await getAuthentication()
-
-//         if (response.done == true) {
-//             navigate('/')
-//             console.log(response)
-//         }
-//     }
-//     useEffect(() => {
-//         authenticationPrivateZone()
-//     })
-//     ///////////////////
-
-//     return (
-//         <>
-//             <div className="container">
-//                 <h3>Register test</h3>
-//                 <div>
-//                     <input placeholder="Username" onChange={e => setUserName(e.target.value)}></input>
-//                     <input placeholder="Password" onChange={e => setPassword(e.target.value)}></input>
-//                     <button >Register</button>
-//                 </div>
-//                 <div>
-//                     <button onClick={e => getAuthentication()}>Testeame el sistema de logeo</button>
-//                 </div>
-//                 <div>
-//                     <button>Logout</button>
-//                 </div>
-//             </div>
-//         </>
-//     )
-// }

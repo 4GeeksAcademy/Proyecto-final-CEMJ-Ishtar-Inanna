@@ -139,7 +139,7 @@ export const ProfilePage = () => {
                         height="130"
                         style={{ objectFit: "cover" }}
                     />) : (<img
-                        src={image || user.prof_img}
+                        src={image || user.prof_img || `https://ui-avatars.com/api/?name=${user.name}&length=1&background=random`}
                         alt="Foto perfil sin cargar"
                         className="rounded-circle"
                         width="130"
@@ -151,7 +151,7 @@ export const ProfilePage = () => {
                 {/* --- SECCIÓN DE FORMULARIO / VISTA --- */}
                 {isChange ? (
                     <div className="d-flex flex-column gap-2">
-
+                        <strong style={{ textAlign: "center" }}>Cambiar foto de perfil:</strong>
                         <input
                             type="file"
                             name="imageProfile"
@@ -159,6 +159,7 @@ export const ProfilePage = () => {
                             accept="image/*"
                             onChange={(e) => uploadImage(e)}
                         />
+                        <strong style={{ textAlign: "center" }}>Nombre:</strong>
                         <input
                             type="text"
                             className="form-control text-center mb-2"
@@ -167,6 +168,7 @@ export const ProfilePage = () => {
                             onChange={handleInputChange}
                             placeholder="Nombre"
                         />
+                        <strong style={{ textAlign: "center" }}>Apellido:</strong>
                         <input
                             type="text"
                             className="form-control text-center mb-2"
@@ -175,6 +177,7 @@ export const ProfilePage = () => {
                             onChange={handleInputChange}
                             placeholder="Apellido"
                         />
+                        <strong style={{ textAlign: "center" }}>Usuario:</strong>
                         <input
                             type="text"
                             className="form-control text-center text-muted mb-3"

@@ -153,6 +153,28 @@ export const SingleAnimalView = () => {
                     )}
                 </div>
             </div>
+           <h5>Perfil de usuario</h5>
+            <Link
+                to="/PublicProfilePage"
+                state={{ userId: pet.user.id }}
+                className="d-flex align-items-center gap-2 text-decoration-none text-dark"
+            >
+                <img
+                    src={
+                        pet.user.prof_img ||
+                        `https://ui-avatars.com/api/?name=${pet.user.name}&length=1`
+                    }
+                    className="rounded-circle border"
+                    width="42"
+                    height="42"
+                    style={{ objectFit: "cover" }}
+                />
+                <span className="fw-semibold">@{pet.user.username}</span>
+            </Link>
+
+
+
+
 
         </div>
 
