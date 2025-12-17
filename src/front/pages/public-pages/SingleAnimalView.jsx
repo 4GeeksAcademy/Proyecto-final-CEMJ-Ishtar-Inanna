@@ -106,7 +106,7 @@ export const SingleAnimalView = () => {
     if (!pet) return <p>Mascota no encontrada</p>;
 
     return (
-        <div className="background">
+        <div className="">
             <div className="container my-4">
                 <button className="btn btn-link mb-3" onClick={() => navigate(-1)}>
                     ← Volver
@@ -123,31 +123,51 @@ export const SingleAnimalView = () => {
                                 <div id="carouselExample" className="carousel slide mb-3">
                                     <div className="carousel-inner">
                                         {pet.images.map((url, index) => (
-                                            <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                                            <div
+                                                key={index}
+                                                className={`background carousel-item ${index === 0 ? 'active' : ''}`}
+
+                                            >
                                                 <img
                                                     src={url}
-                                                    className="d-block w-100 rounded"
+                                                    className="d-block w-100 rounded my-3"
                                                     alt={`Imagen ${index + 1} de ${pet.name}`}
-                                                    style={{ maxHeight: "300px", objectFit: "cover" }}
+                                                    style={{
+                                                        maxHeight: 300,
+                                                        objectFit: 'contain',
+                                                        margin: '0 auto',
+                                                        display: 'block'
+                                                    }}
                                                 />
                                             </div>
                                         ))}
                                     </div>
+
                                     {pet.images.length > 1 && (
                                         <>
-                                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <button
+                                                className="carousel-control-prev"
+                                                type="button"
+                                                data-bs-target="#carouselExample"
+                                                data-bs-slide="prev"
+                                            >
+                                                <span className="carousel-control-prev-icon" aria-hidden="true" />
                                                 <span className="visually-hidden">Previous</span>
                                             </button>
-                                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <button
+                                                className="carousel-control-next"
+                                                type="button"
+                                                data-bs-target="#carouselExample"
+                                                data-bs-slide="next"
+                                            >
+                                                <span className="carousel-control-next-icon" aria-hidden="true" />
                                                 <span className="visually-hidden">Next</span>
                                             </button>
                                         </>
                                     )}
                                 </div>
                             ) : (
-                                <p>No hay imágenes disponibles</p>
+                                <p className="text-muted">No hay imágenes disponibles</p>
                             )}
 
 
@@ -157,14 +177,14 @@ export const SingleAnimalView = () => {
                                         <h2 className="fw-bold mb-0">{pet.name}</h2>
                                         <small className="text-muted">{pet.found_location}</small>
                                     </div>
-                                    <span className="badge bg-success">Adoptable</span>
+
                                 </div>
 
                                 <div className="row text-center mb-4">
                                     <Info label="Raza" value={pet.breed || "N/A"} />
                                     <Info label="Tamaño" value={pet.details.Tamano || "N/A"} />
-                                    <Info label="Tipo de pelo" value={pet.details.Pelo|| "N/A"} />
-                                    <Info label="Especie" value={pet.specie || "N/A"} />
+                                    <Info label="Tipo de pelo" value={pet.details.Pelo || "N/A"} />
+                                    <Info label="Genero" value={pet.details.Genero || "N/A"} />
                                 </div>
                             </div>
                         </div>
@@ -179,17 +199,22 @@ export const SingleAnimalView = () => {
                                     <div>
                                         <ul>
                                             <li>
-                                                <h5>Tamaño</h5>
-                                                <p>{pet.size}</p>
+                                                <h5>Marcas</h5>
+                                                <p>{Array.isArray(pet.details.Marcas)
+                                                    ? pet.details.Marcas.join(', ')
+                                                    : pet.details.Marcas}
+                                                </p>
                                             </li>
+
                                             <li>
-                                                <h5>Tipo de pelaje</h5>
-                                                <p>{pet.color}</p>
+                                                <h5>Color del pelaje</h5>
+                                                <p>{Array.isArray(pet.details.Color)
+                                                    ? pet.details.Color.join(', ')
+                                                    : pet.details.Color}
+                                                </p>
                                             </li>
-                                            <li>
-                                                <h5>Otros detalles</h5>
-                                                <div>{Array.isArray(pet.marks) && pet.Marks.map(m => <p key={m}>{m}</p>)}</div>
-                                            </li>
+
+                                            {/* …other <li>… */}
                                         </ul>
                                     </div>
                                 </Section>

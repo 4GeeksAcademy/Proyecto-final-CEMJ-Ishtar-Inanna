@@ -39,6 +39,7 @@ export const FilteredSearch = () => {
     if (!eq(pet.breed, form.breed)) return false;
     if (!eq(pet.actual_location, form.actual_location)) return false;
     if (!eq(pet.found_location, form.found_location)) return false;
+    
 
     if (form.physical_description) {
       const d = pet.details;
@@ -50,6 +51,7 @@ export const FilteredSearch = () => {
       if (f.Pelo && !eq(d.Pelo, f.Pelo)) return false;
       if (f.Color && !arrMatch(d.Color, f.Color)) return false;
       if (f.Marcas && !arrMatch(d.Marcas, f.Marcas)) return false;
+      if (f.Genero && !eq(d.Genero, f.Genero)) return false;
     }
     return true;
   };
@@ -94,7 +96,9 @@ export const FilteredSearch = () => {
       ['Tamano:' + txt('[name="tamano"]'),
       'Pelo:' + txt('[name="pelo"]'),
       'Color:' + arr('input[name="color"]:checked'),
-      'Marcas:' + arr('input[name="marca"]:checked')]
+      'Marcas:' + arr('input[name="marca"]:checked'),
+      'Genero:' + txt('[name="genero"]')
+    ]
         .filter(Boolean).join('|')
     );
   };
@@ -192,6 +196,17 @@ export const FilteredSearch = () => {
                     <option>Grande</option>
                   </select>
                 </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Género</label>
+                  <select name="genero" className="form-select" required>
+                    <option value="" disabled selected hidden>Seleccione género</option>
+                    <option value="">No especificado</option>
+                    <option>Hembra</option>
+                    <option>Macho</option>
+                  </select>
+                </div>
+
                 <div className="mb-3">
                   <label className="form-label">Tipo de pelo / plumaje</label>
                   <select name="pelo" className="form-select" required>
@@ -273,7 +288,7 @@ export const FilteredSearch = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="mb-3 d-flex justify-content-end">
               <button
                 type="button"

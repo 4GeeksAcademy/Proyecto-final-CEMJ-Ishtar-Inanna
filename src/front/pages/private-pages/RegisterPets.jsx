@@ -182,7 +182,7 @@ export const RegisterPets = () => {
     const sendNewPetPost = async (formData) => {
         const response = await createPetPost(formData)
         navigate('/')
-        
+
     }
 
     const buildString = () => {
@@ -199,12 +199,15 @@ export const RegisterPets = () => {
                 "Pelo:" + txt('[name="pelo"]'),
                 "Color:" + arr('input[name="color"]:checked'),
                 "Marcas:" + arr('input[name="marca"]:checked'),
+                "Genero:" + txt('[name="genero"]'),
+                "Chip:" + txt('[name="chip"]')
+
             ]
                 .filter(Boolean)
                 .join("|")
         );
     };
-
+    console.log(summary)
     return (
         <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
 
@@ -305,6 +308,7 @@ export const RegisterPets = () => {
                             onChange={buildString}
                             className={`collapse ${open ? 'show' : ''} mt-3`}>
 
+
                             {/* Especie */}
                             <div className="mb-3">
                                 <label className="form-label fw-medium" style={{ color: '#00796b' }}>Especie</label>
@@ -319,6 +323,16 @@ export const RegisterPets = () => {
                                     <option>Ave</option>
                                     <option>Conejo</option>
                                     <option>Otro</option>
+                                </select>
+                            </div>
+
+                            {/* gENERO */}
+                            <div className="mb-3">
+                                <label className="form-label fw-medium" style={{ color: '#00796b' }}>Género</label>
+                                <select name="genero" className="form-select shadow-sm rounded border-0" required>
+                                    <option value="" disabled selected hidden>Seleccione genero</option>
+                                    <option>Macho</option>
+                                    <option>Hembra</option>
                                 </select>
                             </div>
 
