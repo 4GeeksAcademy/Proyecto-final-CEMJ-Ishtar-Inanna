@@ -33,7 +33,7 @@ export const Footer = () => (
                         Información
                     </h6>
                     <p className="mb-0">
-                        <strong className="text-dark">Ishtar</strong><br />
+                        <strong className="text-dark">Inanna</strong><br />
                         Plataforma creada para ayudar a animales perdidos y encontrados.
                     </p>
                 </div>
@@ -42,7 +42,7 @@ export const Footer = () => (
             <hr className="my-4" />
 
             <div className="text-center small">
-                © 2025 <strong>Ishtar</strong> — Todos los derechos reservados.
+                © 2025 <strong>Inanna</strong> — Todos los derechos reservados.
             </div>
         </div>
     </footer>

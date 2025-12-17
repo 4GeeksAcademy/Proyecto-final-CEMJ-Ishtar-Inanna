@@ -9,7 +9,7 @@ import "../Home.css"
 const slides = [
 	{
 		img: Fondo,
-		title: "Ishtar",
+		title: "Inanna",
 		text: "Una plataforma colaborativa diseñada para ayudar a reencontrar mascotas perdidas mediante la participación de la comunidad."
 	},
 	{
