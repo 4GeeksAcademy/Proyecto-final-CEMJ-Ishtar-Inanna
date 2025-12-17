@@ -120,7 +120,7 @@ export const SingleAnimalView = () => {
                     <div className="col-md-6">
                         <div className="card shadow-sm mb-4">
                             {Array.isArray(pet.images) && pet.images.length > 0 ? (
-                                <div id="carouselExample" className="carousel slide mb-3">
+                                <div id="carouselExample" className="carousel slide mb-3 carousel-dark ">
                                     <div className="carousel-inner">
                                         {pet.images.map((url, index) => (
                                             <div
@@ -177,6 +177,11 @@ export const SingleAnimalView = () => {
                                         <h2 className="fw-bold mb-0">{pet.name}</h2>
                                         <small className="text-muted">{pet.found_location}</small>
                                     </div>
+                                    {pet.found_location ? (
+                                        <span className="badge bg-danger">Perdido</span>
+                                    ) : (
+                                        <span className="badge bg-success">Encontrado</span>
+                                    )}
 
                                 </div>
 
