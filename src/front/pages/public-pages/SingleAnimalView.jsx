@@ -189,7 +189,7 @@ export const SingleAnimalView = () => {
                                     <Info label="Raza" value={pet.breed || "N/A"} />
                                     <Info label="Tamaño" value={pet.details.Tamano || "N/A"} />
                                     <Info label="Tipo de pelo" value={pet.details.Pelo || "N/A"} />
-                                    <Info label="Genero" value={pet.details.Genero || "N/A"} />
+                                    <Info l label={<i className="bi bi-gender-ambiguous"></i>} value={pet.details.Genero || "N/A"} />
                                 </div>
                             </div>
                         </div>
