@@ -39,8 +39,8 @@ export const FilteredSearch = () => {
     if (!eq(pet.breed, form.breed)) return false;
     if (!eq(pet.actual_location, form.actual_location)) return false;
     if (!eq(pet.found_location, form.found_location)) return false;
-    
 
+    
     if (form.physical_description) {
       const d = pet.details;
       const f = form.physical_description.split('|').reduce((acc, chunk) => {
@@ -98,7 +98,7 @@ export const FilteredSearch = () => {
       'Color:' + arr('input[name="color"]:checked'),
       'Marcas:' + arr('input[name="marca"]:checked'),
       'Genero:' + txt('[name="genero"]')
-    ]
+      ]
         .filter(Boolean).join('|')
     );
   };
@@ -117,7 +117,7 @@ export const FilteredSearch = () => {
       <div className="container d-flex flex-column align-items-center py-5 min-vh-100">
         <div className="card shadow-lg rounded-4 p-4 w-100" style={{ maxWidth: 480 }}>
           <h1 className="text-center mb-4 fw-semibold">Búsqueda filtrada</h1>
-          <div className="my-3">
+          <div className="my-3 d-flex gap-3">
             <button className={`btn ${isLost ? "btn-success" : "btn-danger"}`} onClick={() => setIsLost(true)}>PERDIDO</button>
             <button className={`btn ${isLost ? "btn-danger" : "btn-success"}`} onClick={() => setIsLost(false)}>ENCONTRADO</button>
           </div>
@@ -304,7 +304,7 @@ export const FilteredSearch = () => {
       {filtered.length > 0 && (
         <>
           <h5>Coincidencias ({filtered.length})</h5>
-          <div className="d-flex flex-wrap justify-content-center">
+          <div className="d-flex flex-wrap justify-content-center mb-5">
             {filtered.map(p => (
               <div key={p.id} className="card mx-3 my-2" style={{ width: "18rem" }}>
                 <img
