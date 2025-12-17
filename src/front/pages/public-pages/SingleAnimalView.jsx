@@ -106,16 +106,16 @@ export const SingleAnimalView = () => {
     if (!pet) return <p>Mascota no encontrada</p>;
 
     return (
-        <div className="container">
+        <div className="background">
             <div className="container my-4">
                 <button className="btn btn-link mb-3" onClick={() => navigate(-1)}>
                     ← Volver
                 </button>
             </div>
 
-            <div className="row g-4">
+            <div className="container ms-5 row g-4 d-flex justify-content-center">
                 {/* MAIN CONTENT */}
-                <div className="col-md-7">
+                <div className="col-md-8">
                     <div className="card shadow-sm mb-4">
                     {Array.isArray(pet.images) && pet.images.length > 0 ? (
                         <div id="carouselExample" className="carousel slide mb-3">
@@ -196,7 +196,7 @@ export const SingleAnimalView = () => {
                 </div>
 
                 {/* SIDEBAR */}
-                <div className="col-lg-4">
+                <div className="col-md-4">
                     <div className="card shadow-sm mb-4">
                         <div className="card-body">
                             <h5 className="fw-semibold d-flex align-items-center gap-2">
@@ -207,7 +207,7 @@ export const SingleAnimalView = () => {
                                 />
                                 Los Aristogatos de Boadilla
                             </h5>
-                            <button className="btn btn-primary w-100 my-2">Iniciar adopción</button>
+                            <button className="button btn btn-primary w-100 my-2">Iniciar adopción</button>
                             <button className="btn btn-outline-secondary w-100 mb-3">Contactar</button>
                         </div>
                     </div>
